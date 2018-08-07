@@ -1,0 +1,46 @@
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+      
+            <form method="post" data-toogle="validator" class="form-horzontal" id="form" enctype="multipart/form-data">
+              {{csrf_field()}}
+              {{method_field ('POST')}} 
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modal-title"></h4>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="id" id="id">
+                <div class="form-group">
+                  <label for="name" class="control-label">Nama</label>
+                  <input type="text" class="form-control" name="name" id="name" required>
+                  <span class="help-block with-errors"></span>
+                </div>
+      
+                <div class="form-group">
+                  <label for="email" class="control-label">Email</label>
+                  <input type="email" name="email" id="email" class="form-control" required>
+                  <span class="help-block with-errors"></span>            
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="control-label">Password</label>
+                    <input type="text" name="password" id="password" class="form-control" required>
+                    <span class="help-block with-errors"></span>            
+                </div>
+      
+                 <div class="form-group">
+                  <label for="foto" class="control-label">Foto</label>
+                  <input type="file" name="photo" id="photo" class="form-control">
+                  <span class="help-block with-errors"></span>            
+                </div>
+      
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-save" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Kirim</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
