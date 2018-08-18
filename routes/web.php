@@ -19,8 +19,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//master
-Route::resource('master/bogor', 'MasterBogorController');
+Route::resource('/datawarkah','DataWarkahController');
+Route::get('api/warkah','DataWarkahController@apiWarkah')->name('api.warkah');
+
+
 
 //user
 Route::resource('user', 'UserController');

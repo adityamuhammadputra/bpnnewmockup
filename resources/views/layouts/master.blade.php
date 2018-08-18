@@ -8,11 +8,13 @@
     <title>{{ config('app.name', 'BPN Kab Bogor') }}</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}"> --}}
     <link href="{{asset('lumino/css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/datepicker3.css')}}" rel="stylesheet">
-    <link href="{{asset('lumino/css/bootstrap.min.css')}}" rel="stylesheet">
+	<link href="{{asset('lumino/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{asset('lumino/css/jquery.dataTables.yadcf.0.9.2.css') }}" rel="stylesheet">
+	<link href="{{asset('lumino/css/sweetalert2.min.css') }}" rel="stylesheet">
+
     <link href="{{asset('lumino/css/styles.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -101,35 +103,51 @@
 		</form>
 		<ul class="nav menu">
 			<li><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="widgets.html"><em class="fa fa-calendar">&nbsp;</em> Widgets</a></li>
-			<li><a href="charts.html"><em class="fa fa-bar-chart">&nbsp;</em> Charts</a></li>
-			<li><a href="elements.html"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
-			<li><a href="panels.html"><em class="fa fa-clone">&nbsp;</em> Alerts &amp; Panels</a></li>
+			<li><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Warkah Kab. Bogor</a></li>
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
-				<em class="fa fa-navicon">&nbsp;</em> Multilevel <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				<em class="fa fa-clone">&nbsp;</em> PTSL Kab. Bogor <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 1
+						<span class="fa fa-clone">&nbsp;</span> Master Data
 					</a></li>
 					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 2
+						<span class="fa fa-check-square-o">&nbsp;</span> Pengecekan
 					</a></li>
-					<li><a class="" href="#">
-						<span class="fa fa-arrow-right">&nbsp;</span> Sub Item 3
-					</a></li>
+					
 				</ul>
 			</li>
 			<li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div><!--/.sidebar-->
-    @yield('content')
+	
+	@yield('content')
+	<div class="row">
+        <div class="col-sm-12">
+            <p class="back-link"><a href="http://kab-bogor.atrbpn.go.id/">&copy; 2018 BPN Kab.Bogor</a> Template by Lumino <a href="https://www.medialoot.com">Medialoot</a></p>
+        </div>
+	</div>
+</div>
 	
 	
   
-  {{--  <script src="{{asset('lumino/js/jquery.min.js')}}"></script>  --}}
+  <script src="{{asset('lumino/js/jquery.min.js')}}"></script>
   <script src="{{asset('lumino/js/jquery-1.11.1.min.js')}}"></script>
+  <script src="{{asset('lumino/js/jquery-1.12.4.min.js')}}"></script>
+  <script src="{{asset('lumino/js/jquery-ui.js')}}"></script>
+  <script src="{{asset('lumino/js/chosen.jquery.min.js')}}"></script>
+
   <script src="{{asset('lumino/js/bootstrap.min.js')}}"></script>
+  
+  <script src="{{asset('lumino/js/sweetalert2.min.js')}}"></script>
+
+  <script src="{{asset('lumino/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('lumino/js/dataTables.bootstrap.js')}}"></script>
+  <script src="{{asset('lumino/js/jquery.dataTables.yadcf.0.9.2.js')}}"></script>
+
+
+  <script src="{{asset('lumino/js/validator.min.js') }}"></script>
+
   <script src="{{asset('lumino/js/chart.min.js')}}"></script>
   <script src="{{asset('lumino/js/chart-data.js')}}"></script>
   <script src="{{asset('lumino/js/easypiechart.js')}}"></script>
