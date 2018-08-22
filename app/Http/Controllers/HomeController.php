@@ -22,7 +22,7 @@ class HomeController extends Controller
     {
         $datawarkah = DataWarkah::with('user')->get();
         $datadasboard = Dashboard::with('kelompok')->get();
-        return $datadasboard;
+        // return $datadasboard;
         return view('home');
     }
 }

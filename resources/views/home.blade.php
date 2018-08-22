@@ -10,7 +10,7 @@
             <li class="active">Dashboard</li>
         </ol>
     </div><!--/.row-->
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -20,6 +20,8 @@
                 <div class="panel-body">
                     <div class="canvas-wrapper">
                         <div id="donut1" style="width:100%; height:355px;"></div>
+                        <p>Target : balbalala</p>
+                        <p>Misal  : balbalala</p>
                     </div>
                 </div>
             </div>
@@ -63,7 +65,7 @@
                 </div>
             </div>
         </div>
-    </div><!--/.row-->
+    </div><!--/.row--> --}}
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -96,22 +98,26 @@
                 </div>
                 <div class="panel-body">
                     <div class="canvas-wrapper">
-                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
+                        {{-- <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas> --}}
+                        <canvas class="main-chart" id="bar-chart" height="200" width="600"></canvas>
                     </div>
                 </div>
             </div>
         </div>
     </div><!--/.row-->
+@php
+    $a = 700;
+@endphp
 @push('scripts')
 <script>
     //chart donat
-    function graphDonut(colors) {
+    {{-- function graphDonut(colors) {
         Morris.Donut({
             element: 'donut1',
             colors : colors,
             data   : [
-                {label: "Progres Input Data %", value: {{ '9' }}},
-                {label: "Progres Input Data", value: {{ '91' }}}
+                {label: "Penyerahan Berkas %", value: {{ '9' }}},
+                {label: "Target Berkas %", value: {{ '91' }}}
             ]
         });
         Morris.Donut({
@@ -139,11 +145,32 @@
             ]
         });
     }
-    graphDonut( ['rgb(59,148,217)', 'rgb(26,187,156)'] );
+    graphDonut( ['rgb(59,148,217)', 'rgb(26,187,156)'] ); --}}
 
     window.onload = function () {
-        var chart1 = document.getElementById("line-chart").getContext("2d");
-        window.myLine = new Chart(chart1).Line(lineChartData, {
+        var chart2 = document.getElementById("bar-chart").getContext("2d");
+        window.myBar = new Chart(chart2).Bar(
+            {
+                labels : ["Kelompok 1","Kelompok 2","Kelompok 3","Kelompok 4","Kelompok 5","Kelompok 6","Kelompok 7", "Kelompok 8"],
+                datasets : [
+                    {
+                        fillColor : "rgba(220,220,220,0.5)",
+                        strokeColor : "rgba(220,220,220,0.8)",
+                        highlightFill: "rgba(220,220,220,0.75)",
+                        highlightStroke: "rgba(220,220,220,1)",
+                        data : [{{ $a }},200,100,200,300,400,500,600]
+                    },
+                    {
+                        fillColor : "rgba(48, 164, 255, 0.2)",
+                        strokeColor : "rgba(48, 164, 255, 0.8)",
+                        highlightFill : "rgba(48, 164, 255, 0.75)",
+                        highlightStroke : "rgba(48, 164, 255, 1)",
+                        data : [100,200,100,200,300,400,500,600]
+                    }
+                ]
+        
+            }
+        , {
         responsive: true,
         scaleLineColor: "rgba(0,0,0,.2)",
         scaleGridLineColor: "rgba(0,0,0,.05)",
