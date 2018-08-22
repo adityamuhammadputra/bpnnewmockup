@@ -5,10 +5,64 @@
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="#">
-                <em class="fa fa-home"></em>
+                <em class="fa fa-dashboard"></em>
             </a></li>
-            <li class="active">Forms</li>
+            <li class="active">Dashboard</li>
         </ol>
+    </div><!--/.row-->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Kelompok 1
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <div id="donut1" style="width:100%; height:355px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Kelompok 2
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <div id="donut2" style="width:100%; height:355px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Kelompok 3
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <div id="donut3" style="width:100%; height:355px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Kelompok 4
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <div id="donut4" style="width:100%; height:355px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div><!--/.row-->
     <div class="row">
         <div class="col-md-12">
@@ -38,20 +92,55 @@
                             </ul>
                         </li>
                     </ul>
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-                    <div class="panel-body">
-                        <div class="canvas-wrapper">
-                            <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
-                        </div>
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
                     </div>
+                </div>
             </div>
         </div>
     </div><!--/.row-->
-    
-
-    
 @push('scripts')
 <script>
+    //chart donat
+    function graphDonut(colors) {
+        Morris.Donut({
+            element: 'donut1',
+            colors : colors,
+            data   : [
+                {label: "Progres Input Data %", value: {{ '9' }}},
+                {label: "Progres Input Data", value: {{ '91' }}}
+            ]
+        });
+        Morris.Donut({
+            element: 'donut2',
+            colors : colors,
+            data   : [
+                {label: "Progres Input Data %", value: 10},
+                {label: "Progres Input Data", value: 90}
+            ]
+        });
+        Morris.Donut({
+            element: 'donut3',
+            colors : colors,
+            data   : [
+                {label: "Progres Input Data %", value: 10},
+                {label: "Progres Input Data", value: 90}
+            ]
+        });
+        Morris.Donut({
+            element: 'donut4',
+            colors : colors,
+            data   : [
+                {label: "Progres Input Data %", value: 10},
+                {label: "Progres Input Data", value: 90}
+            ]
+        });
+    }
+    graphDonut( ['rgb(59,148,217)', 'rgb(26,187,156)'] );
+
     window.onload = function () {
         var chart1 = document.getElementById("line-chart").getContext("2d");
         window.myLine = new Chart(chart1).Line(lineChartData, {

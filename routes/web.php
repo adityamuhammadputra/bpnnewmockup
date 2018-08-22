@@ -19,10 +19,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/datawarkah','DataWarkahController');
-Route::get('api/warkah','DataWarkahController@apiWarkah')->name('api.warkah');
+//warkah
+Route::resource('/datawarkah','WarkahController')->except(['create']);
+Route::get('api/warkah','WarkahController@apiWarkah')->name('api.warkah');
 
-
+//ptsl
+Route::resource('/dataptsl','PtslController');
+Route::get('api/ptsl','PtslController@apiPtsl')->name('api.ptsl');
 
 //user
 Route::resource('user', 'UserController');

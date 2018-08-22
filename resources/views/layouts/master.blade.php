@@ -108,7 +108,7 @@
 				<em class="fa fa-clone">&nbsp;</em> PTSL Kab. Bogor <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="#">
+					<li><a class="" href="{{ url('dataptsl') }}">
 						<span class="fa fa-clone">&nbsp;</span> Master Data
 					</a></li>
 					<li><a class="" href="#">
@@ -152,6 +152,10 @@
   <script src="{{asset('lumino/js/chart-data.js')}}"></script>
   <script src="{{asset('lumino/js/easypiechart.js')}}"></script>
   <script src="{{asset('lumino/js/easypiechart-data.js')}}"></script>
+
+  <script src="{{asset('lumino/js/morris.min.js')}}"></script>
+  <script src="{{asset('lumino/js/raphael.min.js')}}"></script>
+
   <script src="{{asset('lumino/js/bootstrap-datepicker.js')}}"></script>
   <script src="{{asset('lumino/js/custom.js')}}"></script>
   @stack('scripts')
