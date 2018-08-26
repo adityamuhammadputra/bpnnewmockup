@@ -8,7 +8,8 @@
     <title>{{ config('app.name', 'BPN Kab Bogor') }}</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <link href="{{asset('lumino/css/bootstrap.min.css')}}" rel="stylesheet">
+	<link href="{{asset('lumino/css/bootstrap.min.css')}}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
     <link href="{{asset('lumino/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/datepicker3.css')}}" rel="stylesheet">
 	<link href="{{asset('lumino/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -27,7 +28,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
+				<a class="navbar-brand" href="#"><span>BPN</span>Bogor</a>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 						<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -102,16 +103,16 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Warkah Kab. Bogor</a></li>
-			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
+			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+			<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Warkah Kab. Bogor</a></li>
+			<li class="parent {{ request()->is('dataptsl') ? 'active' : '' }} {{ request()->is('pengecekan') ? 'active' : '' }}"><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-clone">&nbsp;</em> PTSL Kab. Bogor <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-1">
-					<li><a class="" href="{{ url('dataptsl') }}">
+					<li><a class="collapsed" href="{{ url('dataptsl') }}">
 						<span class="fa fa-clone">&nbsp;</span> Master Data
 					</a></li>
-					<li><a class="" href="#">
+					<li><a class="" href="{{ url('pengecekan') }}">
 						<span class="fa fa-check-square-o">&nbsp;</span> Pengecekan
 					</a></li>
 					
@@ -134,6 +135,9 @@
   <script src="{{asset('lumino/js/jquery.min.js')}}"></script>
   <script src="{{asset('lumino/js/jquery-1.11.1.min.js')}}"></script>
   <script src="{{asset('lumino/js/jquery-1.12.4.min.js')}}"></script>
+  {{-- <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script> --}}
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> --}}
+
   <script src="{{asset('lumino/js/jquery-ui.js')}}"></script>
   <script src="{{asset('lumino/js/chosen.jquery.min.js')}}"></script>
 
@@ -158,6 +162,9 @@
 
   <script src="{{asset('lumino/js/bootstrap-datepicker.js')}}"></script>
   <script src="{{asset('lumino/js/custom.js')}}"></script>
+  <script>
+		
+  </script>
   @stack('scripts')
   </body>
 </html>

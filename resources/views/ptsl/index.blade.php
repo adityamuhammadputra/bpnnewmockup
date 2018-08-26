@@ -5,7 +5,7 @@
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="#">
-                <em class="fa fa-sticky-note"></em>
+                <em class="fa fa-clone"></em>
             </a></li>
             <li class="active">Data PTSL</li>
         </ol>
@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Master Data Warkah 
+                    Master Data PTSL 
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                         <button class="btn btn-primary pull-right btn-flat"><i class="fa fa-plus-circle"></i> Tambah Data</button>

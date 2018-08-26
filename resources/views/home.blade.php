@@ -10,67 +10,12 @@
             <li class="active">Dashboard</li>
         </ol>
     </div><!--/.row-->
-    {{-- <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Kelompok 1
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                </div>
-                <div class="panel-body">
-                    <div class="canvas-wrapper">
-                        <div id="donut1" style="width:100%; height:355px;"></div>
-                        <p>Target : balbalala</p>
-                        <p>Misal  : balbalala</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Kelompok 2
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                </div>
-                <div class="panel-body">
-                    <div class="canvas-wrapper">
-                        <div id="donut2" style="width:100%; height:355px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Kelompok 3
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                </div>
-                <div class="panel-body">
-                    <div class="canvas-wrapper">
-                        <div id="donut3" style="width:100%; height:355px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Kelompok 4
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                </div>
-                <div class="panel-body">
-                    <div class="canvas-wrapper">
-                        <div id="donut4" style="width:100%; height:355px;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--/.row--> --}}
+  
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Site Traffic Overview
+                    Grafik Progress Input Per Kelompok
                     <ul class="pull-right panel-settings panel-button-tab-right">
                         <li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
                             <em class="fa fa-cogs"></em>
@@ -105,47 +50,93 @@
             </div>
         </div>
     </div><!--/.row-->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Progress Kecamatan Wilayah Bogor Selatan
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12 no-padding">
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Caringin</div>
+                            <div class="col-sm-6" style="text-align: right;">10%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="0%" style="width: 10%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="90"></div>
+                        </div>
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Cijeruk</div>
+                            <div class="col-sm-6" style="text-align: right;">60%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="0%" style="width: 60%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Cigombong</div>
+                            <div class="col-sm-6" style="text-align: right;">40%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="0%" style="width: 40%;" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Ciawi</div>
+                            <div class="col-sm-6" style="text-align: right;">100%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="10%" style="width: 100%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default ">
+                <div class="panel-heading">
+                    Progress Kecamatan Wilayah Bogor Barat
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="col-md-12 no-padding">
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Ciseeng</div>
+                            <div class="col-sm-6" style="text-align: right;">20%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="0%" style="width: 20%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="90"></div>
+                        </div>
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Cileungsi</div>
+                            <div class="col-sm-6" style="text-align: right;">40%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="0%" style="width: 40%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Ciomas</div>
+                            <div class="col-sm-6" style="text-align: right;">40%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="0%" style="width: 40%;" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="row progress-labels">
+                            <div class="col-sm-6">Kecamatan Ciampea</div>
+                            <div class="col-sm-6" style="text-align: right;">50%</div>
+                        </div>
+                        <div class="progress">
+                            <div data-percentage="10%" style="width: 50%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
 @php
     $a = 700;
 @endphp
 @push('scripts')
 <script>
-    //chart donat
-    {{-- function graphDonut(colors) {
-        Morris.Donut({
-            element: 'donut1',
-            colors : colors,
-            data   : [
-                {label: "Penyerahan Berkas %", value: {{ '9' }}},
-                {label: "Target Berkas %", value: {{ '91' }}}
-            ]
-        });
-        Morris.Donut({
-            element: 'donut2',
-            colors : colors,
-            data   : [
-                {label: "Progres Input Data %", value: 10},
-                {label: "Progres Input Data", value: 90}
-            ]
-        });
-        Morris.Donut({
-            element: 'donut3',
-            colors : colors,
-            data   : [
-                {label: "Progres Input Data %", value: 10},
-                {label: "Progres Input Data", value: 90}
-            ]
-        });
-        Morris.Donut({
-            element: 'donut4',
-            colors : colors,
-            data   : [
-                {label: "Progres Input Data %", value: 10},
-                {label: "Progres Input Data", value: 90}
-            ]
-        });
-    }
-    graphDonut( ['rgb(59,148,217)', 'rgb(26,187,156)'] ); --}}
 
     window.onload = function () {
         var chart2 = document.getElementById("bar-chart").getContext("2d");
@@ -158,14 +149,14 @@
                         strokeColor : "rgba(220,220,220,0.8)",
                         highlightFill: "rgba(220,220,220,0.75)",
                         highlightStroke: "rgba(220,220,220,1)",
-                        data : [{{ $a }},200,100,200,300,400,500,600]
+                        data : [{{ $a }},400,200,200,300,400,500,600]
                     },
                     {
                         fillColor : "rgba(48, 164, 255, 0.2)",
                         strokeColor : "rgba(48, 164, 255, 0.8)",
                         highlightFill : "rgba(48, 164, 255, 0.75)",
                         highlightStroke : "rgba(48, 164, 255, 1)",
-                        data : [100,200,100,200,300,400,500,600]
+                        data : [400,200,200,200,300,400,500,600]
                     }
                 ]
         
@@ -174,7 +165,10 @@
         responsive: true,
         scaleLineColor: "rgba(0,0,0,.2)",
         scaleGridLineColor: "rgba(0,0,0,.05)",
-        scaleFontColor: "#c5c7cc"
+        scaleFontColor: "#c5c7cc",
+        scaleOverride: true,
+        scaleSteps: 10,
+        scaleStepWidth: 100, 
         });
     };
 </script>
