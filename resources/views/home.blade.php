@@ -59,13 +59,17 @@
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12 no-padding">
+                        @foreach($data2 as $kecamatan=>$jumlah)
                         <div class="row progress-labels">
-                            <div class="col-sm-6">Kecamatan Caringin</div>
-                            <div class="col-sm-6" style="text-align: right;">10%</div>
+                            <div class="col-sm-6">Kecamatan {{ $kecamatan }}</div>
+                            <div class="col-sm-6" style="text-align: right;">{{ $jumlah }} Data</div>
                         </div>
                         <div class="progress">
-                            <div data-percentage="0%" style="width: 10%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="90"></div>
+                            <div data-percentage="0%" style="width: {{ $jumlah }}%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="90"></div>
                         </div>
+                        @endforeach
+                     
+                        
                         <div class="row progress-labels">
                             <div class="col-sm-6">Kecamatan Cijeruk</div>
                             <div class="col-sm-6" style="text-align: right;">60%</div>
@@ -132,9 +136,6 @@
             </div>
         </div>
     </div><!--/.row-->
-@php
-    $a = 700;
-@endphp
 @push('scripts')
 <script>
 
@@ -149,14 +150,23 @@
                         strokeColor : "rgba(220,220,220,0.8)",
                         highlightFill: "rgba(220,220,220,0.75)",
                         highlightStroke: "rgba(220,220,220,1)",
-                        data : [{{ $a }},400,200,200,300,400,500,600]
+                        data : [
+                            @foreach($data as $d)
+                               {{ $d->pengecekan->count() }},
+                            @endforeach
+                        ]
+
                     },
                     {
                         fillColor : "rgba(48, 164, 255, 0.2)",
                         strokeColor : "rgba(48, 164, 255, 0.8)",
                         highlightFill : "rgba(48, 164, 255, 0.75)",
                         highlightStroke : "rgba(48, 164, 255, 1)",
-                        data : [400,200,200,200,300,400,500,600]
+                        data : [
+                            @foreach($data as $d)
+                               {{ 1000-$d->pengecekan->count() }},
+                            @endforeach
+                        ]
                     }
                 ]
         

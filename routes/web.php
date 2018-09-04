@@ -1,16 +1,4 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -34,8 +22,17 @@ Route::get('api/pengecekan','PengecekanController@apiPengecekan')->name('api.pen
 Route::get('autocomplete','PengecekanController@autoComplete')->name('pengecekan.autocomplete');
 Route::get('showptsl', 'PengecekanController@showPtsl')->name('pengecekan.showptsl');
 
+//Peminjaman
+Route::resource('bukutanah', 'BukutanahController');
+Route::get('api/bukutanah','BukutanahController@apiBukuTanah')->name('api.bukutanah');
+Route::resource('peminjamanloket', 'PeminjamanLoketController');
+Route::get('api/peminjamanloket','PeminjamanLoketController@apiPeminjamanLoket')->name('api.PeminjamanLoket');
 
+
+
+// Route::get('layananloket', 'LayananloketController@index')->name('bukutanah.index');
 
 //user
 Route::resource('user', 'UserController');
 Route::get('api/user','UserController@apiUser')->name('api.user');
+
