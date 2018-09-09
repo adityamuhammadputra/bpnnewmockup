@@ -117,24 +117,18 @@
 					</a></li>
 				</ul>
 			</li>
-			<li class="parent {{ request()->is('bukutanah') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
+			<li class="parent {{ request()->is('peminjaman/master') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-dropbox">&nbsp;</em> Peminjaman <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-2">
-					<li><a class="" href="{{ url('bukutanah') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Data Buku Tanah
+					<li><a class="" href="{{ url('peminjaman/master') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Master Peminjaman
 					</a></li>
 					<li><a class="" href="{{ url('peminjaman') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Data Peminjaman
 					</a></li>
-					<li><a class="" href="{{ url('peminjamanloket') }}">
-							<span class="fa fa-arrow-right">&nbsp;</span> Loket Peminjaman
-						</a></li>
-					<li><a class="" href="{{ url('peminjamanmonitoring') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Monitoring Peminjaman
-					</a></li>
-					<li><a class="" href="{{ url('peminjamanproses') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Proses Peminjaman
+					<li><a class="" href="{{ url('peminjaman/proses') }}">
+							<span class="fa fa-arrow-right">&nbsp;</span> Proses Peminjaman
 					</a></li>
 				</ul>
 			</li>

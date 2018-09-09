@@ -23,14 +23,18 @@ Route::get('autocomplete','PengecekanController@autoComplete')->name('pengecekan
 Route::get('showptsl', 'PengecekanController@showPtsl')->name('pengecekan.showptsl');
 
 //Peminjaman
-Route::resource('bukutanah', 'BukutanahController');
-Route::get('api/bukutanah','BukutanahController@apiBukuTanah')->name('api.bukutanah');
-Route::resource('peminjamanloket', 'PeminjamanLoketController');
-Route::get('api/peminjamanloket','PeminjamanLoketController@apiPeminjamanLoket')->name('api.PeminjamanLoket');
+Route::resource('peminjaman/master','PeminjamanMasterController');
+Route::get('peminjamanmaster/cek','PeminjamanMasterController@cek');
+Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaster')->name('api.peminjaman.master');
+
+Route::resource('peminjaman/proses','PeminjamanProsesController');
+Route::get('api/peminjamanproses','PeminjamanProsesController@apiPeminjamanProses')->name('api.peminjaman.proses');
+Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
+Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
 
 
 
-// Route::get('layananloket', 'LayananloketController@index')->name('bukutanah.index');
+
 
 //user
 Route::resource('user', 'UserController');

@@ -12,37 +12,38 @@
             <li><a href="#">
                 <em class="fa fa-check-square-o"></em>
             </a></li>
-            <li class="active">Data Peminjaman</li>
+            <li class="active">Data Buku Tanah</li>
         </ol>
     </div><!--/.row-->
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Master Data Peminjaman 
+                    Master Data Buku Tanah 
                     <div class="pull-right">
-                        <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                        <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                    </div>
                         <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i class="fa fa-plus-circle"></i> Tambah Data</button>
-                    </div>
-                    <div class="panel-body" id="form-panel">
-                        @include('bukutanah.form')
-                    </div>
-                    <div class="panel-body">
-                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-bukutanah">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>No Hak</th>
-                                    <th>Jenis Hak</th>
-                                    <th>Tahun</th>
-                                    <th>Kecamatan</th>
-                                    <th>Desa</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
+                </div>
+                <div class="panel-body" id="form-panel">
+                    @include('bukutanah.form')
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover table-striped table-borderless table-responsive" id="data-bukutanah">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>No Hak</th>
+                                <th>Jenis Hak</th>
+                                <th>Tahun</th>
+                                <th>Kecamatan</th>
+                                <th>Desa</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>

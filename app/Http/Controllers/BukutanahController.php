@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 use Auth;
-
 use App\User;
 use App\BukuTanah;
 
