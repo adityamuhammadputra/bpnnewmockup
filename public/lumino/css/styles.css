@@ -1032,3 +1032,20 @@ p.back-link {
   margin-bottom: 20px;
   font-size: 12px;
   text-transform: uppercase; }
+
+  .imglogoss
+{
+  width: 50px;
+  position: relative;
+  top: 5px;
+}
+.namabpn
+{
+  position: relative;
+  top: 15px;
+  color: white;
+  font-size: 14px;
+}
+.namabpn a{
+  font-size: 22px;
+}

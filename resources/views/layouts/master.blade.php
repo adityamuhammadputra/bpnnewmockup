@@ -9,15 +9,16 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 	<link href="{{asset('lumino/css/bootstrap.min.css')}}" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link href="{{asset('lumino/css/jquery-ui.min.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/datepicker3.css')}}" rel="stylesheet">
 	<link href="{{ asset('lumino/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{asset('lumino/css/jquery.dataTables.yadcf.0.9.2.css') }}" rel="stylesheet">
 	<link href="{{asset('lumino/css/sweetalert2.min.css') }}" rel="stylesheet">
-
+	<link href="{{asset('lumino/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+	<link href="{{asset('lumino/css/googlefont.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/styles.css')}}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+	
 
 </head>
 <body>
@@ -28,7 +29,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span>BPN</span>Bogor</a>
+				<a href="{{ asset('images/Logos.png') }}" target="_blank"><img src="{{ asset('images/Logos.png') }}" class="imglogoss"></a><c class="hidden-xs"><span class="namabpn"><a> BPN</a>Kab.bogor</span></c>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 						<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -88,11 +89,11 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="profile-sidebar">
 			<div class="profile-userpic">
-				<img src="http://placehold.it/50/30a5ff/fff" class="img-responsive" alt="">
+				<a href="{{ asset(auth()->user()->photo) }}" target="_blank"><img src="{{ asset(auth()->user()->photo) }}" class="img-responsive" alt="User Image"></a>
 			</div>
 			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">Username</div>
-				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
+				<div class="profile-usertitle-name">{{ Auth::user()->name }}</div>
+				<div class="profile-usertitle-status"><span class="indicator label-success"></span>10 Online</div>
 			</div>
 			<div class="clear"></div>
 		</div>
@@ -132,18 +133,28 @@
 					</a></li>
 				</ul>
 			</li>
-
-			<li><a href="login.html"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+				
+			<li style="position:absolute; bottom:0;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+				{{ csrf_field() }}
+			</form>
 		</ul>
 	</div><!--/.sidebar-->
+	{{-- <div class="flash-message"></div> --}}
+	
 	@yield('content')
-	
-
-	
+		
 	<div class="row">
         <div class="col-sm-12">
             <p class="back-link"><a href="http://kab-bogor.atrbpn.go.id/">&copy; 2018 BPN Kab.Bogor</a> Template by Lumino <a href="https://www.medialoot.com">Medialoot</a></p>
         </div>
+	</div>
+
+	<div class="row" style="bottom: 0px;left: 0;position: fixed;z-index: 11111;">
+		<div class="col-sm-12">
+			@include('layouts.alerts') 
+			<div class="flash-message"></div> 
+		</div>
 	</div>
 
 </div>
@@ -160,6 +171,9 @@
   <script src="{{asset('lumino/js/chosen.jquery.min.js')}}"></script>
 
   <script src="{{asset('lumino/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('lumino/js/moment.min.js')}}"></script>
+  <script src="{{asset('lumino/js/localid.js')}}"></script>
+  <script src="{{asset('lumino/js/bootstrap-datetimepicker.min.js')}}"></script>
   
   <script src="{{asset('lumino/js/sweetalert2.min.js')}}"></script>
 
@@ -178,7 +192,6 @@
   <script src="{{asset('lumino/js/morris.min.js')}}"></script>
   <script src="{{asset('lumino/js/raphael.min.js')}}"></script>
 
-  <script src="{{asset('lumino/js/bootstrap-datepicker.js')}}"></script>
   <script src="{{asset('lumino/js/custom.js')}}"></script>
   <script>
 		

@@ -39,7 +39,7 @@
                                     <th>No.Hak</th>
                                     <th>Desa</th>
                                     <th>Kecamatan</th>
-                                    <th></th>
+                                    <th>Keterangan</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -87,12 +87,12 @@
                     },
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
-                {{--  columnDefs: [ {
+                 columnDefs: [ {
                     searchable: false,
-                    orderable: ,
+                    orderable:false ,
                     targets: 0
-                } ],  --}}
-                order: false,
+                } ], 
+                order: [[ 1, 'asc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -119,12 +119,6 @@
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "ID Buku Tanah"
-                },
-                {
-                    column_number: 6,
-                    filter_type: "text",
-                    filter_delay: 500,
-                    filter_default_label: "Keterangan"
                 },
             ]);
             {{--  Table.on( 'order.dt search.dt', function () {

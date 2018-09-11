@@ -11,7 +11,7 @@ class Peminjaman extends Model
 
     public function peminjamandetail()
     {
-        return $this->hasMany(PeminjamanDetail::class)->with('peminjamanmaster');
+        return $this->hasMany(PeminjamanDetail::class);
         
 
     }

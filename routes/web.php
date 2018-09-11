@@ -31,6 +31,7 @@ Route::resource('peminjaman/proses','PeminjamanProsesController');
 Route::get('api/peminjamanproses','PeminjamanProsesController@apiPeminjamanProses')->name('api.peminjaman.proses');
 Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
+Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@cetak');
 
 
 
