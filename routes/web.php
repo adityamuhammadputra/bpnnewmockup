@@ -20,6 +20,8 @@ Route::resource('/pengecekan','PengecekanController')->except(['create']);
 Route::get('api/pengecekan','PengecekanController@apiPengecekan')->name('api.pengecekan');
 // Route::get('/pengecekan/autocomplete','PengecekanController@autoComplete')->name('pengecekan.autocomplete');
 Route::get('autocomplete','PengecekanController@autoComplete')->name('pengecekan.autocomplete');
+Route::post('cetak/pengecekan','PengecekanController@cetak');
+
 Route::get('showptsl', 'PengecekanController@showPtsl')->name('pengecekan.showptsl');
 
 //Peminjaman

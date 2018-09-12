@@ -27,31 +27,42 @@
                     <div class="panel-body" id="form-panel">
                         @include('ptsl.pengecekan.form')
                     </div>
+                   
+                    
+                    
                     <div class="panel-body">
-                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-pengecekan">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th width="4%">No berkas</th>
-                                    <th>No Hak</th>
-                                    <th width="1%">No 208</th>
-                                    <th>No SU</th>
-                                    <th>Tahun</th>
-                                    <th>Pemegang</th>
-                                    <th>Desa</th>
-                                    <th>Kecamatan</th>
-                                    <th>No Box</th>
-                                    <th>Keterangan</th>
-                                    <th>Ruang</th>
-                                    <th>Rak</th>
-                                    <th>Baris</th>
-                                    <th>Posisi</th>
-                                    <th width="10%"></th>
-                                </tr>
-                            </thead>
-                            <tbody></tbody>
-                        </table>
-                    {{--  </div>  --}}
+                        
+                        <div class="table-responsive">
+                            <form method="POST" action="{{ url('cetak/pengecekan ') }}"  target="_blank" class="cetaknobox">
+                                {{csrf_field()}}
+                                {{ method_field('POST') }}
+                                <input type="hidden" id="cetak" name="cetak">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-print"></i> </button>
+                            </form>
+                            <table class="table table-hover table-striped table-borderless table-responsive" id="data-pengecekan">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th width="4%">No berkas</th>
+                                        <th>No Hak</th>
+                                        <th width="1%">No 208</th>
+                                        <th>No SU</th>
+                                        <th>Tahun</th>
+                                        <th></th>
+                                        <th>Desa</th>
+                                        <th>Kecamatan</th>
+                                        <th>No.Box</th>
+                                        <th>Keterangan</th>
+                                        <th>Ruang</th>
+                                        <th>Rak</th>
+                                        <th>Baris</th>
+                                        <th>Posisi</th>
+                                        <th width="10%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
                 </div>
             </div>
         </div>
@@ -59,10 +70,21 @@
 
 @push('scripts')
     <script>
+        {{-- var cetak = $('#yadcf-filter--data-pengecekan-9').val();
+        console.log(cetak); --}}
+
+
+          $('#data-pengecekan').on('search.dt', function() {
+            var value = $('.dataTables_filter input').val();
+            $('#cetak').val(value);
+
+        }); 
+
         $('#form-panel').hide();
 
         var Table;
         $(document).ready(function () {
+           
             var Table;
             'use strict';
             Table = $('#data-pengecekan').DataTable({
@@ -71,21 +93,21 @@
                 serverSide:true,
                 ajax:"{{ route('api.pengecekan') }}",
                 columns: [
-                    {data: 'id',name:'id'},
-                    {data: 'no_berkas',name:'no_berkas'},
-                    {data: 'no_hak',name:'no_hak'},
-                    {data: 'no_208',name:'no_208'},
-                    {data: 'no_su',name:'no_su'},
-                    {data: 'tahun',name:'tahun'},
+                    {data: 'id',name:'id', searchable:false},
+                    {data: 'no_berkas',name:'no_berkas', searchable:false},
+                    {data: 'no_hak',name:'no_hak', searchable:false},
+                    {data: 'no_208',name:'no_208', searchable:false},
+                    {data: 'no_su',name:'no_su', searchable:false},
+                    {data: 'tahun',name:'tahun', searchable:false},
                     {data: 'pemegang',name:'pemegang'},
-                    {data: 'desa',name:'desa'},
-                    {data: 'kecamatan',name:'kecamatan'},
+                    {data: 'desa',name:'desa', searchable:false},
+                    {data: 'kecamatan',name:'kecamatan', searchable:false},
                     {data: 'no_box',name:'no_box'},
-                    {data: 'keterangan',name:'keterangan'},
-                    {data: 'ruang',name:'ruang'},
-                    {data: 'rak',name:'rak'},
-                    {data: 'baris',name:'baris'},
-                    {data: 'posisi',name:'posisi'},
+                    {data: 'keterangan',name:'keterangan', searchable:false},
+                    {data: 'ruang',name:'ruang', searchable:false},
+                    {data: 'rak',name:'rak', searchable:false},
+                    {data: 'baris',name:'baris', searchable:false },
+                    {data: 'posisi',name:'posisi', searchable:false},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                 {{--  columnDefs: [ {
@@ -93,7 +115,7 @@
                     orderable: ,
                     targets: 0
                 } ],  --}}
-                order: false,
+                {{-- order: false, --}}
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -102,7 +124,7 @@
                     infoFiltered: "(dari _MAX_ total data)",
                     loadingRecords: "Silahkan Tunggu...",
                     processing:     "Dalam Proses...",
-                    search:         "Cari:",
+                    search:         "Cetak No Box:",
                     paginate: {
                         first:      "Awal",
                         last:       "Akhir",
@@ -114,19 +136,14 @@
                 {{-- iDisplayLength: 15 --}}
             })
         
-            {{-- yadcf.init(Table, [
+            yadcf.init(Table, [
                 {
-                    column_number: 1,
+                    column_number: 6,
                     filter_type: "text",
                     filter_delay: 500,
-                    filter_default_label: "Nomor Warkah"
+                    filter_default_label: "Pemegang"
                 },
-                {
-                    column_number: 3,
-                    filter_type: "text",
-                    filter_default_label: "Tahun Warkah"
-                }
-            ]); --}}
+            ]);
             {{--  Table.on( 'order.dt search.dt', function () {
                 Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;

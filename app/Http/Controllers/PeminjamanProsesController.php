@@ -65,7 +65,7 @@ class PeminjamanProsesController extends Controller
    
     public function show($id)
     {
-        //
+        return PeminjamanDetail::where('peminjaman_id',$id)->get();
     }
 
    
@@ -133,7 +133,9 @@ class PeminjamanProsesController extends Controller
             ->addColumn('action',function($data){
                 return ' <a href="cetak/peminjamanproses/'.$data->id.'"  target="_blank" class ="btn btn-info"><i class="fa fa-print">
                         </i> </a>' .
-                        ' <a onclick="editForm('.$data->id .')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                        ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" class ="btn btn-warning"><i class="fa fa-eye">
+                        </i> </a>' .
+                        ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
                         ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';
@@ -151,7 +153,7 @@ class PeminjamanProsesController extends Controller
         $data = ['data'=>$data];
         $pdf = PDF::loadView('peminjaman.peminjamanproses.cetak',$data);
         $pdf->save(storage_path().'/app/pdf/cetakpeminjamanproses'.$datetime.'.pdf');
-        $pdf->setPaper('a3', 'landscape');
+        $pdf->setPaper('a4', 'landscape');
         return $pdf->stream();
 
         // $view = view('peminjaman.peminjamanproses.cetak', $data)->render();

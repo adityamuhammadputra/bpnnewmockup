@@ -50,11 +50,40 @@
             </div>
         </div>
     </div>
+    @include('peminjaman.peminjamanproses.modaldetail')
+
 
 @push('scripts')
     <script>
-        {{-- $('#form-panel').hide(); --}}
+        $(document).on("click", "#detailData", function () {
+            $('#modal-form').modal('show');
+            var id = $(this).data('id');
+            var nama = $(this).data('nama');
+            $("#namapeminjam").text(nama);
 
+            $.ajax({
+                url: "{{ url('peminjaman/proses') }}/" + id, //menampilkan data dari controller edit
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                        var arrayLength = data.length;
+                        var d = [];
+                        $("#modal-form tbody").html(""); 
+                        var newRowContent = [];
+                        for (var i = 0; i < arrayLength; i++) {
+                            newRowContent = "<tr><td class='id' style='display:none;'>" + data[i].id + "</td><td>" + data[i].idbukutanah + "</td><td>" + data[i].no_hak + "</td>";
+                            newRowContent += "<td>" + data[i].jenis_hak + "</td><td>" + data[i].desa + "</td><td>" + data[i].kecamatan + "</td><td class='actions'>";
+                            newRowContent += "<a class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></a> ";
+                            newRowContent += "</td></tr>";
+                        $("#modal-form tbody").append(newRowContent); 
+                        // $('#modal-form').modal('show');
+                        }
+                },
+                error: function () {
+                    alert("Terjadi Error");        
+                }
+            });
+       });
         function deleteData(id){
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
             swal({

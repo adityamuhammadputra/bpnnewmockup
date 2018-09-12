@@ -69,7 +69,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">No Box</label>
-                        <input type="text" class="form-control" name="no_box" id="no_box" required>
+                        <input type="text" class="form-control" name="no_box" id="no_box" >
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
@@ -78,21 +78,21 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">Keterangan</label>
-                        <input type="text" class="form-control" name="keterangan" id="keterangan" required>
+                        <input type="text" class="form-control" name="keterangan" id="keterangan" >
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">Ruang</label>
-                        <input type="text" class="form-control" name="ruang" id="ruang" required>
+                        <input type="text" class="form-control" name="ruang" id="ruang" >
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">Rak</label>
-                        <input type="text" class="form-control" name="rak" id="rak" required>
+                        <input type="text" class="form-control" name="rak" id="rak" >
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
@@ -101,14 +101,14 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">Baris</label>
-                        <input type="text" class="form-control" name="baris" id="baris" required>
+                        <input type="text" class="form-control" name="baris" id="baris" >
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">Posisi</label>
-                        <input type="text" class="form-control" name="posisi" id="posisi" required>
+                        <input type="text" class="form-control" name="posisi" id="posisi" >
                         
                         <span class="help-block with-errors"></span>
                     </div>

@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+
+use DB;
+use PDF;
 use Auth;
+use Carbon;
 
 use App\User;
 use App\Pengecekan;
@@ -13,6 +17,26 @@ use App\DataPtsl;
 
 class PengecekanController extends Controller
 {
+    public function cetak(Request $request)
+    {
+        $datetime = Carbon::now();
+        $replace = array(" ",":");
+        $datetime = str_replace($replace, '-', $datetime);
+
+        $id =  $request->cetak;
+        $data = Pengecekan::where('no_box',$id)->get();
+        $data = [
+            'data'=>$data,
+            'id' => $id,
+        ];
+
+        $pdf = PDF::loadView('ptsl.pengecekan.cetak',$data);
+        $pdf->save(storage_path().'/app/pdf/cetakpengecekanptsl'.$datetime.'.pdf');
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream();
+
+
+    }
     public function apiPengecekan()
     {
         $data = Pengecekan::orderBy('updated_at','desc')->get();

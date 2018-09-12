@@ -1049,3 +1049,13 @@ p.back-link {
 .namabpn a{
   font-size: 22px;
 }
+.dataTables_filter label{
+  position: relative;
+  right: 54px;
+}
+.cetaknobox{
+  position: absolute;
+  float: right;
+  right: 30px;
+  z-index: 99999;
+}
