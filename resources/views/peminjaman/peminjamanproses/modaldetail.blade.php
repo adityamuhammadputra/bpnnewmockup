@@ -3,7 +3,7 @@
           <div class="modal-content">
             <div class="modal-header" style="background:#222222">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Detail Peminjaman <i id="namapeminjam"></i></h4>
+                <h4 class="modal-title">Peminjaman <a id="namapeminjam"></a></h4>
             </div>
             <div class="modal-body">
                 <table class="table table-striped table-borderless" id="table-detail">
