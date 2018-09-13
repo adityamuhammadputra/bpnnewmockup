@@ -30,6 +30,7 @@ Route::get('peminjamanmaster/cek','PeminjamanMasterController@cek');
 Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaster')->name('api.peminjaman.master');
 
 Route::resource('peminjaman/proses','PeminjamanProsesController');
+Route::delete('peminjamandetail/proses/{id}', 'PeminjamanProsesController@destroydetail');
 Route::get('api/peminjamanproses','PeminjamanProsesController@apiPeminjamanProses')->name('api.peminjaman.proses');
 Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');

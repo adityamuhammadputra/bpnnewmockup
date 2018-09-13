@@ -88,6 +88,12 @@ class PeminjamanProsesController extends Controller
         Session::flash('info', 'Data Berhasil Dihapus');
         return View::make('layouts/alerts');
     }
+
+    public function destroydetail($id)
+    {
+        PeminjamanDetail::destroy($id);
+
+    }
     public function autoComplete(Request $request)
     {
         $query = $request->get('term','');

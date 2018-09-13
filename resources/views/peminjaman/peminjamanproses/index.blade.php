@@ -55,6 +55,23 @@
 
 @push('scripts')
     <script>
+
+        function deleteDetail(id){
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+                url: "{{ url('peminjamandetail/proses')}}/" + id,
+                type: "POST",
+                data: {'_method': 'DELETE','_token': csrf_token
+                },
+                success: function(data) {
+                    $("#table-detail").load(" #table-detail");    
+                },
+                error: function () {
+                   alert("Opppps gagal");
+                }
+            })
+        }
+
         $(document).on("click", "#detailData", function () {
             $('#modal-form').modal('show');
             var id = $(this).data('id');
@@ -73,7 +90,7 @@
                         for (var i = 0; i < arrayLength; i++) {
                             newRowContent = "<tr><td class='id' style='display:none;'>" + data[i].id + "</td><td>" + data[i].idbukutanah + "</td><td>" + data[i].no_hak + "</td>";
                             newRowContent += "<td>" + data[i].jenis_hak + "</td><td>" + data[i].desa + "</td><td>" + data[i].kecamatan + "</td><td class='actions'>";
-                            newRowContent += "<a class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></a> ";
+                            newRowContent += "<a onclick='deleteDetail("+ data[i].id+")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></a> ";
                             newRowContent += "</td></tr>";
                         $("#modal-form tbody").append(newRowContent); 
                         // $('#modal-form').modal('show');

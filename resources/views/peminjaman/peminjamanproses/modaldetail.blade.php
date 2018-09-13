@@ -17,7 +17,7 @@
                             <th class="actions" style="width:5%;"></th>
                         </tr>
                     </thead>
-                    <tbody class="no-border-x" >
+                    <tbody class="no-border-x" id="table-detail">
                         
                     </tbody>
                 </table>
