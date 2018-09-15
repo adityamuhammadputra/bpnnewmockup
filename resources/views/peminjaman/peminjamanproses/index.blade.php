@@ -33,13 +33,12 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-peminjaman">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>No.Berkas</th>
-                                    <th>Nama Peminjam</th>
+                                    <th>NIP</th>
+                                    <th></th>
                                     <th>Kegiatan</th>
                                     <th>Tanggal Pinjam</th>
                                     <th></th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,55 +51,9 @@
     </div>
     @include('peminjaman.peminjamanproses.modaldetail')
 
-
 @push('scripts')
     <script>
-
-        function deleteDetail(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            $.ajax({
-                url: "{{ url('peminjamandetail/proses')}}/" + id,
-                type: "POST",
-                data: {'_method': 'DELETE','_token': csrf_token
-                },
-                success: function(data) {
-                    $("#table-detail").load(" #table-detail");    
-                },
-                error: function () {
-                   alert("Opppps gagal");
-                }
-            })
-        }
-
-        $(document).on("click", "#detailData", function () {
-            $('#modal-form').modal('show');
-            var id = $(this).data('id');
-            var nama = $(this).data('nama');
-            $("#namapeminjam").text(nama);
-
-            $.ajax({
-                url: "{{ url('peminjaman/proses') }}/" + id, //menampilkan data dari controller edit
-                type: "GET",
-                dataType: "JSON",
-                success: function (data) {
-                        var arrayLength = data.length;
-                        var d = [];
-                        $("#modal-form tbody").html(""); 
-                        var newRowContent = [];
-                        for (var i = 0; i < arrayLength; i++) {
-                            newRowContent = "<tr><td class='id' style='display:none;'>" + data[i].id + "</td><td>" + data[i].idbukutanah + "</td><td>" + data[i].no_hak + "</td>";
-                            newRowContent += "<td>" + data[i].jenis_hak + "</td><td>" + data[i].desa + "</td><td>" + data[i].kecamatan + "</td><td class='actions'>";
-                            newRowContent += "<a onclick='deleteDetail("+ data[i].id+")' class='btn btn-danger btn-xs'><i class='fa fa-trash-o'></i></a> ";
-                            newRowContent += "</td></tr>";
-                        $("#modal-form tbody").append(newRowContent); 
-                        // $('#modal-form').modal('show');
-                        }
-                },
-                error: function () {
-                    alert("Terjadi Error");        
-                }
-            });
-       });
+        
         function deleteData(id){
             var csrf_token = $('meta[name="csrf-token"]').attr('content');
             swal({
@@ -152,7 +105,7 @@
                 ajax:"{{ route('api.peminjaman.proses') }}",
                 columns: [
                     {data: 'id',name:'id'},
-                    {data: 'nik',name:'nik'},
+                    {data: 'nip',name:'nip'},
                     {data: 'nama',name:'nama'},
                     {data: 'kegiatan',name:'kegiatan'},
                     {data: 'tanggal_pinjam',name:'tanggal_pinjam'},
@@ -163,10 +116,10 @@
                     orderable:false,
                     targets: 0
                 } ],  
-                order: [[ 2, 'asc' ]],
+                order: [[ 4, 'desc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
-                    zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
+                    zeroRecords: "Data tidak ada",
                     info: "Halaman _PAGE_ dari _PAGES_ Halaman",
                     infoEmpty: "-",
                     infoFiltered: "(dari _MAX_ total data)",
@@ -180,98 +133,28 @@
                         previous:   "Kembali"
                     },
                 },
+                
                 aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
                 {{-- iDisplayLength: 15 --}}
-            })
-        
+            }),
+           
+            yadcf.init(Table, [
+                {
+                    column_number: 2,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "Nama Peminjam"
+                },
+            ]);
             
             {{--  Table.on( 'order.dt search.dt', function () {
                 Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;
                 } );
             } ).draw();  --}}
+           
         });
-        var i=$('table tr').length;
-
-        $(document).ready(function(){
-            $(document).on('click', '.add', function(){
-            var html = '';
-            html += '<tr>';
-            // html += '<td style="display:none;"><input type="hidden" name="no_hak[]" class="form-custom no_hak" value="Isi Nomor Hak"</td>';
-                        // html += '<td><input type="text" name="nip_kegiatan[]" class="form-control autocomplete_txt" data-type="nm_peg" id="nm_peg'+i+'" placeholder="Nip Kegiatan" required/></td>';
-
-            html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_txt" placeholder="Cari Buku Tanah" /></td>';
-            html += '<td><input type="text" name="no_hak[]" id="no_hak'+i+'" class="form-control" placeholder="Nomor Hak" /></td>';
-            html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control" placeholder="Jenis Hak" /></td>';
-            html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
-            html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
-            html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
-            html += '</tr>';
-            $('#item_table').append(html);
-            i++;
-            });
-
-            $(document).on('click', '.remove', function(){
-                $(this).closest('tr').remove();
-            });
-        });
-
-        $(document).on('focus','.autocomplete_txt',function(){
-            type = $(this).data('type');
-            if(type =='idbukutanah' )autoType='idbukutanah'; 
-            src = "{{ route('peminjaman.proses.autocomplete') }}";
-            $(this).autocomplete({
-                minLength: 0,
-                source: function(request, response) {
-                    $.ajax({
-                        url: src,
-                        dataType: "json",
-                        data: {
-                            term : request.term,
-                            type : type,
-                        },
-                        success: function(data) {
-                            var array = $.map(data, function (item) {
-                                return {
-                                    label: item[autoType],
-                                    value: item[autoType],
-                                    data : item.id
-                                }
-                            });
-                            response(array)
-                        }
-                    }); 
-                },
-                select: function( event, ui ) {
-                    id_arr = $(this).attr('id');
-                    elementId = id_arr.substring(11);
-                    var data = ui.item.data; 
-                    console.log(elementId);
-                    $.ajax({
-                        type: "GET",
-                        url: "{{route('peminjaman.proses.autocomplete.show')}}",
-                        data : {
-                            idbukutanah : data
-                        },
-                        cache: false,
-                        dataType: "html",
-                        beforeSend  : function(){
-                            $(".prosesloading").show();   
-                        },
-                        success: function(data){
-                            var datashow = JSON.parse(data);
-                            console.log(id_arr); 
-                            $("#idbukutanah" + elementId).val(datashow[0].idbukutanah);
-                            $("#no_hak" + elementId).val(datashow[0].no_hak);
-                            $("#jenis_hak" + elementId).val(datashow[0].jenis_hak);
-                            $("#desa" + elementId).val(datashow[0].desa);
-                            $("#kecamatan" + elementId).val(datashow[0].kecamatan);
-                        }
-                    });
-                },
-                minLength: 3,
-            });
-        });
+        
 
         function addData() {
             save_method = "add";

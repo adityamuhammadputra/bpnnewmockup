@@ -16,6 +16,7 @@ use App\User;
 use App\Peminjaman;
 use App\PeminjamanMaster;
 use App\PeminjamanDetail;
+use App\Pegawai;
 
 class PeminjamanProsesController extends Controller
 {
@@ -29,7 +30,7 @@ class PeminjamanProsesController extends Controller
     {
        
         Peminjaman::create([
-            'nik' => $request->nik,
+            'nip' => $request->nip,
             'nama' => $request->nama,
             'unit_kerja' => $request->unit_kerja,
             'kegiatan' => $request->kegiatan,
@@ -50,6 +51,7 @@ class PeminjamanProsesController extends Controller
                     'jenis_hak' => $request->jenis_hak[$i],
                     'desa' => $request->desa[$i],
                     'kecamatan' => $request->kecamatan[$i],
+                    'no_warkah' => $request->no_warkah[$i],
                 ];
 
                 PeminjamanDetail::insert($datas);
@@ -57,8 +59,6 @@ class PeminjamanProsesController extends Controller
         }
 
         return redirect()->back()->with('success','Data Berhasil Disimpan');
-
-        
 
     }
 
@@ -77,7 +77,37 @@ class PeminjamanProsesController extends Controller
   
     public function update(Request $request, $id)
     {
-        //
+        $peminjamanid = $request->id;
+
+        if ($request->idbukutanah != null){
+            $datas = [];
+            for($i = 0; $i < count($request->idbukutanah); $i++){
+                $datas = [
+                    'peminjaman_id' => $peminjamanid,
+                    'idbukutanah' => $request->idbukutanah[$i],
+                    'no_hak' => $request->no_hak[$i],
+                    'jenis_hak' => $request->jenis_hak[$i],
+                    'desa' => $request->desa[$i],
+                    'kecamatan' => $request->kecamatan[$i],
+                    'no_warkah' => $request->no_warkah[$i],
+                ];
+
+                PeminjamanDetail::insert($datas);
+            }
+        }
+
+        Peminjaman::where('id', $peminjamanid)
+          ->update([
+              'nama' => $request->nama,
+              'nip' => $request->nip,
+              'unit_kerja' => $request->unit_kerja,
+              'kegiatan' => $request->kegiatan,
+              'tanggal_pinjam' => $request->tanggal_pinjam,
+              'tanggal_kembali' => $request->tanggal_kembali,
+          ]);
+
+        return redirect()->back()->with('success','Data Berhasil Diupdate');
+
     }
 
    
@@ -93,7 +123,42 @@ class PeminjamanProsesController extends Controller
     {
         PeminjamanDetail::destroy($id);
 
+        Session::flash('info', 'Data Berhasil Dihapus');
+        return View::make('layouts/alerts');
+
     }
+    public function autoCompletePegawai(Request $request)
+    {
+        $query = $request->get('term','');
+
+        $dataptsl=Pegawai::where('nip','LIKE','%'.$query.'%')->orWhere('nama','LIKE','%'.$query.'%')->limit(20)->get();
+        $data=array();
+        foreach ($dataptsl as $d) {
+                $data[]=array('value'=>$d->nip.' || nama: '.$d->nama.' || Unit Kerja: '.$d->unit_kerja, 'id'=>$d->nip);
+        }
+        if (count($data)) {
+            return $data;
+        } else {
+            return ['value'=>'Nama atau NIP tidak ada','id'=>''];
+        }
+       
+    }
+    public function autoCompletePegawaiShow(Request $request)
+    {   
+        $id =  $request->nip;
+
+        $datas=Pegawai::where('nip', $id)->first();
+        
+        $data= array(
+            'nip'=>$datas->nip,
+            'nama'=>$datas->nama,
+            'unit_kerja'=>$datas->unit_kerja,
+            'kegiatan_id'=>$datas->kegiatan_id,
+        );
+        $row_set[]              =$data;
+        return $return = json_encode($row_set);
+    }
+
     public function autoComplete(Request $request)
     {
         $query = $request->get('term','');
@@ -109,7 +174,7 @@ class PeminjamanProsesController extends Controller
         if (count($datas)) {
             return $datas;
         } else {
-            return ['idbukutanah'=>'Data yang anda cari tidak ada','id'=>'Data yang anda cari tidak ada'];
+            return ['value'=>'Data yang anda cari tidak ada','id'=>'Data yang anda cari tidak ada'];
         }
     }
 
@@ -139,13 +204,27 @@ class PeminjamanProsesController extends Controller
             ->addColumn('action',function($data){
                 return ' <a href="cetak/peminjamanproses/'.$data->id.'"  target="_blank" class ="btn btn-info"><i class="fa fa-print">
                         </i> </a>' .
-                        ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" class ="btn btn-warning"><i class="fa fa-eye">
+                        ' <a onclick="detail('.$data->id .','.$data->nama .')" data-id="'.$data->id .'" data-nama="'.$data->nama .'" class ="btn btn-warning"><i class="fa fa-eye">
                         </i> </a>' .
-                        ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                        ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" data-nip="'.$data->nip .'" data-unitkerja="'.$data->unit_kerja .'" 
+                            data-kegiatan="'.$data->kegiatan .'" data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali .'" 
+                            class ="btn btn-primary"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
                         ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';
             })->rawColumns(['action'])->make(true);
+    }
+
+    public function apiPeminjamanProsesDetail($id)
+    {
+        $data = PeminjamanDetail::where('peminjaman_id',$id)->orderBy('updated_at','desc')->get();
+
+        return Datatables::of($data)
+        ->addColumn('action',function($data){
+            return  ' <a onclick="deleteDetail('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                    </i> </a>';
+        })->rawColumns(['action'])->make(true);
+
     }
 
     public function cetak($id)

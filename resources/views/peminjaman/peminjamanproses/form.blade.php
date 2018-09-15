@@ -13,8 +13,8 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name" class="control-label">No Berkas</label>
-                    <input type="number" class="form-control" name="nik" id="nik">
+                    <label for="name" class="control-label">NIP</label>
+                    <input type="number" class="form-control" name="nip" id="nip">
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
@@ -30,10 +30,30 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label class="control-label">Kegiatan</label>
-                    <select class="form-control" name="kegiatan" required>
-                        <option value="Pengecekan">Pengecekan</option>
-                        <option value="Balik Nama">Balik Nama</option>
-                        <option value="Hak Tanggungan">Hak Tanggungan</option>
+                    <select class="form-control" name="kegiatan" id="kegiatan" required>
+                        <option value="1">Balik Nama</option>
+                        <option value="2">Blokir</option>
+                        <option value="3">Ganti Blanko</option>
+                        <option value="4">Hak Tanggungan</option>
+                        <option value="5">Lelang</option>
+                        <option value="6">Pembebanan Hak</option>
+                        <option value="7">Pembaharuan Hak</option>
+                        <option value="8">Pemisahan Hak</option>
+                        <option value="9">Pemohonan Hak</option>
+                        <option value="10">Penggabungan Hak</option>
+                        <option value="11">Peningkatan Hak</option>
+                        <option value="12">Penurunan Hak</option>
+                        <option value="13">Perpanjang Hak</option>
+                        <option value="14">Pengecekan</option>
+                        <option value="15">Roya Hak Tanggungan</option>
+                        <option value="16">Sertifikat Hilang</option>
+                        <option value="17">Sertifikat Rusak</option>
+                        <option value="18">Sengketa</option>
+                        <option value="19">Sita</option>
+                        <option value="20">SKP</option>
+                        <option value="21">SKPT</option>
+                        <option value="22">Splitching</option>
+                        <option value="23">Warisan</option>
                     </select>
                     <span class="help-block with-errors"></span>
                 </div>
@@ -74,6 +94,7 @@
                     <th width="10%">Jenis Hak</th>
                     <th width="15%">Desa </th> 
                     <th width="15%">Kecamatan </th> 
+                    <th width="10%">No.Warkah</th>
                     <th width="5%" style="text-align-center">
                         <button type="button" name="add" class="btn btn-success add"><i class="fa fa-plus text-white"></i></button>
                     </th>
@@ -89,6 +110,127 @@
 </div>
 @push('scripts')
 <script type="text/javascript">
+    var i=$('table tr').length;
+
+    $(document).ready(function(){
+        $(document).on('click', '.add', function(){
+        var html = '';
+        html += '<tr>';
+        html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_txt" placeholder="Cari Buku Tanah" /></td>';
+        html += '<td><input type="text" name="no_hak[]" id="no_hak'+i+'" class="form-control" placeholder="Nomor Hak" /></td>';
+        html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control" placeholder="Jenis Hak" /></td>';
+        html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
+        html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
+        html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
+        html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
+        html += '</tr>';
+        $('#item_table').append(html);
+        i++;
+        });
+
+        $(document).on('click', '.remove', function(){
+            $(this).closest('tr').remove();
+        });
+    });
+
+    $(document).on('focus','.autocomplete_txt',function(){
+        type = $(this).data('type');
+        if(type =='idbukutanah' )autoType='idbukutanah'; 
+        src = "{{ route('peminjaman.proses.autocomplete') }}";
+        $(this).autocomplete({
+            minLength: 0,
+            source: function(request, response) {
+                $.ajax({
+                    url: src,
+                    dataType: "json",
+                    data: {
+                        term : request.term,
+                        type : type,
+                    },
+                    success: function(data) {
+                        var array = $.map(data, function (item) {
+                            return {
+                                label: item[autoType],
+                                value: item[autoType],
+                                data : item.id
+                            }
+                        });
+                        response(array)
+                    }
+                }); 
+            },
+            select: function( event, ui ) {
+                id_arr = $(this).attr('id');
+                elementId = id_arr.substring(11);
+                var data = ui.item.data; 
+                console.log(elementId);
+                $.ajax({
+                    type: "GET",
+                    url: "{{route('peminjaman.proses.autocomplete.show')}}",
+                    data : {
+                        idbukutanah : data
+                    },
+                    cache: false,
+                    dataType: "html",
+                    beforeSend  : function(){
+                        $(".prosesloading").show();   
+                    },
+                    success: function(data){
+                        var datashow = JSON.parse(data);
+                        console.log(id_arr); 
+                        $("#idbukutanah" + elementId).val(datashow[0].idbukutanah);
+                        $("#no_hak" + elementId).val(datashow[0].no_hak);
+                        $("#jenis_hak" + elementId).val(datashow[0].jenis_hak);
+                        $("#desa" + elementId).val(datashow[0].desa);
+                        $("#kecamatan" + elementId).val(datashow[0].kecamatan);
+                    }
+                });
+            },
+            minLength: 3,
+        });
+    });
+
+    $(document).ready(function() {
+        src = "{{ url('autocompletepegawai') }}";
+        $("#nama").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: src,
+                    dataType: "json",
+                    data: {
+                        term : request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                }); 
+            },
+            select:function(event, ui){
+                var nip =ui.item.id;
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('autocompletepegawaishow')}}",
+                    data : {
+                        nip : nip
+                    },
+                    cache: false,
+                    dataType: "html",
+                    beforeSend  : function(){
+                        $(".prosesloading").show();   
+
+                    },
+                    success: function(data){
+                        var datashow = JSON.parse(data); 
+                        $("#nama").val(datashow[0].nama);
+                        $("#nip").val(datashow[0].nip);
+                        $("#unit_kerja").val(datashow[0].unit_kerja);
+                        $('#kegiatan').val(datashow[0].kegiatan_id);
+                    }
+                });
+            },
+            minLength: 2,
+        });
+    }); 
     $(document).ready(function() {
         var dateNow = new Date();
         var dateNext = new Date();

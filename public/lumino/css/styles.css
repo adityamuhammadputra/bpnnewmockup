@@ -1059,3 +1059,10 @@ p.back-link {
   right: 30px;
   z-index: 99999;
 }
+
+@media (min-width: 768px) {
+  .modal-xl {
+    width: 95%;
+   /* max-width:1300px; */
+  }
+}

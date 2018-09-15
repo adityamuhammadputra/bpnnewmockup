@@ -6,6 +6,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+// Dashboard Arsip
+Route::get('/dashboardarsip', 'DashboardArsipController@index')->name('dashboardarsip');
 
 //warkah
 Route::resource('/datawarkah','WarkahController')->except(['create']);
@@ -32,6 +34,9 @@ Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaste
 Route::resource('peminjaman/proses','PeminjamanProsesController');
 Route::delete('peminjamandetail/proses/{id}', 'PeminjamanProsesController@destroydetail');
 Route::get('api/peminjamanproses','PeminjamanProsesController@apiPeminjamanProses')->name('api.peminjaman.proses');
+Route::get('api/peminjamanproses/{id}','PeminjamanProsesController@apiPeminjamanProsesDetail');
+Route::get('autocompletepegawai','PeminjamanProsesController@autoCompletePegawai');
+Route::get('autocompletepegawaishow','PeminjamanProsesController@autoCompletePegawaiShow');
 Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
 Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@cetak');

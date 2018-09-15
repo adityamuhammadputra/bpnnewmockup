@@ -56,6 +56,7 @@
             border-collapse: collapse;
             width: 100%;
             text-align: center;
+            padding-bottom: 20px;
         }
         
         #customers td, #customers th {
@@ -94,6 +95,14 @@
             width: 12px;
             margin-top: 2px;
         }
+        .ttd{
+            width: 200px;
+            position: relative;
+            float: right;
+            text-align: center;
+            height: 300px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -109,7 +118,7 @@
     </div>
     <div class="atasjudul">
         <b><u>PERMOHONAN PEMINJAMAN BUKUTANAH DAN WARKAH</u></b><br>
-        <i>Nomor : XXXX / 2018</i>
+        <i>Nomor : {{ $data->id }} / 2018</i>
     </div>
     <div class="heaederorang">
         <div class="heaederorangkiri">
@@ -120,7 +129,7 @@
                     <td>{{ $data->nama }}</td>
                 </tr>
                 <tr>
-                    <td>No. Berkas</td>
+                    <td>NIP</td>
                     <td>:</td>
                     <td>{{ $data->nip }}</td>
                 </tr>
@@ -145,7 +154,7 @@
                     <td>{{ $data->tanggal_pinjam }}</td>
                 </tr>
                 <tr>
-                    <td>Tanggal Batas Kembali</td>
+                    <td>Tanggal Jatuh Tempo</td>
                     <td>:</td>
                     <td>{{ $data->tanggal_kembali }}</td>
                 </tr>
@@ -159,6 +168,10 @@
         
     </div>
    
+    <div class="footer">
+        &copy;2018 Badan Pertanahan Nasional Kabupaten Bogor.
+    </div>
+    
     
     <div class="isitable">
         <table id="customers">
@@ -169,6 +182,7 @@
                     <th width="15%">Desa </th> 
                     <th width="15%">Kecamatan </th> 
                     <th width="10%">No.Hak</th>
+                    <th width="10%">No.Warkah</th>
 
                 </tr>  
             </thead>
@@ -180,17 +194,21 @@
                     <td> {{ $datas->desa }}</td>
                     <td> {{ $datas->kecamatan }}</td>
                     <td> {{ $datas->no_hak }}</td>
+                    <td> {{ $datas->no_warkah }}</td>
                 </tr>
                 @endforeach
             </tbody> 
         </table>
     </div>
-    <div class="footer">
-        &copy;2018 Badan Pertanahan Nasional Kabupaten Bogor.
+    <div class="ttd">
+        Pemohon / Peminjam
+        <br><br>
+        <br><br>
+        <br><br>
+        <u>{{ $data->nama }}</u>
+        <b>{{ $data->nip }}</b>
     </div>
-    <div class="tanggalcetak">
-        <img src="images/print.png"> {{ \Carbon\Carbon::now() }} 
-    </div>
+    
             
 
 

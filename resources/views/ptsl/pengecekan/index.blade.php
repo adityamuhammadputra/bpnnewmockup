@@ -19,7 +19,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Master Data Pengecekan 
+                    Master Data Pengecekan Berkas Fisik PTSL
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
                         <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i class="fa fa-plus-circle"></i> Tambah Data</button>
@@ -43,21 +43,18 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th width="4%">No berkas</th>
-                                        <th>No Hak</th>
-                                        <th width="1%">No 208</th>
-                                        <th>No SU</th>
+                                        <th>No.Berkas</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>No.SU</th>
                                         <th>Tahun</th>
                                         <th></th>
                                         <th>Desa</th>
                                         <th>Kecamatan</th>
-                                        <th>No.Box</th>
-                                        <th>Keterangan</th>
-                                        <th>Ruang</th>
-                                        <th>Rak</th>
-                                        <th>Baris</th>
-                                        <th>Posisi</th>
-                                        <th width="10%"></th>
+                                        <th></th>
+                                        <th>TIM</th>
+                                        <th>Keterangan</th> 
+                                        <th width="10%">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -103,11 +100,8 @@
                     {data: 'desa',name:'desa', searchable:false},
                     {data: 'kecamatan',name:'kecamatan', searchable:false},
                     {data: 'no_box',name:'no_box'},
+                    {data: 'kelompok_id',name:'kelompok_id', searchable:false},
                     {data: 'keterangan',name:'keterangan', searchable:false},
-                    {data: 'ruang',name:'ruang', searchable:false},
-                    {data: 'rak',name:'rak', searchable:false},
-                    {data: 'baris',name:'baris', searchable:false },
-                    {data: 'posisi',name:'posisi', searchable:false},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                 {{--  columnDefs: [ {
@@ -142,6 +136,24 @@
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "Pemegang"
+                },
+                {
+                    column_number: 2,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No.Hak"
+                },
+                {
+                    column_number: 3,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No.208"
+                },
+                {
+                    column_number: 9,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No.Box"
                 },
             ]);
             {{--  Table.on( 'order.dt search.dt', function () {
