@@ -41,8 +41,12 @@ Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
 Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@cetak');
 
-
-
+//pengembalian
+Route::resource('pengembalian','PengembalianController');
+Route::get('api/pengembalian','PengembalianController@apiPengembalian');
+Route::get('api/pengembalian/{id}','PengembalianController@apiPengembalianDetail');
+Route::get('pengembaliancek','PengembalianController@cek');
+Route::get('pengembaliancekdetail','PengembalianController@cekdetail');
 
 
 //user

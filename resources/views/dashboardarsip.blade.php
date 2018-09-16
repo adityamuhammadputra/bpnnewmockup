@@ -75,10 +75,10 @@
                         <div class="progress">
                                 <div data-percentage="0%" style="width: 80%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                         <div class="row progress-labels">
-                            <div class="col-sm-6">SK</div>
-                            <div class="col-sm-6" style="text-align: right;">120</div>
-                        </div>
+                            <div class="row progress-labels">
+                                <div class="col-sm-6">BALIK NAMA</div>
+                                <div class="col-sm-6" style="text-align: right;">350</div>
+                            </div>
                         <div class="progress">
                                 <div data-percentage="0%" style="width: 10%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
@@ -111,7 +111,7 @@
                             <div data-percentage="0%" style="width: 60%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="row progress-labels">
-                            <div class="col-sm-6">BALIK NAMA</div>
+                            <div class="col-sm-6">SK</div>
                             <div class="col-sm-6" style="text-align: right;">350</div>
                         </div>
                         <div class="progress">
@@ -147,7 +147,11 @@
                         highlightStroke: "rgba(220,220,220,1)",
                         data : [
                             @foreach($data as $d)
-                               {{ $d->pengecekan->count() }},
+                               {{ 700-$d->pengecekan->count() }},
+                               {{ 850-$d->pengecekan->count() }},
+
+                               {{ 720-$d->pengecekan->count() }},
+
                             @endforeach
                         ]
 
@@ -160,6 +164,9 @@
                         data : [
                             @foreach($data as $d)
                                {{ 1000-$d->pengecekan->count() }},
+                               {{ 875-$d->pengecekan->count() }},
+                               {{ 705-$d->pengecekan->count() }},
+
                             @endforeach
                         ]
                     }

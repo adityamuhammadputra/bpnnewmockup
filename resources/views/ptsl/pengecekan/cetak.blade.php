@@ -94,6 +94,19 @@
             width: 12px;
             margin-top: 2px;
         }
+        .ttd{
+            width: 200px;
+            position: relative;
+            float: right;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .tanggal{
+            float: left;
+            width: 200px;
+            position: relative;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -108,9 +121,14 @@
         </div>
     </div>
     <div class="atasjudul">
-        <b><u>PENGECEKAN PTSL NOMOR BOX</u></b><br>
-        <i>Nomor Box : {{ $id }}</i>
+        <b><u>LAMPIRAN PENYERAHAN BERKAS PTSL</u></b><br>
+        <i>Tanggal Penyerahan : . . . / . . . / 20 . . .</i>
     </div>
+
+    <div class="footer">
+        &copy;2018 Badan Pertanahan Nasional Kabupaten Bogor.
+    </div>
+
     <div class="isitable">
         <table id="customers">
             <thead>
@@ -123,8 +141,9 @@
                     <th width="10%">Pemegang</th>
                     <th width="8%">Desa</th>
                     <th width="8%">Kecamatan</th>
-                    <th width="10%">Keterangan</th>
-
+                    {{--  <th width="10%">Keterangan</th>  --}}
+                    <th width="8%">No Box</th>
+                    <th width="8%">Tim</th>
                 </tr>  
             </thead>
             <tbody>
@@ -138,18 +157,28 @@
                     <td> {{ $datas->pemegang }}</td>
                     <td> {{ $datas->desa }}</td>
                     <td> {{ $datas->kecamatan }}</td>
-                    <td> {{ $datas->keterangan }}</td>
+                    {{--  <td> {{ $datas->keterangan }}</td>  --}}
+                    <td> {{ $datas->no_box }}</td>
+                    <td> {{ $datas->kelompok_id }}</td>
                 </tr>
                 @endforeach
             </tbody> 
         </table>
     </div>
-    <div class="footer">
-        &copy;2018 Badan Pertanahan Nasional Kabupaten Bogor.
+    <div class="ttd">
+        Petugas Penyerahan
+        <br><br>
+        <br><br>
+        <br><br>
+        (...................................)
     </div>
-    <div class="tanggalcetak">
+
+   
+   
+    {{--  <div class="tanggalcetak">
         <img src="images/print.png"> {{ \Carbon\Carbon::now() }} 
-    </div>
+    </div>  --}}
+    
             
 
 

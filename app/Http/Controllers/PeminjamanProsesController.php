@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+use Form;
 use DB;
 use PDF;
 use Auth;
@@ -17,13 +17,19 @@ use App\Peminjaman;
 use App\PeminjamanMaster;
 use App\PeminjamanDetail;
 use App\Pegawai;
+use App\Kegiatan;
 
 class PeminjamanProsesController extends Controller
 {
    
     public function index()
     {
-        return view('peminjaman.peminjamanproses.index');
+        $kegiatan = Kegiatan::orderBy('no_urut','asc')->pluck('nama_kegiatan','id')->toArray();
+        $kegiatan = ['' => '---- Pilih Kegiatan ----'] + $kegiatan;
+        
+
+        return view('peminjaman.peminjamanproses.index',compact('kegiatan'));
+
     }
 
     public function store(Request $request)
@@ -203,8 +209,6 @@ class PeminjamanProsesController extends Controller
         return Datatables::of($data)
             ->addColumn('action',function($data){
                 return ' <a href="cetak/peminjamanproses/'.$data->id.'"  target="_blank" class ="btn btn-info"><i class="fa fa-print">
-                        </i> </a>' .
-                        ' <a onclick="detail('.$data->id .','.$data->nama .')" data-id="'.$data->id .'" data-nama="'.$data->nama .'" class ="btn btn-warning"><i class="fa fa-eye">
                         </i> </a>' .
                         ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" data-nip="'.$data->nip .'" data-unitkerja="'.$data->unit_kerja .'" 
                             data-kegiatan="'.$data->kegiatan .'" data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali .'" 

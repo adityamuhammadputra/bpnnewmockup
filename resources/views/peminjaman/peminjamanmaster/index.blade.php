@@ -12,14 +12,14 @@
             <li><a href="#">
                 <em class="fa fa-check-square-o"></em>
             </a></li>
-            <li class="active">Data Master Peminjaman</li>
+            <li class="active">Stock Opname Fisik Buku Tanah</li>
         </ol>
     </div><!--/.row-->
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Data Master Peminjaman
+                    Stock Opname Fisik Buku Tanah
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>

@@ -30,6 +30,7 @@ class PengecekanController extends Controller
             'id' => $id,
         ];
 
+
         $pdf = PDF::loadView('ptsl.pengecekan.cetak',$data);
         $pdf->save(storage_path().'/app/pdf/cetakpengecekanptsl'.$datetime.'.pdf');
         $pdf->setPaper('a4', 'landscape');
@@ -52,13 +53,133 @@ class PengecekanController extends Controller
  
     public function index()
     {
-        return view('ptsl.pengecekan.index');
+        $data = User::with('kelompok')->where('id',auth()->user()->id)->first();
+        $nourutbox =  $data->kelompok->kd_kelompok;
+        
+        return view('ptsl.pengecekan.index',compact('nourutbox'));
+
+        $kelompok_id = auth()->user()->kelompok_id;
+        $nourutbox = Pengecekan::groupBy('no_box')->pluck('no_box')->max(); //nilai nobox tertinggi
+        $cekbox25 = Pengecekan::where('no_box',$nourutbox)->count(); //hitung nobox 25
+        if($cekbox25 >= 2){
+            $nourutbox = $nourutbox + 1;
+            $cekboxada = Pengecekan::where('no_box',$nourutbox)->where('kelompok_id',$kelompok_id)->count();
+            if($cekboxada != null){
+
+                return view('ptsl.pengecekan.index',compact('nourutbox'));
+            }
+            else{
+                $nourutbox = $nourutbox;
+
+                return view('ptsl.pengecekan.index',compact('nourutbox'));
+
+            }
+        }
+        else{
+            $nourutbox + 1;
+            $cekboxada = Pengecekan::where('no_box',$nourutbox)->where('kelompok_id',$kelompok_id)->count();
+            if($cekboxada != null){
+                return view('ptsl.pengecekan.index',compact('nourutbox'));
+
+            }
+            else{
+                $nourutbox = $nourutbox + 1;
+
+                return view('ptsl.pengecekan.index',compact('nourutbox'));
+
+            }
+        }
+
+
+
+
+        
     }
    
     public function store(Request $request)
     {
-        // Pengecekan::create($request->except(['_method','_token']));
         return Pengecekan::create($request->except(['_method','_token']));
+
+        $kelompok_id = auth()->user()->kelompok_id;
+        $nourutbox1 = Pengecekan::groupBy('no_box')->pluck('no_box')->max(); //nilai nobox tertinggi
+        $cekbox25 = Pengecekan::where('no_box',$nourutbox1)->count(); //hitung nobox 25
+        if($cekbox25 >= 2){
+            $nourutbox1 = $nourutbox1 + 1;
+            $cekboxada = Pengecekan::where('no_box',$nourutbox1)->where('kelompok_id',$kelompok_id)->count();
+            if($cekboxada != null){
+
+                // return Pengecekan::create($request->except(['_method','_token']));
+                return Pengecekan::create([
+                    'kecamatan' => $request->kecamatan,
+                    'desa' => $request->desa,
+                    'kelompok_id' => $request->kelompok_id,
+                    'keterangan' => $request->keterangan,
+                    'no_208' => $request->no_208,
+                    'no_berkas' => $request->no_berkas,
+                    'no_box' => $nourutbox1,
+                    'no_su' => $request->no_su,
+                    'no_hak' => $request->no_hak,
+                    'pemegang' => $request->pemegang,
+                    'tahun' => $request->tahun,
+                ]);
+            }
+            else{
+                $nourutbox1 = $nourutbox1;
+
+                return Pengecekan::create([
+                    'kecamatan' => $request->kecamatan,
+                    'desa' => $request->desa,
+                    'kelompok_id' => $request->kelompok_id,
+                    'keterangan' => $request->keterangan,
+                    'no_208' => $request->no_208,
+                    'no_berkas' => $request->no_berkas,
+                    'no_box' => $nourutbox1,
+                    'no_su' => $request->no_su,
+                    'no_hak' => $request->no_hak,
+                    'pemegang' => $request->pemegang,
+                    'tahun' => $request->tahun,
+                ]);
+
+            }
+        }
+        else{
+            // $nourutbox1 + 1;
+            $cekboxada = Pengecekan::where('no_box',$nourutbox1)->where('kelompok_id',$kelompok_id)->count();
+            if($cekboxada != null && $cekbox25 >= 2){
+                $nourutbox1 = $nourutbox1 + 1;
+
+                return Pengecekan::create([
+                    'kecamatan' => $request->kecamatan,
+                    'desa' => $request->desa,
+                    'kelompok_id' => $request->kelompok_id,
+                    'keterangan' => $request->keterangan,
+                    'no_208' => $request->no_208,
+                    'no_berkas' => $request->no_berkas,
+                    'no_box' => $nourutbox1,
+                    'no_su' => $request->no_su,
+                    'no_hak' => $request->no_hak,
+                    'pemegang' => $request->pemegang,
+                    'tahun' => $request->tahun,
+                ]);
+            }
+            else{
+                // $nourutbox1 = $nourutbox1 + 1;
+                return Pengecekan::create([
+                    'kecamatan' => $request->kecamatan,
+                    'desa' => $request->desa,
+                    'kelompok_id' => $request->kelompok_id,
+                    'keterangan' => $request->keterangan,
+                    'no_208' => $request->no_208,
+                    'no_berkas' => $request->no_berkas,
+                    'no_box' => $nourutbox1,
+                    'no_su' => $request->no_su,
+                    'no_hak' => $request->no_hak,
+                    'pemegang' => $request->pemegang,
+                    'tahun' => $request->tahun,
+                ]);
+
+            }
+        }
 
     }
 

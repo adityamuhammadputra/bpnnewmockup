@@ -45,13 +45,13 @@
                                         <th>No</th>
                                         <th>No.Berkas</th>
                                         <th></th>
-                                        <th></th>
+                                        <th>No.208</th>
                                         <th>No.SU</th>
                                         <th>Tahun</th>
                                         <th></th>
                                         <th>Desa</th>
                                         <th>Kecamatan</th>
-                                        <th></th>
+                                        <th>No.Box</th>
                                         <th>TIM</th>
                                         <th>Keterangan</th> 
                                         <th width="10%">Action</th>
@@ -142,19 +142,7 @@
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No.Hak"
-                },
-                {
-                    column_number: 3,
-                    filter_type: "text",
-                    filter_delay: 500,
-                    filter_default_label: "No.208"
-                },
-                {
-                    column_number: 9,
-                    filter_type: "text",
-                    filter_delay: 500,
-                    filter_default_label: "No.Box"
-                },
+                },  
             ]);
             {{--  Table.on( 'order.dt search.dt', function () {
                 Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {

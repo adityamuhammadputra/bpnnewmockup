@@ -205,7 +205,7 @@
         <br><br>
         <br><br>
         <br><br>
-        <u>{{ $data->nama }}</u>
+        <u>{{ $data->nama }}</u> <br>
         <b>{{ $data->nip }}</b>
     </div>
     

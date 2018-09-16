@@ -18,5 +18,6 @@ class Kelompok extends Model
     {
         return $this->hasMany(Pengecekan::class)->groupBy('kecamatan');
     }
+
     
 }

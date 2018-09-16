@@ -69,7 +69,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">No Box</label>
-                        <input type="text" class="form-control" name="no_box" id="no_box" placeholder="A-" >
+                        <input type="text" class="form-control" name="no_box" id="no_box" value="{{ $nourutbox }} " >
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
@@ -78,20 +78,15 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">TIM</label>
-                        <input type="text" class="form-control" name="kelompok_id" id="kelompok_id" >
+                        <input type="text" class="form-control" value="{{ auth()->user()->kelompok_id }}" name="kelompok_id" id="kelompok_id" readonly>
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
               <div class="col-md-4">
                     <div class="form-group">
                         <label for="name" class="control-label">Keterangan</label>
+                        <input type="text" class="form-control" value="BERKAS LENGKAP" readonly>
                         <span class="help-block with-errors"></span>
-                        <select name="keterangan" id="keterangan" aria-controls="example" class="form-control input-sm">
-                        <option value="">--Pilih Keterangan Fisik Berkas--</option>
-                        <option value="BERKAS LENGKAP">Berkas Lengkap</option>
-                        <option value="BERKAS REVISI">Berkas Revisi</option>
-                        <option value="BUKU TANAH TIDAK ADA">Buku Tanah Tidak Ada</option>
-                        </select>
                     </div>
                </div>
                      <div class="col-md-4">
