@@ -204,9 +204,9 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProses()
     {
-        $data = Peminjaman::where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc')->get();
-
+        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc')->get();
         return Datatables::of($data)
+          
             ->addColumn('action',function($data){
                 return ' <a href="cetak/peminjamanproses/'.$data->id.'"  target="_blank" class ="btn btn-info"><i class="fa fa-print">
                         </i> </a>' .

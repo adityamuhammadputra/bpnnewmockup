@@ -13,6 +13,10 @@ class Peminjaman extends Model
     {
         return $this->hasMany(PeminjamanDetail::class);
         
+    }
 
+    public function kegiatan()
+    {
+        return $this->belongsTo('App\Kegiatan', 'kegiatan', 'id');
     }
 }

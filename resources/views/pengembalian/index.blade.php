@@ -32,7 +32,7 @@
                                     <th>Tanggal Pinjam</th>
                                     <th>Tanggal Kembali</th>
                                     <th>Keterangan</th>
-                                    <th nowrap></th>
+                                    <th width:10%;></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,7 +84,7 @@
                 {data: 'id',name:'id'},
                 {data: 'nip',name:'nip'},
                 {data: 'nama',name:'nama'},
-                {data: 'kegiatan',name:'kegiatan'},
+                {data: 'kegiatan.nama_kegiatan',name:'kegiatan.nama_kegiatan'},
                 {data: 'tanggal_pinjam',name:'tanggal_pinjam'},
                 {data: 'tanggal_kembali_asli',name:'tanggal_kembali_asli'},
                 {   

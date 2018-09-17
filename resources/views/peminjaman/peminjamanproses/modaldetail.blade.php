@@ -37,31 +37,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Kegiatan</label>
-                                <select class="form-control" name="kegiatan" id="kegiatandetail" required>
-                                    <option value="1">Balik Nama</option>
-                                    <option value="2">Blokir</option>
-                                    <option value="3">Ganti Blanko</option>
-                                    <option value="4">Hak Tanggungan</option>
-                                    <option value="5">Lelang</option>
-                                    <option value="6">Pembebanan Hak</option>
-                                    <option value="7">Pembaharuan Hak</option>
-                                    <option value="8">Pemisahan Hak</option>
-                                    <option value="9">Pemohonan Hak</option>
-                                    <option value="10">Penggabungan Hak</option>
-                                    <option value="11">Peningkatan Hak</option>
-                                    <option value="12">Penurunan Hak</option>
-                                    <option value="13">Perpanjang Hak</option>
-                                    <option value="14">Pengecekan</option>
-                                    <option value="15">Roya Hak Tanggungan</option>
-                                    <option value="16">Sertifikat Hilang</option>
-                                    <option value="17">Sertifikat Rusak</option>
-                                    <option value="18">Sengketa</option>
-                                    <option value="19">Sita</option>
-                                    <option value="20">SKP</option>
-                                    <option value="21">SKPT</option>
-                                    <option value="22">Splitching</option>
-                                    <option value="23">Warisan</option>
-                                </select>
+                                    {{ Form::select('kegiatan', $kegiatan, request()->get('id'), ['id' => 'kegiatandetail', 'class' => 'form-control', 'required'=>'true']) }}
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>

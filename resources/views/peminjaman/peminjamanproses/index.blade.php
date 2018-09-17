@@ -103,7 +103,7 @@
                     {data: 'id',name:'id'},
                     {data: 'nip',name:'nip'},
                     {data: 'nama',name:'nama'},
-                    {data: 'kegiatan',name:'kegiatan'},
+                    {data: 'kegiatan.nama_kegiatan',name:'kegiatan.nama_kegiatan'},
                     {data: 'tanggal_pinjam',name:'tanggal_pinjam'},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
