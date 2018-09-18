@@ -92,7 +92,7 @@
                 columns: [
                     {data: 'id',name:'id', searchable:false},
                     {data: 'no_berkas',name:'no_berkas', searchable:false},
-                    {data: 'no_hak',name:'no_hak', searchable:false},
+                    {data: 'no_hak',name:'no_hak'},
                     {data: 'no_208',name:'no_208', searchable:false},
                     {data: 'no_su',name:'no_su', searchable:false},
                     {data: 'tahun',name:'tahun', searchable:false},
