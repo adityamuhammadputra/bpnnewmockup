@@ -9,5 +9,6 @@ class PeminjamanDetail extends Model
     protected $table = 'peminjaman_detail';
     protected $guarded = [];
 
+    
    
 }

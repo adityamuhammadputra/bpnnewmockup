@@ -204,7 +204,7 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProses()
     {
-        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc')->get();
+        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc');
         return Datatables::of($data)
           
             ->addColumn('action',function($data){
@@ -221,7 +221,7 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProsesDetail($id)
     {
-        $data = PeminjamanDetail::where('peminjaman_id',$id)->orderBy('updated_at','desc')->get();
+        $data = PeminjamanDetail::where('peminjaman_id',$id)->orderBy('updated_at','desc');
 
         return Datatables::of($data)
         ->addColumn('action',function($data){

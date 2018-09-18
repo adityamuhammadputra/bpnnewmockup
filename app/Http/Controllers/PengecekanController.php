@@ -40,7 +40,7 @@ class PengecekanController extends Controller
     }
     public function apiPengecekan()
     {
-        $data = Pengecekan::orderBy('updated_at','desc')->get();
+        $data = Pengecekan::orderBy('updated_at','desc');
 
         return Datatables::of($data)
             ->addColumn('action',function($data){

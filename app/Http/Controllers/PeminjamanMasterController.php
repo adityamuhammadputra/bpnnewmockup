@@ -36,38 +36,37 @@ class PeminjamanMasterController extends Controller
         }
 
     }
+
     public function apiPeminjamanMaster()
     {
-        $data = PeminjamanMaster::orderBy('status','desc')->get();
-
-
-
+        $data = PeminjamanMaster::orderBy('status', 'desc');
         return Datatables::of($data)
-            ->addColumn('action',function($data){
-                if($data->status == 1){
+            ->addColumn('action', function ($data) {
+                if ($data->status == 1) {
 
-                return '<a id="cek" data-value="'.$data->status.'" data-id="'.$data->id.'" class="btn btn-success">
+                    return '<a id="cek" data-value="' . $data->status . '" data-id="' . $data->id . '" class="btn btn-success">
                             <i class="fa fa-check-square-o"></i> 
                         </a>                       
-                        '.
-                        ' <a onclick="editForm('.$data->id .')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                        ' .
+                        ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
-                        ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                        ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';
-                }
-                else{
-                    return '<a id="cek" data-value="'.$data->status.'" data-id="'.$data->id.'" class="btn btn-warning">
+                } else {
+                    return '<a id="cek" data-value="' . $data->status . '" data-id="' . $data->id . '" class="btn btn-warning">
                             <i class="fa fa-window-close-o"></i> 
                         </a>                       
-                        '.
-                        ' <a onclick="editForm('.$data->id .')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                        ' .
+                        ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
-                        ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                        ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';
                 }
 
             })->rawColumns(['action'])->make(true);
+
     }
+
 
     
 }

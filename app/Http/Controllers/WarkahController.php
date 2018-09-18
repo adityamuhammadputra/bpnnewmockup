@@ -17,7 +17,7 @@ class WarkahController extends Controller
     
     public function apiWarkah()
     {
-        $data = DataWarkah::orderBy('id')->get();
+        $data = DataWarkah::orderBy('id');
 
         // return $data;
 

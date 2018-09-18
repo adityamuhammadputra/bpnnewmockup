@@ -125,7 +125,7 @@ class PengembalianController extends Controller
 
     public function apiPengembalian()
     {
-        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc')->get();
+        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc');
 
         return Datatables::of($data)
             ->addColumn('action',function($data){

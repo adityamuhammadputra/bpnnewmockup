@@ -14,7 +14,7 @@ class PtslController extends Controller
 {
     public function apiPtsl()
     {
-        $data = DataPtsl::orderBy('id')->get();
+        $data = DataPtsl::orderBy('id');
 
         return Datatables::of($data)
             ->addColumn('action',function($data){
