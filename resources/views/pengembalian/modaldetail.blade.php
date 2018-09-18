@@ -124,7 +124,7 @@
                 column_number: 1,
                 filter_type: "text",
                 filter_delay: 500,
-                filter_default_label: "No Box"
+                filter_default_label: "No Hak"
             },
         ]);
         
