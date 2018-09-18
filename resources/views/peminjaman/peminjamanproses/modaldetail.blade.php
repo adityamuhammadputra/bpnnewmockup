@@ -75,9 +75,10 @@
                                     <th width="10%">Id Buku Tanah</th>
                                     <th width="10%">No.Hak</th>
                                     <th width="10%">Jenis Hak</th>
-                                    <th width="15%">Desa </th> 
-                                    <th width="15%">Kecamatan </th> 
+                                    <th width="10%">Desa </th> 
+                                    <th width="10%">Kecamatan </th> 
                                     <th width="10%">No.Warkah</th>
+                                    <th width="10%">No.SU</th>
                                     <th width="5%"><button type="button" name="add" class="btn btn-success adddetail"><i class="fa fa-plus text-white"></i></button></th>
                                 </tr>
                             </thead>
@@ -108,6 +109,7 @@
         html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
         html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
         html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
+        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU" /></td>';
         html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
         html += '</tr>';
         $('#form-detail #data-detail tbody').append(html);
@@ -154,6 +156,7 @@
                 {data: 'desa',name:'desa'},
                 {data: 'kecamatan',name:'kecamatan'},
                 {data: 'no_warkah',name:'no_warkah'},
+                {data: 'no_su',name:'no_su'},
                 {data: 'action',name:'action',orderable:false, searchable:false}
             ],
                 columnDefs: [ {

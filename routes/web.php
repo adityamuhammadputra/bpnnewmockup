@@ -43,9 +43,9 @@ Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@
 
 //pengembalian
 Route::resource('pengembalian','PengembalianController');
-Route::get('api/pengembalian','PengembalianController@apiPengembalian');
-Route::get('api/pengembalian/{id}','PengembalianController@apiPengembalianDetail');
-Route::get('pengembaliancek','PengembalianController@cek');
+// Route::get('api/pengembalian','PengembalianController@apiPengembalian');
+Route::get('api/pengembaliandetail','PengembalianController@apiPengembalianDetail');
+// Route::get('pengembaliancek','PengembalianController@cek');
 Route::get('pengembaliancekdetail','PengembalianController@cekdetail');
 
 

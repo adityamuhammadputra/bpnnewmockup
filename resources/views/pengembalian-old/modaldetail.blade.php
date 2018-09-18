@@ -1,42 +1,23 @@
-@extends('layouts.master')
-@section('content')
-
-
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <div class="row">
-        <ol class="breadcrumb">
-            <li><a href="#">
-                <em class="fa fa-dropbox"></em>
-            </a></li>
-            <li class="active">Pengembalian</li>
-        </ol>
-    </div><!--/.row-->
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Proses Pengembalian
-                    <div class="pull-right">
-                        <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                    </div>
-                </div>
-                <div class="panel-body">
+    <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header" style="background:#222222">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Peminjaman <a id="namapeminjam"></a></h4>
+            </div>
+            <div class="modal-body" id="form-peminjamanprosesdetail">
+                <div class="table-responsive">
                     <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
                         <thead>
                             <tr>
                                 <th width="10%">Id Buku Tanah</th>
-                                <th>NIP</th>
-                                <th width="10%">Nama</th>
-                                <th>Tanggal Pinjam</th>
                                 <th width="10%"></th>
                                 <th width="10%">Jenis Hak</th>
-                                <th width="10%">Desa </th> 
-                                <th width="10%">Kecamatan </th> 
+                                <th width="15%">Desa </th> 
+                                <th width="15%">Kecamatan </th> 
                                 <th width="10%">No.Warkah</th>
                                 <th width="10%">Keterangan</th>
-                                <th>Tanggal Kembali</th>
-                                <th width="10%">Status</th>
-                                <th width="12%"></th>
+                                <th width="3%"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,14 +25,13 @@
                     </table>
                 </div>
             </div>
+          </div>
         </div>
     </div>
-    @include('pengembalian.modaldetail')
 
-
-@push('scripts')
+@push('scripts')    
 <script>
-
+    
     $(document).on('click', "#cekdetail", function (e) {
         e.preventDefault();
         var id = $(this).data('id')
@@ -65,7 +45,7 @@
             $.ajax({
             url: "{{ url('pengembaliancekdetail')}}",
             type: "GET",
-            data: {status_detail:status_detail, id:id},
+            data: {status_detail:status_detail, id:id,peminjaman_id:peminjaman_id},
                 success: function (data) {
                 $('#data-detail').dataTable().api().ajax.reload();
                 $('div.flash-message').html(data);
@@ -77,7 +57,12 @@
     });
 
     var TableDetail;
-    $(document).ready(function () {
+    $(document).on("click", "#detailData", function () {
+        $('#modal-form').modal('show');
+        var id = $(this).data('id');
+        var nama = $(this).data('nama');
+        
+
         var TableDetail;
         'use strict';
         TableDetail = $('#data-detail').DataTable({
@@ -85,20 +70,14 @@
             processing: true,
             serverSide:true,
             "bDestroy": true,
-            ajax:"{{ url('api/pengembaliandetail')}}",
+            ajax:"{{ url('api/pengembalian') .'/'}}"+ id,
             columns: [
                 {data: 'idbukutanah',name:'idbukutanah'},
-                {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
-                {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
-                {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
                 {data: 'desa',name:'desa'},
                 {data: 'kecamatan',name:'kecamatan'},
                 {data: 'no_warkah',name:'no_warkah'},
-                {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
-                {data: 'tanggal_kembali',name:'tanggal_kembali'},
-
                 {   
                     data: 'status_detail',
                     name:'status_detail',
@@ -142,7 +121,7 @@
         }),
          yadcf.init(TableDetail, [
             {
-                column_number: 4,
+                column_number: 1,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
@@ -150,7 +129,24 @@
         ]);
         
     });
-</script>
+    function updateStatusDetail(id){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: "{{ url('peminjamandetail/proses')}}/" + id,
+            type: "POST",
+            data: {'_method': 'DELETE','_token': csrf_token
+            },
+            success: function(data) {
+                $('#data-detail').dataTable().api().ajax.reload();
+                $('div.flash-message').html(data);
+                    
+            },
+            error: function () {
+                alert("Opppps gagal");
+            }
+        })
+    }
 
+    
+</script>
 @endpush
-@endsection

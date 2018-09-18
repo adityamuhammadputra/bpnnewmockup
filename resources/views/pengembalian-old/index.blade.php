@@ -1,7 +1,6 @@
 @extends('layouts.master')
 @section('content')
 
-
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -20,28 +19,26 @@
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
                 </div>
+               
                 <div class="panel-body">
-                    <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
-                        <thead>
-                            <tr>
-                                <th width="10%">Id Buku Tanah</th>
-                                <th>NIP</th>
-                                <th width="10%">Nama</th>
-                                <th>Tanggal Pinjam</th>
-                                <th width="10%"></th>
-                                <th width="10%">Jenis Hak</th>
-                                <th width="10%">Desa </th> 
-                                <th width="10%">Kecamatan </th> 
-                                <th width="10%">No.Warkah</th>
-                                <th width="10%">Keterangan</th>
-                                <th>Tanggal Kembali</th>
-                                <th width="10%">Status</th>
-                                <th width="12%"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-pengembalian">
+                            <thead>
+                                <tr>
+                                    <th>No.Berkas</th>
+                                    <th>NIP</th>
+                                    <th></th>
+                                    <th>Kegiatan</th>
+                                    <th>Tanggal Pinjam</th>
+                                    <th>Tanggal Kembali</th>
+                                    <th>Keterangan</th>
+                                    <th width:10%;></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,22 +49,21 @@
 @push('scripts')
 <script>
 
-    $(document).on('click', "#cekdetail", function (e) {
+    $(document).on('click', "#cek", function (e) {
         e.preventDefault();
         var id = $(this).data('id')
-        var status_detail = $(this).data('value');
-        var peminjaman_id = $(this).data('peminjaman_id');
+        var status = $(this).data('value');
         $.ajaxSetup({
             headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-            url: "{{ url('pengembaliancekdetail')}}",
+            url: "{{ url('pengembaliancek')}}",
             type: "GET",
-            data: {status_detail:status_detail, id:id},
+            data: {status:status, id:id},
                 success: function (data) {
-                $('#data-detail').dataTable().api().ajax.reload();
+                $('#data-pengembalian').dataTable().api().ajax.reload();
                 $('div.flash-message').html(data);
             },
                 error: function () {
@@ -75,33 +71,25 @@
             }
         });
     });
-
-    var TableDetail;
+    var Table;
     $(document).ready(function () {
-        var TableDetail;
+        var Table;
         'use strict';
-        TableDetail = $('#data-detail').DataTable({
+        Table = $('#data-pengembalian').DataTable({
             colReorder: true,
             processing: true,
             serverSide:true,
-            "bDestroy": true,
-            ajax:"{{ url('api/pengembaliandetail')}}",
+            ajax:"{{ url('api/pengembalian') }}",
             columns: [
-                {data: 'idbukutanah',name:'idbukutanah'},
-                {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
-                {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
-                {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
-                {data: 'no_hak',name:'no_hak'},
-                {data: 'jenis_hak',name:'jenis_hak'},
-                {data: 'desa',name:'desa'},
-                {data: 'kecamatan',name:'kecamatan'},
-                {data: 'no_warkah',name:'no_warkah'},
-                {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
-                {data: 'tanggal_kembali',name:'tanggal_kembali'},
-
+                {data: 'id',name:'id'},
+                {data: 'nip',name:'nip'},
+                {data: 'nama',name:'nama'},
+                {data: 'kegiatan.nama_kegiatan',name:'kegiatan.nama_kegiatan'},
+                {data: 'tanggal_pinjam',name:'tanggal_pinjam'},
+                {data: 'tanggal_kembali_asli',name:'tanggal_kembali_asli'},
                 {   
-                    data: 'status_detail',
-                    name:'status_detail',
+                    data: 'status',
+                    name:'status',
                     "render": function ( data, type, row ){
                         if(data === '1'){
                             return '<span class="label label-success">Sudah Dikembalikan</span>';
@@ -114,7 +102,7 @@
                 },
                 {data: 'action',name:'action',orderable:false, searchable:false}
             ],
-                columnDefs: [ {
+             columnDefs: [ {
                 searchable: false,
                 orderable:false,
                 targets: 0
@@ -140,15 +128,22 @@
             aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
             {{-- iDisplayLength: 15 --}}
         }),
-         yadcf.init(TableDetail, [
+       
+        yadcf.init(Table, [
             {
-                column_number: 4,
+                column_number: 2,
                 filter_type: "text",
                 filter_delay: 500,
-                filter_default_label: "No Hak"
+                filter_default_label: "Nama Peminjam"
             },
         ]);
         
+        {{--  Table.on( 'order.dt search.dt', function () {
+            Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+            } );
+        } ).draw();  --}}
+       
     });
 </script>
 

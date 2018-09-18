@@ -96,6 +96,7 @@ class PeminjamanProsesController extends Controller
                     'desa' => $request->desa[$i],
                     'kecamatan' => $request->kecamatan[$i],
                     'no_warkah' => $request->no_warkah[$i],
+                    'no_su' => $request->no_su[$i],
                 ];
 
                 PeminjamanDetail::insert($datas);

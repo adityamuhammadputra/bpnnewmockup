@@ -71,9 +71,10 @@
                     <th width="15%">Id Buku Tanah</th>
                     <th width="10%">No.Hak</th>
                     <th width="10%">Jenis Hak</th>
-                    <th width="15%">Desa </th> 
-                    <th width="15%">Kecamatan </th> 
+                    <th width="10%">Desa </th> 
+                    <th width="10%">Kecamatan </th> 
                     <th width="10%">No.Warkah</th>
+                    <th width="10%">No.SU</th>
                     <th width="5%" style="text-align-center">
                         <button type="button" name="add" class="btn btn-success add"><i class="fa fa-plus text-white"></i></button>
                     </th>
@@ -101,6 +102,7 @@
         html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
         html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
         html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
+        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU" /></td>';
         html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
         html += '</tr>';
         $('#item_table').append(html);

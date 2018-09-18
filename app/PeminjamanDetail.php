@@ -9,6 +9,10 @@ class PeminjamanDetail extends Model
     protected $table = 'peminjaman_detail';
     protected $guarded = [];
 
-    
-   
+    public function peminjamanheader()
+    {
+        // return $this->belongsTo(Peminjaman::class);
+        return $this->belongsTo('App\Peminjaman', 'peminjaman_id', 'id')->with('kegiatan');
+
+    }
 }
