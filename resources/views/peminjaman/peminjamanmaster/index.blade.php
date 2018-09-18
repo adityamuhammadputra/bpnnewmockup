@@ -36,7 +36,7 @@
                                     <th>Id</th>
                                     <th></th>
                                     <th>Jenis Hak</th>
-                                    <th>No.Hak</th>
+                                    <th></th>
                                     <th>Desa</th>
                                     <th>Kecamatan</th>
                                     <th>Keterangan</th>
@@ -119,6 +119,12 @@
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "ID Buku Tanah"
+                },
+                {
+                    column_number: 3,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No Hak"
                 },
             ]);
             {{--  Table.on( 'order.dt search.dt', function () {
