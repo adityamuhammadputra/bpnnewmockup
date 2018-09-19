@@ -31,8 +31,8 @@
                                     <th>Tanggal Pinjam</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
-                                    <th width="10%">Desa </th> 
-                                    <th width="10%">Kecamatan </th> 
+                                    <th width="10%"></th> 
+                                    <th width="10%"></th> 
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
                                     <th width="10%">Keterangan</th>
@@ -150,6 +150,18 @@
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
+            },
+            {
+                column_number: 6,
+                filter_type: "text",
+                filter_delay: 500,
+                filter_default_label: "Desa "
+            },
+            {
+                column_number: 7,
+                filter_type: "text",
+                filter_delay: 500,
+                filter_default_label: "Kecamatan"
             },
         ]);
         

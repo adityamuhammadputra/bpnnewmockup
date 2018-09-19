@@ -68,36 +68,21 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="name" class="control-label">No Box</label>
-                        <input type="text" class="form-control" name="no_box" id="no_box" value="{{ $nourutbox }} " >
-                        <span class="help-block with-errors"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="name" class="control-label">TIM</label>
-                        <input type="text" class="form-control" value="{{ auth()->user()->kelompok_id }}" name="kelompok_id" id="kelompok_id" readonly>
-                        <span class="help-block with-errors"></span>
-                    </div>
-                </div>
-              <div class="col-md-4">
-                    <div class="form-group">
                         <label for="name" class="control-label">Keterangan</label>
-                        <input type="text" class="form-control" value="BERKAS LENGKAP" readonly>
+                        <input type="text" class="form-control" name="keterangan" value="BERKAS LENGKAP" readonly>
                         <span class="help-block with-errors"></span>
                     </div>
                </div>
-                     <div class="col-md-4">
-                        <div class="form-group">
-                            <br>
-                            <button type="button" class="btn btn-default" onclick="btnCancel()"><i class="fa fa-times-circle"></i> Batal</button>
-                             <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i> <t class="tombol-simpan">Simpan</t></button>
-                         </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-left">
+                    <div class="form-group">
+                        <br>
+                        <button type="button" class="btn btn-default" onclick="btnCancel()"><i class="fa fa-times-circle"></i> Batal</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i> <t class="tombol-simpan">Simpan</t></button>
                     </div>
-             </div>
-            
+                </div>
+            </div>
     </form>
  </div>
           

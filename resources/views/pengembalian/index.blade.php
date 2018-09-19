@@ -151,6 +151,18 @@
                 filter_delay: 500,
                 filter_default_label: "No Hak"
             },
+            {
+                column_number: 5,
+                filter_type: "text",
+                filter_delay: 500,
+                filter_default_label: "Desa "
+            },
+            {
+                column_number: 6,
+                filter_type: "text",
+                filter_delay: 500,
+                filter_default_label: "Kecamatan"
+            },
         ]);
         
     });
