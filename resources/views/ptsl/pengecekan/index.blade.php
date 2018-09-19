@@ -22,7 +22,7 @@
                     Master Data Pengecekan Berkas Fisik PTSL
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
-                        <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i class="fa fa-minus-circle"></i> Sembuyikan Form</button>
+                        <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i class="fa fa-plus-circle"></i> Tambah Data</button>
                     </div>
                     <div class="panel-body" id="form-panel">
                         @include('ptsl.pengecekan.form')
@@ -77,6 +77,7 @@
 
         }); 
 
+        $('#form-panel').hide();
 
         var Table;
         $(document).ready(function () {
@@ -153,13 +154,14 @@
         function addData() {
             save_method = "add";
             $('input[name=_method]').val('POST');
-            // $('#form-pengecekan form')[0].reset();
+            $('#form-pengecekan form')[0].reset();
             $("#form-panel").slideToggle();
         }
 
         function btnCancel(){
             $("#form-pengecekan").load(" #form-pengecekan");  
             $('#form-pengecekan form')[0].reset();
+            // $("#form-panel").slideUp();
         }
        
         function editData(id) {
@@ -249,6 +251,7 @@
                         success: function (data) {
                             $('#data-pengecekan').dataTable().api().ajax.reload();
                             $('#form-pengecekan form')[0].reset();
+                            $('#form-panel').show();
                             $('.tombol-simpan').text('Simpan');
                             swal({
                                 title:'Berhasil!',

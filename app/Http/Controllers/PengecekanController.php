@@ -109,6 +109,8 @@ class PengecekanController extends Controller
                 'keterangan' => $request->keterangan,
             ]);
         }
+        Session::flash('info', 'Data Berhasil Diubah');
+        return View::make('layouts/alerts');
 
     }
 
