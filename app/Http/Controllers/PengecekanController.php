@@ -72,7 +72,7 @@ class PengecekanController extends Controller
 
         
 
-        if ($cekbox25 >= 25) {
+        if ($cekbox25 >= 3) {
             $nextnb = substr($maxnb, 2) + 1;
             $nourutbox = $kd_kelompok . $nextnb;
 
