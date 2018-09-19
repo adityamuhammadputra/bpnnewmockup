@@ -48,6 +48,13 @@ Route::get('api/pengembaliandetail','PengembalianController@apiPengembalianDetai
 // Route::get('pengembaliancek','PengembalianController@cek');
 Route::get('pengembaliancekdetail','PengembalianController@cekdetail');
 
+Route::resource('pengembalianhistory', 'PengembalianHistoryController');
+Route::get('api/pengembalianhistory', 'PengembalianHistoryController@apiPengembalianHistory');
+
+
+
+
+
 
 //user
 Route::resource('user', 'UserController');

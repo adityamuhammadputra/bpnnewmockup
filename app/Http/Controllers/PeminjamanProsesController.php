@@ -34,7 +34,7 @@ class PeminjamanProsesController extends Controller
 
     public function store(Request $request)
     {
-       
+    //    return $request;
         Peminjaman::create([
             'nip' => $request->nip,
             'nama' => $request->nama,

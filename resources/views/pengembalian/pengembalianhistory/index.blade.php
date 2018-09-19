@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Proses Pengembalian
+                    Pengembalian History
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
@@ -38,7 +38,7 @@
                                     <th width="10%">Keterangan</th>
                                     <th>Tanggal Kembali</th>
                                     <th width="10%">Status</th>
-                                    <th width="12%"></th>
+                                    {{-- <th width="12%"></th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,7 +88,7 @@
             processing: true,
             serverSide:true,
             "bDestroy": true,
-            ajax:"{{ url('api/pengembaliandetail')}}",
+            ajax:"{{ url('api/pengembalianhistory')}}",
             columns: [
                 {data: 'idbukutanah',name:'idbukutanah'},
                 {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
@@ -116,7 +116,7 @@
                         
                     }
                 },
-                {data: 'action',name:'action',orderable:false, searchable:false}
+                // {data: 'action',name:'action',orderable:false, searchable:false}
             ],
                 columnDefs: [ {
                 searchable: false,

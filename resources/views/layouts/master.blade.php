@@ -134,7 +134,19 @@
 					</a></li>
 				</ul>
 			</li>
-			<li class="{{ request()->is('pengembalian') ? 'active' : '' }}"><a href="{{ url('pengembalian') }}"><em class="fa fa-reply-all">&nbsp;</em> Pengembalian</a></li>
+			<li class="parent {{ request()->is('pengembalian') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-3">
+				<em class="fa fa-reply-all">&nbsp;</em> Pengembalian <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-3">
+					<li><a class="" href="{{ url('pengembalian') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Proses Pengembalian 
+					</a></li>
+					<li><a class="" href="{{ url('pengembalianhistory') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> History Pengembalian
+					</a></li>
+				</ul>
+			</li>
+			{{-- <li class="{{ request()->is('pengembalian') ? 'active' : '' }}"><a href="{{ url('pengembalian') }}"><em class="fa fa-reply-all">&nbsp;</em> Pengembalian</a></li> --}}
 				
 			<li style="position:absolute; bottom:0;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
