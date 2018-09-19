@@ -42,7 +42,7 @@ class PengecekanController extends Controller
     {
         $kelompok_id = auth()->user()->kelompok_id;
 
-        $data = Pengecekan::orderBy('kelompok_id', $kelompok_id)->orderBy('no_box','desc');
+        $data = Pengecekan::where('kelompok_id', $kelompok_id)->orderBy('no_box','desc');
 
         return Datatables::of($data)
             ->addColumn('action',function($data){
