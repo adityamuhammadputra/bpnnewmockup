@@ -28,17 +28,24 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name" class="control-label">Jenis Hak</label>
                                 <input type="text" class="form-control" name="jenis_hak" id="jenis_hak">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="name" class="control-label">No Warkah</label>
                                 <input type="number" class="form-control" name="no_warkah" id="no_warkah">
+                                <span class="help-block with-errors"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="name" class="control-label">No SU</label>
+                                <input type="number" class="form-control" name="no_su" id="no_su">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -84,6 +91,7 @@
             var kecamatan = $(this).data('kecamatan');
             var no_warkah = $(this).data('no_warkah');
             var no_hak = $(this).data('no_hak');
+            var no_su = $(this).data('no_su');
     
             $("#namapeminjam").text(nama);
             $("#id").val(id);
@@ -93,6 +101,7 @@
             $("#kecamatan").val(kecamatan);
             $("#no_warkah").val(no_warkah);
             $("#no_hak").val(no_hak);
+            $("#no_su").val(no_su);
             
         });
 

@@ -33,6 +33,7 @@
                                 <th width="10%">Desa </th> 
                                 <th width="10%">Kecamatan </th> 
                                 <th width="10%">No.Warkah</th>
+                                <th width="10%">No.SU</th>
                                 <th width="10%">Keterangan</th>
                                 <th>Tanggal Kembali</th>
                                 <th width="10%">Status</th>
@@ -96,6 +97,7 @@
                 {data: 'desa',name:'desa'},
                 {data: 'kecamatan',name:'kecamatan'},
                 {data: 'no_warkah',name:'no_warkah'},
+                {data: 'no_su',name:'no_su'},
                 {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
                 {data: 'tanggal_kembali',name:'tanggal_kembali'},
 

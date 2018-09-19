@@ -54,6 +54,7 @@ class PengembalianController extends Controller
               'desa' => $request->desa,
               'kecamatan' => $request->kecamatan,
               'no_warkah' => $request->no_warkah,
+              'no_su' => $request->no_su,
           ]);
 
         return redirect()->back()->with('success','Data Berhasil Diupdate');
