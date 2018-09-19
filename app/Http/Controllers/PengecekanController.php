@@ -55,9 +55,29 @@ class PengecekanController extends Controller
  
     public function index()
     {
-        
-        return view('ptsl.pengecekan.index');
+        $data = User::with('kelompok')->where('id', auth()->user()->id)->first();
+        $kd_kelompok = $data->kelompok->kd_kelompok;
 
+        $kelompok_id = auth()->user()->kelompok_id;
+        $maxnb = Pengecekan::where('kelompok_id', $kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
+        if ($maxnb == null) {
+            $maxnb = $kd_kelompok . '1';
+        }
+        $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
+
+        if ($cekbox25 >= 3) {
+            $nextnb = substr($maxnb, 2) + 1;
+            $nourutbox = $kd_kelompok . $nextnb;
+
+            return view('ptsl.pengecekan.index',compact('nourutbox'));
+
+        } else {
+            $nextnb = substr($maxnb, 2);
+            $nourutbox = $kd_kelompok . $nextnb;
+
+            return view('ptsl.pengecekan.index',compact('nourutbox'));
+
+        }
     }
    
     public function store(Request $request)
@@ -68,9 +88,10 @@ class PengecekanController extends Controller
 
         $kelompok_id = auth()->user()->kelompok_id;
         $maxnb = Pengecekan::where('kelompok_id',$kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
+        if ($maxnb == null) {
+            $maxnb = $kd_kelompok . '1';
+        }
         $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
-
-        
 
         if ($cekbox25 >= 3) {
             $nextnb = substr($maxnb, 2) + 1;

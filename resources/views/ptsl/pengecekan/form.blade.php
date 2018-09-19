@@ -66,13 +66,21 @@
                         <span class="help-block with-errors"></span>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
                         <label for="name" class="control-label">Keterangan</label>
                         <input type="text" class="form-control" name="keterangan" value="BERKAS LENGKAP" readonly>
                         <span class="help-block with-errors"></span>
                     </div>
                </div>
+               <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="name" class="control-label">No Urut Box</label>
+                        <input type="text" class="form-control" name="keterangan" value="{{$nourutbox}}" readonly>
+                        <span class="help-block with-errors"></span>
+                    </div>
+               </div>
+
             </div>
             <div class="row">
                 <div class="col-md-12 text-left">
