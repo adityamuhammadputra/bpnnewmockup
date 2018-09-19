@@ -38,7 +38,7 @@
                                     <th width="10%">Keterangan</th>
                                     <th>Tanggal Kembali</th>
                                     <th width="10%">Status</th>
-                                    {{-- <th width="12%"></th> --}}
+                                    <th width="12%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,7 +116,7 @@
                         
                     }
                 },
-                // {data: 'action',name:'action',orderable:false, searchable:false}
+                {data: 'action',name:'action',orderable:false, searchable:false}
             ],
                 columnDefs: [ {
                 searchable: false,

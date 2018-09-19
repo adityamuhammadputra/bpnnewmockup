@@ -38,19 +38,11 @@ class PengembalianHistoryController extends Controller
                 if ($data->status_detail == 1) {
                     return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-success btn-sm">
                         <i class="fa fa-check-square-o"></i> 
-                    </a> ' .
-                        '<a id="detailData" data-id="' . $data->id . '" data-idbukutanah="' . $data->idbukutanah . '" data-no_hak="' . $data->no_hak . '" data-jenis_hak="' . $data->jenis_hak . '" 
-                        data-desa="' . $data->desa . '" data-kecamatan="' . $data->kecamatan . '" data-no_warkah="' . $data->no_warkah . '" data-nama="' . $data->peminjamanheader->nama . '"
-                        class ="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o">
-                    </i> </a>';
+                    </a> ' ;
                 } else {
                     return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-warning btn-sm">
                         <i class="fa fa-window-close-o"></i> 
-                    </a> ' .
-                        '<a id="detailData" data-id="' . $data->id . '" data-idbukutanah="' . $data->idbukutanah . '" data-no_hak="' . $data->no_hak . '" data-jenis_hak="' . $data->jenis_hak . '" 
-                        data-desa="' . $data->desa . '" data-kecamatan="' . $data->kecamatan . '" data-no_warkah="' . $data->no_warkah . '" data-nama="' . $data->peminjamanheader->nama . '"
-                        class ="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o">
-                    </i> </a>';
+                    </a> ' ;
                 }
             })->rawColumns(['action'])->make(true);
 
