@@ -28,15 +28,15 @@
                                     <th width="10%">Id Buku Tanah</th>
                                     <th>NIP</th>
                                     <th width="10%">Nama</th>
-                                    <th>Tanggal Pinjam</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
                                     <th width="10%">Desa </th> 
                                     <th width="10%">Kecamatan </th> 
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
+                                    <th>Tanggal Pinjam</th>
                                     <th width="10%">Keterangan</th>
-                                    <th>Tanggal Kembali</th>
+                                    {{-- <th>Tanggal Kembali</th> --}}
                                     <th width="10%">Status</th>
                                     <th width="12%"></th>
                                 </tr>
@@ -93,15 +93,15 @@
                 {data: 'idbukutanah',name:'idbukutanah'},
                 {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
                 {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
-                {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
                 {data: 'desa',name:'desa'},
                 {data: 'kecamatan',name:'kecamatan'},
                 {data: 'no_warkah',name:'no_warkah'},
                 {data: 'no_su',name:'no_su'},
+                {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
                 {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
-                {data: 'tanggal_kembali',name:'tanggal_kembali'},
+                // {data: 'tanggal_kembali',name:'tanggal_kembali'},
 
                 {   
                     data: 'status_detail',
@@ -146,7 +146,7 @@
         }),
          yadcf.init(TableDetail, [
             {
-                column_number: 4,
+                column_number: 3,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
