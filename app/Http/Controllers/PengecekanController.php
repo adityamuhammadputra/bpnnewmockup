@@ -40,9 +40,15 @@ class PengecekanController extends Controller
     }
     public function apiPengecekan()
     {
+        $user_id = auth()->user()->id;
         $kelompok_id = auth()->user()->kelompok_id;
-
-        $data = Pengecekan::where('kelompok_id', $kelompok_id)->orderBy('no_box','desc');
+        
+        if($user_id == 2){
+            $data = Pengecekan::orderBy('no_box','desc');
+        }
+        else{
+            $data = Pengecekan::where('kelompok_id', $kelompok_id)->orderBy('no_box','desc');
+        }
 
         return Datatables::of($data)
             ->addColumn('action',function($data){

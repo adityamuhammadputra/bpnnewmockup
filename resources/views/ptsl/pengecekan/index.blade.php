@@ -22,7 +22,9 @@
                     Master Data Pengecekan Berkas Fisik PTSL
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span></div>
+                        @if(auth()->user()->id != 2) 
                         <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i class="fa fa-plus-circle"></i> Tambah Data</button>
+                        @endif
                     </div>
                     <div class="panel-body" id="form-panel">
                         @include('ptsl.pengecekan.form')
@@ -53,8 +55,10 @@
                                         <th>Kecamatan</th>
                                         <th>No.Box</th>
                                         <th>TIM</th>
-                                        <th>Keterangan</th> 
+                                        <th>Keterangan</th>
+                                        @if(auth()->user()->id != 2) 
                                         <th width="10%">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -102,7 +106,9 @@
                     {data: 'no_box',name:'no_box'},
                     {data: 'kelompok_id',name:'kelompok_id', searchable:false},
                     {data: 'keterangan',name:'keterangan', searchable:false},
+                    @if(auth()->user()->id != 2) 
                     {data: 'action',name:'action',orderable:false, searchable:false}
+                    @endif
                 ],
                 {{--  columnDefs: [ {
                     searchable: false,
