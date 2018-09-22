@@ -71,7 +71,7 @@ class PengecekanController extends Controller
         }
         $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
 
-        if ($cekbox25 >= 3) {
+        if ($cekbox25 >= 25) {
             $nextnb = substr($maxnb, 2) + 1;
             $nourutbox = $kd_kelompok . $nextnb;
 
@@ -99,7 +99,7 @@ class PengecekanController extends Controller
         }
         $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
 
-        if ($cekbox25 >= 3) {
+        if ($cekbox25 >= 25) {
             $nextnb = substr($maxnb, 2) + 1;
             $nourutbox = $kd_kelompok . $nextnb;
 
@@ -115,7 +115,6 @@ class PengecekanController extends Controller
                 'no_hak' => $request->no_hak,
                 'pemegang' => $request->pemegang,
                 'tahun' => $request->tahun,
-                'keterangan' => $request->keterangan,
             ]);
         }else{
             $nextnb = substr($maxnb, 2);
@@ -133,7 +132,6 @@ class PengecekanController extends Controller
                 'no_hak' => $request->no_hak,
                 'pemegang' => $request->pemegang,
                 'tahun' => $request->tahun,
-                'keterangan' => $request->keterangan,
             ]);
         }
         Session::flash('info', 'Data Berhasil Diubah');

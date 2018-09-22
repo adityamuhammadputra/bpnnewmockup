@@ -18,6 +18,9 @@
 	<link href="{{asset('lumino/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
 	<link href="{{asset('lumino/css/googlefont.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/styles.css')}}" rel="stylesheet">
+    
+    <link rel="shortcut icon" href="{{ asset('images/Logos.png') }}">
+
 	
 
 </head>
@@ -148,7 +151,7 @@
 			</li>
 			{{-- <li class="{{ request()->is('pengembalian') ? 'active' : '' }}"><a href="{{ url('pengembalian') }}"><em class="fa fa-reply-all">&nbsp;</em> Pengembalian</a></li> --}}
 				
-			<li style="position:absolute; bottom:0;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 				{{ csrf_field() }}
 			</form>
