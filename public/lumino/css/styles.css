@@ -1073,7 +1073,7 @@ p.back-link {
 {
     width:70px !important;
 }
-#yadcf-filter--data-detail-3
+#yadcf-filter--data-detail-2
 {
     width:70px !important;
 }
@@ -1096,4 +1096,35 @@ p.back-link {
 #yadcf-filter--data-pengecekan-6
 {
     width:120px !important;
+}
+#yadcf-filter--data-pengecekan-7
+{
+    width:100px !important;
+}
+#yadcf-filter--data-master-1{
+    width:90px !important;
+
+}
+#yadcf-filter--data-master-2{
+    width:120px !important;
+
+}
+#yadcf-filter--data-master-4
+{
+    width:80px !important;
+}
+
+.label-borok
+{
+    position: relative !important;
+    top: -15px !important;
+    right: -10px !important;
+    border-radius: 10px;
+    padding:3px 8px;
+    animation: blinker 2s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0.3;
+  }
 }

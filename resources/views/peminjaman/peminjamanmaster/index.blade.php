@@ -35,12 +35,16 @@
                                 <tr>
                                     <th>Id</th>
                                     <th></th>
+                                    <th></th>
                                     <th>Jenis Hak</th>
                                     <th></th>
                                     <th>Desa</th>
                                     <th>Kecamatan</th>
+                                    <th>Ruang</th>
+                                    <th>Rak</th>
+                                    <th>Baris</th>
                                     <th>Keterangan</th>
-                                    <th></th>
+                                    <th nowrap>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,17 +71,21 @@
                 ajax:"{{ route('api.peminjaman.master') }}",
                 columns: [
                     {data: 'id',name:'id'},
+                    {data: 'no_box',name:'no_box'},
                     {data: 'idbukutanah',name:'idbukutanah'},
                     {data: 'jenis_hak',name:'jenis_hak'},
                     {data: 'no_hak',name:'no_hak'},
                     {data: 'desa',name:'desa'},
                     {data: 'kecamatan',name:'kecamatan'},
+                    {data: 'ruang',name:'ruang'},
+                    {data: 'rak',name:'rak'},
+                    {data: 'baris',name:'baris'},
                     {   
                         data: 'status',
                         name:'status',
                         "render": function ( data, type, row ){
                             if(data === '1'){
-                                return '<span class="label label-success">Berkas Ada</span>';
+                                return '<span class="label label-success">Berkas Tersedia</span>';
                             }
                             else{
                                 return '<span class="label label-warning">Berkas Tidak Ada</span>';
@@ -92,7 +100,7 @@
                     orderable:false ,
                     targets: 0
                 } ], 
-                order: [[ 1, 'asc' ]],
+                order: [[ 2, 'asc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -118,14 +126,21 @@
                     column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
+                    filter_default_label: "No Bundel"
+                },
+                {
+                    column_number: 2,
+                    filter_type: "text",
+                    filter_delay: 500,
                     filter_default_label: "ID Buku Tanah"
                 },
                 {
-                    column_number: 3,
+                    column_number: 4,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No Hak"
                 },
+                
             ]);
             {{--  Table.on( 'order.dt search.dt', function () {
                 Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
@@ -145,6 +160,104 @@
             $("#form-peminjamanmaster").load(" #form-peminjamanmaster");    
             $('#form-peminjamanmaster form')[0].reset();
             $("#form-panel").slideUp();
+        }
+            
+        function editForm(id) {
+            $('#form-panel').show();
+            save_method = 'edit';
+            $('input[name=_method]').val('PATCH');
+            $('#form-peminjamanmaster form')[0].reset();
+            $.ajax({
+                url: "{{ url('peminjaman/master')}}/" + id + "/edit",
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    $('.tombol-simpan').text('Perbaharui');
+                    $('#id').val(data.id);
+                    $('#no_box').val(data.no_box);
+                    $('#idbukutanah').val(data.idbukutanah);
+                    $('#jenis_hak').val(data.jenis_hak);
+                    $('#no_hak').val(data.no_hak);
+                    $('#desa').val(data.desa);
+                    $('#kecamatan').val(data.kecamatan);
+                    $('#ruang').val(data.ruang);
+                    $('#rak').val(data.rak);
+                    $('#baris').val(data.baris);
+                    $('#status').val(data.status);
+                },
+                error: function () {
+                    alert("Data tidak ada!");
+                }
+            });
+        }
+
+         $(function () {
+            $('#form-peminjamanmaster form').validator().on('submit', function (e) {
+                if (!e.isDefaultPrevented()) {
+                    var id = $('#id').val();
+                    if (save_method == 'add') url = "{{ url('peminjaman/master') }}"; 
+                    else url = "{{ url('peminjaman/master') . '/'}}" + id;
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: $('#form-peminjamanmaster form').serialize(),
+                        success: function (data) {
+                            $('#data-master').dataTable().api().ajax.reload();
+                            $('#form-peminjamanmaster form')[0].reset();
+                            $('#form-panel').show();
+                            $('.tombol-simpan').text('Simpan');
+                            $('div.flash-message').html(data);
+                           
+                        },
+                        error: function () {
+                            swal({
+                                title:'opss..',
+                                text: 'Terjadi Error, Silahkan Hubungi Pengembang',
+                                type:'error',
+                                timer: '1500'
+                            })
+                        }
+                    });
+                    return false;
+                }
+            });
+        });
+
+        function deleteData(id) {
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            swal({
+                title: 'Apakah Anda yakin Menghapus Data?',
+                text: "Konfirmasi Penghapusan Data",
+                type:'warning',
+                showCancelButton:true,
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Hapus ini',
+                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
+            }).then(function(){                
+                $.ajax({
+                    url: "{{ url('peminjaman/master')}}/" + id,
+                    type: "POST",
+                    data: {'_method': 'DELETE','_token': csrf_token
+                    },
+                    success: function(data) {
+                        $('#data-master').dataTable().api().ajax.reload();
+                        $("#form-peminjamanmaster").load(document.URL + '" #form-pengecekan"');
+                        $('#form-peminjamanmaster form')[0].reset();
+                        $('#form-panel').show();
+                        $('div.flash-message').html(data);
+                        
+                    },
+                    error: function () {
+                        swal({
+                            title:'opss..',
+                            text: 'Terjadi Error, Silahkan Hubungi Pengembang',
+                            type:'error',
+                            timer: '1500'
+                        })
+                    }
+                });
+            });
         }
 
         

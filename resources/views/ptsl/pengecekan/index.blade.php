@@ -51,7 +51,7 @@
                                         <th>No.SU</th>
                                         <th>Tahun</th>
                                         <th></th>
-                                        <th>Desa</th>
+                                        <th></th>
                                         <th>Kecamatan</th>
                                         <th>No.Box</th>
                                         <th>TIM</th>
@@ -142,6 +142,12 @@
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "Pemegang"
+                },
+                {
+                    column_number: 7,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "Desa"
                 },
                 {
                     column_number: 2,

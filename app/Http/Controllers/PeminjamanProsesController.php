@@ -40,6 +40,7 @@ class PeminjamanProsesController extends Controller
             'nama' => $request->nama,
             'unit_kerja' => $request->unit_kerja,
             'kegiatan' => $request->kegiatan,
+            'via' => $request->via,
             'tanggal_pinjam' => $request->tanggal_pinjam,
             'tanggal_kembali' => $request->tanggal_kembali,
             'created_by' => auth()->user()->id,
@@ -110,6 +111,7 @@ class PeminjamanProsesController extends Controller
               'nip' => $request->nip,
               'unit_kerja' => $request->unit_kerja,
               'kegiatan' => $request->kegiatan,
+              'via' => $request->via,
               'tanggal_pinjam' => $request->tanggal_pinjam,
               'tanggal_kembali' => $request->tanggal_kembali,
           ]);
@@ -206,15 +208,15 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProses()
     {
-        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->orderBy('updated_at','desc');
+        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->where('status',0)->orderBy('updated_at','desc');
         return Datatables::of($data)
           
             ->addColumn('action',function($data){
-                return ' <a href="cetak/peminjamanproses/'.$data->id.'"  target="_blank" class ="btn btn-info"><i class="fa fa-print">
-                        </i> </a>' .
+                return ' <span class="label label-danger label-borok">' . $data->jumlahpinjam . '</span><a href="cetak/peminjamanproses/'.$data->id. '"  class ="btn btn-info"><em class="fa fa-print">
+                        </em> </a>' .
                         ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" data-nip="'.$data->nip .'" data-unitkerja="'.$data->unit_kerja .'" 
-                            data-kegiatan="'.$data->kegiatan .'" data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali .'" 
-                            class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                            data-kegiatan="'.$data->kegiatan .'" data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali . '" 
+                             data-via="' . $data->via . '" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
                         ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';
@@ -241,7 +243,18 @@ class PeminjamanProsesController extends Controller
 
         $data = Peminjaman::with('peminjamandetail')->find($id);
 
-        $data = ['data'=>$data];
+        Peminjaman::where('id', $id)
+            ->update([
+                'status' => '1',
+            ]);
+
+        $kegiatan = $data->kegiatan()->first();
+
+
+        $data = [
+                'data'=>$data,
+                'kegiatan' => $kegiatan
+                ];
         $pdf = PDF::loadView('peminjaman.peminjamanproses.cetak',$data);
         $pdf->save(storage_path().'/app/pdf/cetakpeminjamanproses'.$datetime.'.pdf');
         $pdf->setPaper('a4', 'landscape');

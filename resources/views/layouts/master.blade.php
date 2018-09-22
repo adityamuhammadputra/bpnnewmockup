@@ -127,13 +127,16 @@
 				</a>
 				<ul class="children collapse" id="sub-item-2">
 					<li><a class="" href="{{ url('peminjaman/master') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Master Peminjaman
-					</a></li>
-					<li><a class="" href="{{ url('peminjaman') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Data Peminjaman
+						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Master
 					</a></li>
 					<li><a class="" href="{{ url('peminjaman/proses') }}">
-							<span class="fa fa-arrow-right">&nbsp;</span> Proses Peminjaman
+							<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Proses
+					</a></li>
+					<li><a class="" href="{{ url('peminjaman/kegiatan') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kegiatan
+					</a></li>
+					<li><a class="" href="{{ url('peminjaman') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kontrol
 					</a></li>
 				</ul>
 			</li>

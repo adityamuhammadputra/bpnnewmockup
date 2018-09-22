@@ -141,7 +141,7 @@
                 <tr>
                     <td>Penggunaan</td>
                     <td>:</td>
-                    <td>{{ $data->kegiatan }}</td>
+                    <td>{{ $kegiatan->nama_kegiatan }}</td>
                 </tr>
             </table>
         </div>
@@ -177,24 +177,24 @@
         <table id="customers">
             <thead>
                 <tr>
-                    <th width="15%">Id Buku Tanah</th>
                     <th width="10%">Jenis Hak</th>
                     <th width="15%">Desa </th> 
                     <th width="15%">Kecamatan </th> 
                     <th width="10%">No.Hak</th>
                     <th width="10%">No.Warkah</th>
+                    <th width="10%">No.SU</th>
 
                 </tr>  
             </thead>
             <tbody>
                 @foreach($data->peminjamandetail as $datas)
                 <tr>
-                    <td> {{ $datas->idbukutanah }}</td>
                     <td> {{ $datas->jenis_hak }}</td>
                     <td> {{ $datas->desa }}</td>
                     <td> {{ $datas->kecamatan }}</td>
                     <td> {{ $datas->no_hak }}</td>
                     <td> {{ $datas->no_warkah }}</td>
+                    <td> {{ $datas->no_su }}</td>
                 </tr>
                 @endforeach
             </tbody> 

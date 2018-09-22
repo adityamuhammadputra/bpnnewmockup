@@ -86,7 +86,7 @@
                                     <th width="10%">Kecamatan </th> 
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
-                                    <th width="5%"><button type="button" name="add" class="btn btn-success adddetail"><i class="fa fa-plus text-white"></i></button></th>
+                                    <th width="5%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -105,28 +105,31 @@
 @push('scripts')    
 <script>
     
-
-    $(document).ready(function(){
-        $(document).on('click', '.adddetail', function(){
-        var html = '';
-        html += '<tr>';
-        html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_detail" placeholder="ID Buku Tanah" /></td>';
-        html += '<td><input type="text" name="no_hak[]" id="no_hak'+i+'" class="form-control" placeholder="Nomor Hak" /></td>';
-        html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control" placeholder="Jenis Hak" /></td>';
-        html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
-        html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
-        html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
-        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU" /></td>';
-        html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
-        html += '</tr>';
-        $('#form-detail #data-detail tbody').append(html);
-        i++;
-        });
-
-        $(document).on('click', '.remove', function(){
-            $(this).closest('tr').remove();
+    $(document).on('click', "#cekdetail", function (e) {
+        e.preventDefault();
+        var id = $(this).data('id')
+        var status_detail = $(this).data('value');
+        var peminjaman_id = $(this).data('peminjaman_id');
+        $.ajaxSetup({
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+            url: "{{ url('peminjamankegiatancekdetail')}}",
+            type: "GET",
+            data: {status_detail:status_detail, id:id,peminjaman_id:peminjaman_id},
+                success: function (data) {
+                $('#data-peminjaman').dataTable().api().ajax.reload();
+                $('#data-detail').dataTable().api().ajax.reload();
+                $('div.flash-message').html(data);
+            },
+                error: function () {
+                alert('Oops! error!');
+            }
         });
     });
+   
 
     var TableDetail;
     $(document).on("click", "#detailData", function () {
@@ -157,7 +160,7 @@
             processing: true,
             serverSide:true,
             "bDestroy": true,
-            ajax:"{{ url('api/peminjamanproses') .'/'}}"+ id,
+            ajax:"{{ url('api/peminjamankegiatan') .'/'}}"+ id,
             columns: [
                 {data: 'idbukutanah',name:'idbukutanah'},
                 {data: 'no_hak',name:'no_hak'},
@@ -196,66 +199,8 @@
         })
         
     });
-    function deleteDetail(id){
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        $.ajax({
-            url: "{{ url('peminjamandetail/proses')}}/" + id,
-            type: "POST",
-            data: {'_method': 'DELETE','_token': csrf_token
-            },
-            success: function(data) {
-                $('#data-detail').dataTable().api().ajax.reload();
-                $('div.flash-message').html(data);
-                    
-            },
-            error: function () {
-                alert("Opppps gagal");
-            }
-        })
-    }
+    
 
-    $(document).ready(function() {
-        src = "{{ url('autocompletepegawai') }}";
-        $("#namadetail").autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: src,
-                    dataType: "json",
-                    data: {
-                        term : request.term
-                    },
-                    success: function(data) {
-                        response(data);
-                    }
-                }); 
-            },
-            select:function(event, ui){
-                var nip =ui.item.id;
-                $.ajax({
-                    type: "GET",
-                    url: "{{ url('autocompletepegawaishow')}}",
-                    data : {
-                        nip : nip
-                    },
-                    cache: false,
-                    dataType: "html",
-                    beforeSend  : function(){
-                        $(".prosesloading").show();   
-
-                    },
-                    success: function(data){
-                        var datashow = JSON.parse(data); 
-                        $("#namadetail").val(datashow[0].nama);
-                        $("#nipdetail").val(datashow[0].nip);
-                        $("#unit_kerjadetail").val(datashow[0].unit_kerja);
-                        $('#kegiatandetail').val(datashow[0].kegiatan_id);
-                    }
-                });
-            },
-            minLength: 2,
-        });
-
-        $("#namadetail").autocomplete( "option", "appendTo", "#form-detail" );
-    }); 
+    
 </script>
 @endpush

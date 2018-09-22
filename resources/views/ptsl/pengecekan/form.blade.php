@@ -44,7 +44,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="name" class="control-label">Nama Pemegang</label>
+                        <label for="name" class="control-label">Nama Pemegang HAK</label>
                         <input type="text" class="form-control" name="pemegang" id="pemegang" >
                         <span class="help-block with-errors"></span>
                     </div>        

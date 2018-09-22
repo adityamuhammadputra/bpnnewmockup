@@ -30,6 +30,6 @@
     $(".alert").fadeTo(2000, 0).slideUp(2000, function(){
         $(this).remove(); 
     });
-}, 5000);
+}, 10000);
 
 </script>

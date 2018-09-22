@@ -158,6 +158,7 @@ class PengembalianController extends Controller
     public function apiPengembalianDetail()
     {
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',0);
+        // return $data;
 
         return Datatables::of($data)
         ->addColumn('action',function($data){

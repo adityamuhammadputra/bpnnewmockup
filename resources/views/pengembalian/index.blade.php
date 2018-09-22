@@ -25,13 +25,12 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
                             <thead>
                                 <tr>
-                                    <th width="10%">Id Buku Tanah</th>
-                                    <th>NIP</th>
-                                    <th width="10%">Nama</th>
+                                    <th width="12%">Penangggung Jawab</th>
+                                    <th width="10%">Peminjaman Via</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
-                                    <th width="10%">Desa </th> 
-                                    <th width="10%">Kecamatan </th> 
+                                    <th width="10%"> </th> 
+                                    <th width="10%"> </th> 
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
                                     <th>Tanggal Pinjam</th>
@@ -90,9 +89,8 @@
             "bDestroy": true,
             ajax:"{{ url('api/pengembaliandetail')}}",
             columns: [
-                {data: 'idbukutanah',name:'idbukutanah'},
-                {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
                 {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
+                {data: 'peminjamanheader.via',name:'peminjamanheader.via'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
                 {data: 'desa',name:'desa'},
@@ -123,7 +121,7 @@
                 orderable:false,
                 targets: 0
             } ],  
-            order: [[ 4, 'desc' ]],
+            order: [[ 8, 'desc' ]],
             language: {
                 lengthMenu: "Menampilkan _MENU_",
                 zeroRecords: "Data tidak ada",
@@ -146,19 +144,19 @@
         }),
          yadcf.init(TableDetail, [
             {
-                column_number: 3,
+                column_number: 2,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
             },
             {
-                column_number: 5,
+                column_number: 4,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Desa "
             },
             {
-                column_number: 6,
+                column_number: 5,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Kecamatan"

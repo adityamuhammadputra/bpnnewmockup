@@ -26,6 +26,11 @@ Route::post('cetak/pengecekan','PengecekanController@cetak');
 
 Route::get('showptsl', 'PengecekanController@showPtsl')->name('pengecekan.showptsl');
 
+// Data Master Peminjaman
+Route::resource('/peminjamanmaster', 'PeminjamanMasterController')->except(['create']);
+Route::get('api/peminjamanmaster', 'PeminjamanMasterController@apipeminjamanmaster')->name('api.peminjamanmaster');
+
+
 //Peminjaman
 Route::resource('peminjaman/master','PeminjamanMasterController');
 Route::get('peminjamanmaster/cek','PeminjamanMasterController@cek');
@@ -40,6 +45,20 @@ Route::get('autocompletepegawaishow','PeminjamanProsesController@autoCompletePeg
 Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
 Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@cetak');
+
+Route::resource('peminjaman/kegiatan', 'PeminjamanKegiatanController')->only(['index','edit','update']);
+Route::get('api/peminjamankegiatan', 'PeminjamanKegiatanController@apiPeminjamanKegiatan');
+Route::get('api/peminjamankegiatan/{id}', 'PeminjamanKegiatanController@apiPeminjamanKegiatanDetail');
+Route::get('peminjamankegiatancek', 'PeminjamanKegiatanController@cek');
+Route::get('peminjamankegiatancekdetail', 'PeminjamanKegiatanController@cekdetail');
+
+
+
+
+
+
+
+
 
 //pengembalian
 Route::resource('pengembalian','PengembalianController');

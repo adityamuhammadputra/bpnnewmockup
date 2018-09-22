@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="name" class="control-label">Tanggal Pinjam</label>
                     <div class='input-group'>
@@ -51,7 +51,7 @@
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label for="name" class="control-label">Tanggal Kembali</label>
                     <div class='input-group'>
@@ -60,6 +60,13 @@
                             <span class="fa fa-calendar"></span>
                         </span>
                     </div>
+                    <span class="help-block with-errors"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="name" class="control-label">Peminjaman Via</label>
+                    <input type="text" class="form-control" name="via" id="via">
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
@@ -216,7 +223,7 @@
         var dateNow = new Date();
         var dateNext = new Date();
         $(function() {
-            dateNext.setDate(dateNext.getDate() + 7);
+            dateNext.setDate(dateNext.getDate() + 14);
             $('#tanggalPinjam').datetimepicker({
                 defaultDate:dateNow
             });

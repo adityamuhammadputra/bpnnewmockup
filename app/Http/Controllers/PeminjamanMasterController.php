@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 use Auth;
+use View;
+use Session;
 use App\User;
 use App\PeminjamanMaster;
 
@@ -66,7 +68,53 @@ class PeminjamanMasterController extends Controller
             })->rawColumns(['action'])->make(true);
 
     }
+    public function show($id)
+    {
+        //
+    }
 
 
+    public function edit($id)
+    {
+        return PeminjamanMaster::find($id);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = PeminjamanMaster::find($id);
+        $data->no_box = $request['no_box'];
+        $data->idbukutanah = $request['idbukutanah'];
+        $data->jenis_hak = $request['jenis_hak'];
+        $data->no_hak = $request['no_hak'];
+        $data->desa = $request['desa'];
+        $data->kecamatan = $request['kecamatan'];
+        $data->ruang = $request['ruang'];
+        $data->rak = $request['rak'];
+        $data->baris = $request['baris'];
+        $data->status = $request['status'];
+        
+        $data->update();
+
+        Session::flash('info', 'Data Berhasil Diubah');
+        return View::make('layouts/alerts');
+
+
+    }
+
+    public function destroy($id)
+    {
+        PeminjamanMaster::destroy($id);
+        Session::flash('info', 'Data Berhasil Dihapus');
+        return View::make('layouts/alerts');
+    }
+
+    public function store(Request $request)
+    {
+        PeminjamanMaster::create($request->except(['_method', '_token']));
+
+        Session::flash('info', 'Data Baru Berhasil Ditambah');
+        return View::make('layouts/alerts');
+
+    }
     
 }

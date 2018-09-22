@@ -15,14 +15,15 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Proses Peminjaman
+                    Peminjaman Kegiatan
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
-                        <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-minus-circle"></i> Hide Form</button>
+                    <button class="btn btn-primary pull-right btn-flat" onclick="cetak()"><i id="hiden" class="fa fa-print"></i> Cetak</button>
+
                 </div>
                 <div class="panel-body" id="form-panel">
-                    @include('peminjaman.peminjamanproses.form')
+                    @include('peminjaman.peminjamankegiatan.form')
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -45,43 +46,14 @@
             </div>
         </div>
     </div>
-    @include('peminjaman.peminjamanproses.modaldetail')
+    @include('peminjaman.peminjamankegiatan.modaldetail')
+
 
 @push('scripts')
     <script>
+        $("#form-panel").hide();
         
-        function deleteData(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            swal({
-                title: 'Apakah Anda yakin Menghapus Data?',
-                text: "Konfirmasi Penghapusan Data",
-                type:'warning',
-                showCancelButton:true,
-                cancelButtonColor:'#d33',
-                confirmButtonColor:'#3085d6',
-                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Hapus ini',
-                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
-            }).then(function(){                
-                $.ajax({
-                    url: "{{ url('peminjaman/proses')}}/"+id,
-                    type: "POST",
-                    data: {'_method': 'DELETE','_token': csrf_token
-                    },
-                    success: function(data) {
-                        $('#data-peminjaman').dataTable().api().ajax.reload();
-                        $('div.flash-message').html(data);
-                    },
-                    error: function () {
-                        swal({
-                            title:'opss..',
-                            text: 'Terjadi Error, Silahkan Hubungi Pengembang',
-                            type:'error',
-                            timer: '1500'
-                        })
-                    }
-                });
-            });   
-        }
+       
 
         $(function () {
             $('#form-peminjamanproses form').validator().on('submit', function (e) {
@@ -98,7 +70,7 @@
                 colReorder: true,
                 processing: true,
                 serverSide:true,
-                ajax:"{{ route('api.peminjaman.proses') }}",
+                ajax:"{{ url('api/peminjamankegiatan') }}",
                 columns: [
                     {data: 'id',name:'id'},
                     {data: 'nama',name:'nama'},
@@ -151,7 +123,7 @@
            
         });
         
-        function addData() {
+        function cetak() {
             save_method = "add";
             $('input[name=_method]').val('POST');
             $("#form-panel").slideToggle();
@@ -162,6 +134,36 @@
             $('#nik').val('');
             $('#unit_kerja').val('');
         }
+
+        $(document).on('click', "#cek", function (e) {
+            e.preventDefault();
+            var id = $(this).data('id')
+            var status = $(this).data('value');
+            swal({
+                title: 'Apakah anda yakin ingin mengembalikan semua berkas?',
+                text: "Konfirmasi Pengembalian Berkas",
+                type:'warning',
+                showCancelButton:true,
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Kembalikan',
+                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
+            }).then(function(){  
+                $.ajax({
+                    url: "{{ url('peminjamankegiatancek')}}",
+                    type: "GET",
+                    data: {status:status, id:id},
+                        success: function (data) {
+                        $('#data-peminjaman').dataTable().api().ajax.reload();
+                        $('div.flash-message').html(data);
+                    },
+                        error: function () {
+                        alert('Oops! error!');
+                    }
+                });
+            });
+        });
+        
 
     </script>
 
