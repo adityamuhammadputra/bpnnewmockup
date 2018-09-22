@@ -9,6 +9,8 @@ use DB;
 use PDF;
 use Auth;
 use Carbon;
+use View;
+use Session;
 
 use App\User;
 use App\Pengecekan;
@@ -88,54 +90,64 @@ class PengecekanController extends Controller
    
     public function store(Request $request)
     {
+        // return "ok";
         // return Pengecekan::create($request->except(['_method','_token']));
         $data = User::with('kelompok')->where('id', auth()->user()->id)->first();
         $kd_kelompok = $data->kelompok->kd_kelompok;
 
-        $kelompok_id = auth()->user()->kelompok_id;
-        $maxnb = Pengecekan::where('kelompok_id',$kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
-        if ($maxnb == null) {
-            $maxnb = $kd_kelompok . '1';
-        }
-        $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
 
-        if ($cekbox25 >= 25) {
-            $nextnb = substr($maxnb, 2) + 1;
-            $nourutbox = $kd_kelompok . $nextnb;
-
-            return Pengecekan::create([
-                'kecamatan' => $request->kecamatan,
-                'desa' => $request->desa,
-                'kelompok_id' => auth()->user()->kelompok_id,
-                'keterangan' => $request->keterangan,
-                'no_208' => $request->no_208,
-                'no_berkas' => $request->no_berkas,
-                'no_box' => $nourutbox,
-                'no_su' => $request->no_su,
-                'no_hak' => $request->no_hak,
-                'pemegang' => $request->pemegang,
-                'tahun' => $request->tahun,
-            ]);
+        $cekdata = Pengecekan::where('no_berkas',$request->no_berkas)
+                            ->where('no_hak',$request->no_hak)->first();
+        if($cekdata != null)
+        {
+            Session::flash('danger', 'Data sudah diimput oleh kelompok '. $cekdata->kelompok_id);
+            return View::make('layouts/alerts');
         }else{
-            $nextnb = substr($maxnb, 2);
-            $nourutbox = $kd_kelompok . $nextnb;
+            $kelompok_id = auth()->user()->kelompok_id;
+            $maxnb = Pengecekan::where('kelompok_id', $kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
+            if ($maxnb == null) {
+                $maxnb = $kd_kelompok . '1';
+            }
+            $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
 
-            return Pengecekan::create([
-                'kecamatan' => $request->kecamatan,
-                'desa' => $request->desa,
-                'kelompok_id' => auth()->user()->kelompok_id,
-                'keterangan' => $request->keterangan,
-                'no_208' => $request->no_208,
-                'no_berkas' => $request->no_berkas,
-                'no_box' => $nourutbox,
-                'no_su' => $request->no_su,
-                'no_hak' => $request->no_hak,
-                'pemegang' => $request->pemegang,
-                'tahun' => $request->tahun,
-            ]);
+            if ($cekbox25 >= 25) {
+                $nextnb = substr($maxnb, 2) + 1;
+                $nourutbox = $kd_kelompok . $nextnb;
+
+                Pengecekan::create([
+                    'kecamatan' => $request->kecamatan,
+                    'desa' => $request->desa,
+                    'kelompok_id' => auth()->user()->kelompok_id,
+                    'keterangan' => $request->keterangan,
+                    'no_208' => $request->no_208,
+                    'no_berkas' => $request->no_berkas,
+                    'no_box' => $nourutbox,
+                    'no_su' => $request->no_su,
+                    'no_hak' => $request->no_hak,
+                    'pemegang' => $request->pemegang,
+                    'tahun' => $request->tahun,
+                ]);
+            } else {
+                $nextnb = substr($maxnb, 2);
+                $nourutbox = $kd_kelompok . $nextnb;
+
+                Pengecekan::create([
+                    'kecamatan' => $request->kecamatan,
+                    'desa' => $request->desa,
+                    'kelompok_id' => auth()->user()->kelompok_id,
+                    'keterangan' => $request->keterangan,
+                    'no_208' => $request->no_208,
+                    'no_berkas' => $request->no_berkas,
+                    'no_box' => $nourutbox,
+                    'no_su' => $request->no_su,
+                    'no_hak' => $request->no_hak,
+                    'pemegang' => $request->pemegang,
+                    'tahun' => $request->tahun,
+                ]);
+            }
+            Session::flash('info', 'Data Berhasil Disimpan');
+            return View::make('layouts/alerts');
         }
-        Session::flash('info', 'Data Berhasil Diubah');
-        return View::make('layouts/alerts');
 
     }
 
@@ -182,10 +194,11 @@ class PengecekanController extends Controller
     public function autoComplete(Request $request)
     {
         $query = $request->get('term','');
+
         $dataptsl=DataPtsl::where('no_berkas','LIKE','%'.$query.'%')->orWhere('tahun','LIKE','%'.$query.'%')->limit(30)->get();
         $data=array();
         foreach ($dataptsl as $ptsl) {
-                $data[]=array('value'=>'No Berkas :'.$ptsl->no_berkas.' / Tahun :'.$ptsl->tahun, 'id'=>$ptsl->no_berkas);
+                $data[]=array('value'=>'No Berkas :'.$ptsl->no_berkas.' || No Hak :'.$ptsl->no_hak. ' || Tahun :' . $ptsl->tahun, 'id'=>$ptsl->no_berkas);
         }
         if (count($data)) {
             return $data;

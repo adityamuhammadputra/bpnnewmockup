@@ -133,7 +133,7 @@
                     },
                 },
                 aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-                {{-- iDisplayLength: 15 --}}
+                iDisplayLength: 25
             })
         
             yadcf.init(Table, [
@@ -224,7 +224,8 @@
                         $('#data-pengecekan').dataTable().api().ajax.reload();
                         $("#form-pengecekan").load(document.URL + '" #form-pengecekan"');
                         $('#form-pengecekan form')[0].reset();
-                        $("#form-panel").slideUp();
+                        $('#form-pengecekan form')[0].reset();
+                        $('#form-panel').show();
                         swal({
                             title:'Berhasil!',
                             text:'Data Berhasil Dihapus',
@@ -259,12 +260,8 @@
                             $('#form-pengecekan form')[0].reset();
                             $('#form-panel').show();
                             $('.tombol-simpan').text('Simpan');
-                            swal({
-                                title:'Berhasil!',
-                                text:'Permintaan anda berhasil',
-                                type:'success',
-                                timer:'1500'
-                            })
+                            $('div.flash-message').html(data);
+                           
                         },
                         error: function () {
                             swal({
