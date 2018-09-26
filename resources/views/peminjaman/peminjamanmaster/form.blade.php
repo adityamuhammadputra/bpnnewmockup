@@ -69,8 +69,8 @@
                     <label for="name" class="control-label">Ruang</label>
                     <select name="ruang" id="ruang" class="form-control">
                         <option value="">--Pilih Penyimpanan--</option>
-                        <option value="robotic">Robotic</option>
-                        <option value="rak">Rak</option>
+                        <option value="ROBOTIC">Robotic</option>
+                        <option value="RAK">Rak</option>
                     </select>
                     <span class="help-block with-errors"></span>
                 </div>        

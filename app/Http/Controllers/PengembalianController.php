@@ -98,28 +98,12 @@ class PengembalianController extends Controller
     }
 
     public function cekdetail(Request $request){
-        // $checkall = PeminjamanDetail::where('peminjaman_id',$request->peminjaman_id)->pluck('status_detail')->toArray();
-        $check = PeminjamanDetail::where('id', '=', $request->id)
-            ->first();
+        // return $request->id;
         
-
-        if($check->status_detail == 0){
-            $data = PeminjamanDetail::find($request->id);
-            $data->status_detail = 1;
-            $data->tanggal_kembali = Carbon::now();
-            $data->update();
-           
-        } 
-        else{
-            $data = PeminjamanDetail::find($request->id);
-            $data->status_detail = 0;
-            $data->tanggal_kembali = '';
-            $data->update();
-        }
-        // if(in_array(1,$checkall)){
-
-        // }
-        Session::flash('info', 'Data Berhasil Diubah');
+        PeminjamanDetail::where('id', '=', $request->id)
+            ->update(['status_detail' => '2']);
+      
+        Session::flash('info', 'Data Berhasil Dikembalikan');
         return View::make('layouts/alerts');
 
         
@@ -157,29 +141,18 @@ class PengembalianController extends Controller
     
     public function apiPengembalianDetail()
     {
-        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',0);
-        // return $data;
+        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',1);
 
         return Datatables::of($data)
         ->addColumn('action',function($data){
-            if($data->status_detail == 1){
-                return '<a id="cekdetail" data-value="'.$data->status_detail.'" data-peminjaman_id="'.$data->peminjaman_id.'" data-id="'.$data->id.'" class="btn btn-success btn-sm">
-                        <i class="fa fa-check-square-o"></i> 
-                    </a> '.
-                    '<a id="detailData" data-id="'.$data->id .'" data-idbukutanah="'.$data->idbukutanah .'" data-no_hak="'.$data->no_hak .'" data-jenis_hak="'.$data->jenis_hak .'" 
-                        data-desa="'.$data->desa .'" data-kecamatan="'.$data->kecamatan .'" data-no_warkah="'.$data->no_warkah .'" data-nama="'.$data->peminjamanheader->nama .'"
-                        class ="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o">
-                    </i> </a>';
-            }
-            else{
-                return '<a id="cekdetail" data-value="'.$data->status_detail.'" data-peminjaman_id="'.$data->peminjaman_id.'" data-id="'.$data->id.'" class="btn btn-warning btn-sm">
-                        <i class="fa fa-window-close-o"></i> 
-                    </a> '.
-                    '<a id="detailData" data-id="'.$data->id .'" data-idbukutanah="'.$data->idbukutanah .'" data-no_hak="'.$data->no_hak .'" data-jenis_hak="'.$data->jenis_hak .'" 
-                        data-desa="'.$data->desa .'" data-kecamatan="'.$data->kecamatan .'" data-no_warkah="'.$data->no_warkah .'" data-nama="'.$data->peminjamanheader->nama .'"
-                        class ="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o">
-                    </i> </a>';
-            }
+           
+            return '<a id="cekdetail" data-value="'.$data->status_detail. '" data-id_detail="'.$data->id.'" class="btn btn-warning btn-sm">
+                    <i class="fa fa-window-close-o"></i> 
+                </a> '.
+                '<a id="detailData" data-id="'.$data->id .'" data-idbukutanah="'.$data->idbukutanah .'" data-no_hak="'.$data->no_hak . '" data-no_su="' . $data->no_su . '" data-jenis_hak="'.$data->jenis_hak .'" 
+                    data-desa="'.$data->desa .'" data-kecamatan="'.$data->kecamatan .'" data-no_warkah="'.$data->no_warkah .'" data-nama="'.$data->peminjamanheader->nama .'"
+                    class ="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o">
+                </i> </a>';
         })->rawColumns(['action'])->make(true);
 
     }

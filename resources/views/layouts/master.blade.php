@@ -109,33 +109,45 @@
 		<ul class="nav menu">
 			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard PTSL</a></li>
 			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
-			<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Warkah Kab. Bogor</a></li>
+			<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
+			<li class="parent {{ request()->is('peminjaman/master') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-4">
+				<em class="fa fa-navicon">&nbsp;</em>BukuTanah <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-4">
+					<li><a class="" href="{{ url('peminjaman/master') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Buku Tanah Penataan
+					</a></li>
+					<li><a class="" href="{{ url('peminjamanmasterwalboard') }}" target="_blank">
+						<span class="fa fa-arrow-right">&nbsp;</span> Buku Tanah Wallboard
+					</a></li>
+					<li><a class="" href="{{ url('peminjaman/history') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Buku Tanah History
+					</a></li>
+				</ul>
+			</li>		
 			<li class="parent {{ request()->is('ptsl/pengecekan') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Program PTSL <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-1">
 					<li><a class="" href="{{ route('dataptsl.index') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Data PTSL
+						<span class="fa fa-arrow-right">&nbsp;</span> PTSL Data Master
 					</a></li>
 					<li><a class="" href="{{ url('pengecekan') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Pengecekan PTSL
+						<span class="fa fa-arrow-right">&nbsp;</span> PTSL Pengecekan 
 					</a></li>
 				</ul>
 			</li>
-			<li class="parent {{ request()->is('peminjaman/master') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
+			<li class="parent {{ request()->is('peminjaman/proses') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-dropbox">&nbsp;</em> Peminjaman <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-2">
-					<li><a class="" href="{{ url('peminjaman/master') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Master
-					</a></li>
 					<li><a class="" href="{{ url('peminjaman/proses') }}">
 							<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Proses
 					</a></li>
 					<li><a class="" href="{{ url('peminjaman/kegiatan') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kegiatan
 					</a></li>
-					<li><a class="" href="{{ url('peminjaman') }}">
+					<li><a class="" href="{{ url('peminjaman') }}" >
 						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kontrol
 					</a></li>
 				</ul>
@@ -145,10 +157,13 @@
 				</a>
 				<ul class="children collapse" id="sub-item-3">
 					<li><a class="" href="{{ url('pengembalian') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> Proses Pengembalian 
+						<span class="fa fa-arrow-right">&nbsp;</span> Pengembalian Proses 
+					</a></li>
+					<li><a class="" href="{{ url('pengembalianwallboard') }}" target="_blank">
+						<span class="fa fa-arrow-right">&nbsp;</span> Pengembalian Wallboard
 					</a></li>
 					<li><a class="" href="{{ url('pengembalianhistory') }}">
-						<span class="fa fa-arrow-right">&nbsp;</span> History Pengembalian
+						<span class="fa fa-arrow-right">&nbsp;</span> Pengembalian History
 					</a></li>
 				</ul>
 			</li>

@@ -31,20 +31,24 @@ class PengembalianHistoryController extends Controller
 
     public function apiPengembalianHistory()
     {
-        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail', 1);
+        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail', 2);
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
-                if ($data->status_detail == 1) {
-                    return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-success btn-sm">
-                        <i class="fa fa-check-square-o"></i> 
-                    </a> ' ;
-                } else {
-                    return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-warning btn-sm">
-                        <i class="fa fa-window-close-o"></i> 
-                    </a> ' ;
-                }
+            return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-success btn-sm">
+                <i class="fa fa-check-square-o"></i> 
+            </a> ' ;
             })->rawColumns(['action'])->make(true);
+
+    }
+
+    public function cekdetail(Request $request)
+    {
+        PeminjamanDetail::where('id', '=', $request->id)
+            ->update(['status_detail' => '1']);
+
+        Session::flash('info', 'Data Berhasil Dikembalikan Ke Pengembalian');
+        return View::make('layouts/alerts');
 
     }
 

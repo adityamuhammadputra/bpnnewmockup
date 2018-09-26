@@ -33,8 +33,19 @@ Route::get('api/peminjamanmaster', 'PeminjamanMasterController@apipeminjamanmast
 
 //Peminjaman
 Route::resource('peminjaman/master','PeminjamanMasterController');
-Route::get('peminjamanmaster/cek','PeminjamanMasterController@cek');
+Route::get('peminjamanmastercek','PeminjamanMasterController@cek');
+Route::get('peminjamanmastercekpijam','PeminjamanMasterController@cekpinjam');
 Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaster')->name('api.peminjaman.master');
+
+Route::get('peminjamanmasterwalboard', 'PeminjamanMasterWallboardController@index');
+Route::get('api/peminjamanmasterwalboard', 'PeminjamanMasterWallboardController@apiPeinjamanMasterWarllboard');
+Route::get('peminjamanmasterwallboardcekpijam', 'PeminjamanMasterWallboardController@cekpinjam');
+
+Route::get('peminjaman/history','PeminjamanHistoryController@index');
+Route::get('api/peminjamanhistory', 'PeminjamanHistoryController@apiPeminjamanHistory');
+Route::get('peminjamanhistorycekpijam', 'PeminjamanHistoryController@cekpinjam');
+
+
 
 Route::resource('peminjaman/proses','PeminjamanProsesController');
 Route::delete('peminjamandetail/proses/{id}', 'PeminjamanProsesController@destroydetail');
@@ -51,7 +62,8 @@ Route::get('api/peminjamankegiatan', 'PeminjamanKegiatanController@apiPeminjaman
 Route::get('api/peminjamankegiatan/{id}', 'PeminjamanKegiatanController@apiPeminjamanKegiatanDetail');
 Route::get('peminjamankegiatancek', 'PeminjamanKegiatanController@cek');
 Route::get('peminjamankegiatancekdetail', 'PeminjamanKegiatanController@cekdetail');
-
+Route::get('peminjamankegiatandetail/{id}', 'PeminjamanKegiatanController@datadetail');
+Route::patch('peminjamankegiatandetailupdate/{id}', 'PeminjamanKegiatanController@datadetailupdate');
 
 
 
@@ -69,6 +81,12 @@ Route::get('pengembaliancekdetail','PengembalianController@cekdetail');
 
 Route::resource('pengembalianhistory', 'PengembalianHistoryController');
 Route::get('api/pengembalianhistory', 'PengembalianHistoryController@apiPengembalianHistory');
+Route::get('pengembaliancekdetailhistory', 'PengembalianHistoryController@cekdetail');
+
+// Pengembalian Wallboard
+Route::resource('pengembalianwallboard', 'PengembalianWallboardController');
+
+
 
 
 

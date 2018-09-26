@@ -36,11 +36,41 @@ class PeminjamanMasterController extends Controller
             $data->status = 0;
             $data->update();
         }
+        Session::flash('info', 'Berhasil');
+        return View::make('layouts/alerts');
+
+    }
+    public function cekpinjam(Request $request)
+    {
+
+        $checklike = PeminjamanMaster::where('id', '=', $request->id)
+            ->where('status_pinjam', '=', $request->status_pinjam)
+            ->first();
+
+        if ($checklike->status_pinjam == 0) {
+            $data = PeminjamanMaster::find($request->id);
+            $data->status_pinjam = 1;
+            $data->update();
+
+            Session::flash('info', 'Data Telah Masuk Diwallboard');
+            return View::make('layouts/alerts');
+
+        } else {
+            $data = PeminjamanMaster::find($request->id);
+            $data->status = 0;
+            $data->update();
+
+            Session::flash('info', 'Data Telah Dihapus Diwallboard');
+            return View::make('layouts/alerts');
+        }
+        
 
     }
 
     public function apiPeminjamanMaster()
     {
+        // return Datatables::of(PeminjamanMaster::orderBy('idbukutanah', 'asc'))->toJson();
+
         $data = PeminjamanMaster::orderBy('status', 'desc');
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
@@ -48,21 +78,26 @@ class PeminjamanMasterController extends Controller
 
                     return '<a id="cek" data-value="' . $data->status . '" data-id="' . $data->id . '" class="btn btn-success">
                             <i class="fa fa-check-square-o"></i> 
-                        </a>                       
-                        ' .
-                        ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
-                        </i> </a>' .
-                        ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
-                        </i> </a>';
+                            </a> ' .
+                            ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                            </i> </a>' .
+                            ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                            </i> </a>'.
+                            '<a id="cekpinjam" data-value="' . $data->status_pinjam . '" data-id="' . $data->id . '" class="btn btn-warning">
+                                <i class="fa fa-rocket"></i> 
+                            </a>';
                 } else {
                     return '<a id="cek" data-value="' . $data->status . '" data-id="' . $data->id . '" class="btn btn-warning">
                             <i class="fa fa-window-close-o"></i> 
-                        </a>                       
-                        ' .
-                        ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
-                        </i> </a>' .
-                        ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
-                        </i> </a>';
+                            </a>' .
+                            ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                            </i> </a>' .
+                            ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                            </i> </a>'.
+                            '<a id="cekpinjam" data-value="' . $data->status_pinjam . '" data-id="' . $data->id . '" class="btn btn-warning">
+                                <i class="fa fa-rocket"></i> 
+                            </a>';
+                    
                 }
 
             })->rawColumns(['action'])->make(true);

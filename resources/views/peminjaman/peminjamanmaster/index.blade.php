@@ -33,7 +33,6 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-master">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th></th>
                                     <th></th>
                                     <th>Jenis Hak</th>
@@ -70,7 +69,6 @@
                 serverSide:true,
                 ajax:"{{ route('api.peminjaman.master') }}",
                 columns: [
-                    {data: 'id',name:'id'},
                     {data: 'no_box',name:'no_box'},
                     {data: 'idbukutanah',name:'idbukutanah'},
                     {data: 'jenis_hak',name:'jenis_hak'},
@@ -100,7 +98,7 @@
                     orderable:false ,
                     targets: 0
                 } ], 
-                order: [[ 2, 'asc' ]],
+                order: [[ 10, 'desc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -123,19 +121,19 @@
         
             yadcf.init(Table, [
                 {
-                    column_number: 1,
+                    column_number: 0,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No Bundel"
                 },
                 {
-                    column_number: 2,
+                    column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
-                    filter_default_label: "ID Buku Tanah"
+                    filter_default_label: "Buku Tanah"
                 },
                 {
-                    column_number: 4,
+                    column_number: 3,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No Hak"
@@ -260,11 +258,9 @@
             });
         }
 
-        
-
         $(document).on('click', "#cek", function (e) {
             e.preventDefault();
-            var id = $(this).data('id')
+            var id = $(this).data('id');
             var status = $(this).data('value');
             $.ajaxSetup({
                 headers: {
@@ -272,7 +268,7 @@
                 }
               });
               $.ajax({
-              url: "{{ url('peminjamanmaster/cek')}}",
+              url: "{{ url('peminjamanmastercek')}}",
               type: "GET",
               data: {status:status , id:id},
                 success: function (data) {
@@ -284,6 +280,26 @@
                 }
               });
           });
+          $(document).on('click', "#cekpinjam", function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            var status_pinjam = $(this).data('value');
+            
+              $.ajax({
+              url: "{{ url('peminjamanmastercekpijam')}}",
+              type: "GET",
+              data: {status_pinjam:status_pinjam , id:id},
+                success: function (data) {
+                  $('#data-master').dataTable().api().ajax.reload();
+                  $('div.flash-message').html(data);
+                },
+                error: function () {
+                  alert('Oops! error!');
+                }
+              });
+          });
+
+          
        
         
         

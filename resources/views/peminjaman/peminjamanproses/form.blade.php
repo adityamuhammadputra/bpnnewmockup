@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name" class="control-label">Nama Pemohon</label>
+                    <label for="name" class="control-label">Nama Peminjam</label>
                     <input type="text" class="form-control" name="nama" id="nama" required >
                     <span class="help-block with-errors"></span>
                 </div>

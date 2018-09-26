@@ -47,13 +47,65 @@
         </div>
     </div>
     @include('peminjaman.peminjamankegiatan.modaldetail')
+    @include('peminjaman.peminjamankegiatan.modaldetaildetail')
 
 
 @push('scripts')
     <script>
         $("#form-panel").hide();
-        
        
+        function datadetail(id) {
+            save_method = 'edit';
+            $('#modal-formdetail form')[0].reset();
+            $('input[name=_method]').val('PATCH');
+            $.ajax({
+                url: "{{ url('peminjamankegiatandetail')}}/" + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function (data) {
+                    $('#modal-formdetail').modal('show');
+                    $('#id').val(data.id);
+                    $('#idbukutanah').val(data.idbukutanah);
+                    $('#no_hak').val(data.no_hak);
+                    $('#jenis_hak').val(data.jenis_hak);
+                    $('#desa').val(data.desa);
+                    $('#kecamatan').val(data.kecamatan);
+                    $('#no_warkah').val(data.no_warkah);
+                    $('#no_su').val(data.no_su);
+                },
+                error: function () {
+                    alert("Data tidak ada!");
+                }
+            });
+        }
+
+        $(function () {
+            $('#modal-formdetail form').validator().on('submit', function (e) {
+                if (!e.isDefaultPrevented()) {
+                    var id = $('#id').val();
+                    url = "{{ url('peminjamankegiatandetailupdate') . '/'}}" + id;
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: $('#modal-formdetail form').serialize(),
+                        success: function (data) {
+                            $('#modal-formdetail').modal('hide');
+                            $('#data-detail').dataTable().api().ajax.reload();
+                            $('div.flash-message').html(data);
+                        },
+                        error: function () {
+                            swal({
+                                title:'opss..',
+                                text: 'Terjadi Error, Silahkan Hubungi Pengembang',
+                                type:'error',
+                                timer: '1500'
+                            })
+                        }
+                    });
+                    return false;
+                }
+            });
+        });
 
         $(function () {
             $('#form-peminjamanproses form').validator().on('submit', function (e) {

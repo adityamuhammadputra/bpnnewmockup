@@ -59,14 +59,13 @@
         e.preventDefault();
         var id = $(this).data('id')
         var status_detail = $(this).data('value');
-        var peminjaman_id = $(this).data('peminjaman_id');
         $.ajaxSetup({
             headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-            url: "{{ url('pengembaliancekdetail')}}",
+            url: "{{ url('pengembaliancekdetailhistory')}}",
             type: "GET",
             data: {status_detail:status_detail, id:id},
                 success: function (data) {
@@ -107,7 +106,7 @@
                     data: 'status_detail',
                     name:'status_detail',
                     "render": function ( data, type, row ){
-                        if(data === '1'){
+                        if(data === '2'){
                             return '<span class="label label-success">Sudah Dikembalikan</span>';
                         }
                         else{

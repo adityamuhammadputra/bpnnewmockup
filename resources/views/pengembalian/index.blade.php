@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Proses Pengembalian
+                    Pengembalian Proses
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
@@ -25,19 +25,19 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
                             <thead>
                                 <tr>
-                                    <th width="12%">Penangggung Jawab</th>
+                                    <th width="10%">Penanggung Jawab</th>
                                     <th width="10%">Peminjaman Via</th>
+                                    <th>Tanggal Pinjam</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
-                                    <th width="10%"> </th> 
-                                    <th width="10%"> </th> 
+                                    <th width="10%"></th> 
+                                    <th width="10%"></th> 
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
-                                    <th>Tanggal Pinjam</th>
                                     <th width="10%">Keterangan</th>
-                                    {{-- <th>Tanggal Kembali</th> --}}
+                                    <th>Tanggal Kembali</th>
                                     <th width="10%">Status</th>
-                                    <th width="12%"></th>
+                                    <th width="12%">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -56,9 +56,8 @@
 
     $(document).on('click', "#cekdetail", function (e) {
         e.preventDefault();
-        var id = $(this).data('id')
+        var id = $(this).data('id_detail');
         var status_detail = $(this).data('value');
-        var peminjaman_id = $(this).data('peminjaman_id');
         $.ajaxSetup({
             headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -67,7 +66,7 @@
             $.ajax({
             url: "{{ url('pengembaliancekdetail')}}",
             type: "GET",
-            data: {status_detail:status_detail, id:id},
+            data: {id:id,status_detail:status_detail},
                 success: function (data) {
                 $('#data-detail').dataTable().api().ajax.reload();
                 $('div.flash-message').html(data);
@@ -91,21 +90,21 @@
             columns: [
                 {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
                 {data: 'peminjamanheader.via',name:'peminjamanheader.via'},
+                {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
                 {data: 'desa',name:'desa'},
                 {data: 'kecamatan',name:'kecamatan'},
                 {data: 'no_warkah',name:'no_warkah'},
                 {data: 'no_su',name:'no_su'},
-                {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
                 {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
-                // {data: 'tanggal_kembali',name:'tanggal_kembali'},
+                {data: 'tanggal_kembali',name:'tanggal_kembali'},
 
                 {   
                     data: 'status_detail',
                     name:'status_detail',
                     "render": function ( data, type, row ){
-                        if(data === '1'){
+                        if(data === '2'){
                             return '<span class="label label-success">Sudah Dikembalikan</span>';
                         }
                         else{
@@ -121,7 +120,7 @@
                 orderable:false,
                 targets: 0
             } ],  
-            order: [[ 8, 'desc' ]],
+            order: [[ 4, 'desc' ]],
             language: {
                 lengthMenu: "Menampilkan _MENU_",
                 zeroRecords: "Data tidak ada",
@@ -144,19 +143,19 @@
         }),
          yadcf.init(TableDetail, [
             {
-                column_number: 2,
+                column_number: 3,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
             },
             {
-                column_number: 4,
+                column_number: 5,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Desa "
             },
             {
-                column_number: 5,
+                column_number: 6,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Kecamatan"

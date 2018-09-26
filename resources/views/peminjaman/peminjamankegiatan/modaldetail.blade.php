@@ -14,14 +14,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="control-label">Nama Pemohon</label>
-                                <input type="text" class="form-control" name="nama" id="namadetail" required > 
+                                <input type="text" class="form-control" name="nama" id="namadetail" required readonly > 
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="control-label">NIP</label>
-                                <input type="number" class="form-control" name="nip" id="nipdetail">
+                                <input type="number" class="form-control" name="nip" id="nipdetail" readonly>
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -30,14 +30,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Unit Kerja</label>
-                                <input type="text" class="form-control" name="unit_kerja" id="unit_kerjadetail">
+                                <input type="text" class="form-control" name="unit_kerja" id="unit_kerjadetail" readonly>
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Kegiatan</label>
-                                    {{ Form::select('kegiatan', $kegiatan, request()->get('id'), ['id' => 'kegiatandetail', 'class' => 'form-control', 'required'=>'true']) }}
+                                    {{ Form::select('kegiatan', $kegiatan, request()->get('id'), ['id' => 'kegiatandetail', 'class' => 'form-control', 'required'=>'true','readonly'=>'true','disabled'=>'ture']) }}
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                             <div class="form-group">
                                 <label for="name" class="control-label">Tanggal Pinjam</label>
                                 <div class='input-group'>
-                                    <input type='text' id="tanggal_pinjamdetail" name="tanggal_pinjam" class="form-control date" required/>
+                                    <input type='text' id="tanggal_pinjamdetail" name="tanggal_pinjam" class="form-control date" required readonly/>
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -59,7 +59,7 @@
                             <div class="form-group">
                                 <label for="name" class="control-label">Tanggal Kembali</label>
                                 <div class='input-group'>
-                                    <input type='text' id="tanggal_kembalidetail" name="tanggal_kembali" class="form-control date" required/>
+                                    <input type='text' id="tanggal_kembalidetail" name="tanggal_kembali" class="form-control date"/>
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -70,7 +70,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="control-label">Peminjaman Via</label>
-                                <input type="text" class="form-control" name="via" id="viadetail">
+                                <input type="text" class="form-control" name="via" id="viadetail" readonly>
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -92,9 +92,6 @@
                             <tbody>
                             </tbody>
                         </table>
-                    </div>
-                    <div class="row text-center">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i> <t class="tombol-simpan">Simpan Perubahan</t></button>
                     </div>
                 </form>
             </div>
