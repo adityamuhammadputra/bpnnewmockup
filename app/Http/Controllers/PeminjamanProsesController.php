@@ -210,7 +210,7 @@ class PeminjamanProsesController extends Controller
     {
         $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->where('status',0)->orderBy('updated_at','desc');
         return Datatables::of($data)
-          
+           
             ->addColumn('action',function($data){
                 return ' <span class="label label-danger label-borok">' . $data->jumlahpinjam . '</span><a href="cetak/peminjamanproses/'.$data->id. '"  class ="btn btn-info"><em class="fa fa-print">
                         </em> </a>' .
