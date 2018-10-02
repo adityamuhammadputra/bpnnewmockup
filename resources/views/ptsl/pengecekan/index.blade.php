@@ -115,7 +115,7 @@
                     orderable: ,
                     targets: 0
                 } ],  --}}
-                {{-- order: false, --}}
+                // order: [[ 9, 'asc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -229,7 +229,7 @@
                     success: function(data) {
                         $('#data-pengecekan').dataTable().api().ajax.reload();
                         $("#form-pengecekan").load(document.URL + '" #form-pengecekan"');
-                        $('#form-pengecekan form')[0].reset();
+                        $("#no_box").load(document.URL + '" #no_box"');
                         $('#form-pengecekan form')[0].reset();
                         $('#form-panel').show();
                         swal({

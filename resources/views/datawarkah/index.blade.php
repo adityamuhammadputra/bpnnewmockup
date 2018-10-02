@@ -35,6 +35,7 @@
                                     <th>Lokasi Ruang</th>
                                     <th>Baris</th>
                                     <th>Posisi</th>
+                                    <th>Rak</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -66,6 +67,7 @@
                     {data: 'lokasi_ruang',name:'lokasi_ruang'},
                     {data: 'baris',name:'baris'},
                     {data: 'posisi',name:'posisi'},
+                    {data: 'rak',name:'rak'},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                 {{--  columnDefs: [ {

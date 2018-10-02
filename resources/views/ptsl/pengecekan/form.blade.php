@@ -76,7 +76,7 @@
                <div class="col-md-2">
                     <div class="form-group">
                         <label for="name" class="control-label">No Urut Box</label>
-                        <input type="text" class="form-control" name="no_box" value="{{$nourutbox}}" readonly>
+                        <input type="text" class="form-control" name="no_box" id="no_box" value="{{$nourutbox}}" readonly>
                         <span class="help-block with-errors"></span>
                     </div>
                </div>

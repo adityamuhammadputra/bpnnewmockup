@@ -1075,6 +1075,10 @@ p.back-link {
 }
 #yadcf-filter--data-detail-3
 {
+    width:80px !important;
+}
+#yadcf-filter--data-detail-1
+{
     width:70px !important;
 }
 #yadcf-filter--data-detail-6
@@ -1113,6 +1117,8 @@ p.back-link {
 {
     width:80px !important;
 }
+
+
 
 .label-borok
 {

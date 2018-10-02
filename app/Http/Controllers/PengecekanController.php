@@ -46,10 +46,10 @@ class PengecekanController extends Controller
         $kelompok_id = auth()->user()->kelompok_id;
         
         if($user_id == 2){
-            $data = Pengecekan::orderBy('no_box','desc');
+            $data = Pengecekan::orderBy('created_at','desc');
         }
         else{
-            $data = Pengecekan::where('kelompok_id', $kelompok_id)->orderBy('no_box','desc');
+            $data = Pengecekan::where('kelompok_id', $kelompok_id)->orderBy('created_at','desc');
         }
 
         return Datatables::of($data)
@@ -67,20 +67,26 @@ class PengecekanController extends Controller
         $kd_kelompok = $data->kelompok->kd_kelompok;
 
         $kelompok_id = auth()->user()->kelompok_id;
-        $maxnb = Pengecekan::where('kelompok_id', $kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
+        $maxnb = DB::table('tbl_pengecekan')
+            ->select(DB::raw('max(cast(substr(no_box,3) as signed)) as maxnb'))
+            ->where('kelompok_id', $kelompok_id)
+            ->pluck('maxnb');
+
         if ($maxnb == null) {
             $maxnb = $kd_kelompok . '1';
         }
-        $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
+        $cekbox25 = Pengecekan::where('no_box', $kd_kelompok.$maxnb[0])->where('kelompok_id', $kelompok_id)->count();
 
         if ($cekbox25 >= 25) {
-            $nextnb = substr($maxnb, 2) + 1;
+            $nextnb = $maxnb[0] + 1;
+
             $nourutbox = $kd_kelompok . $nextnb;
 
             return view('ptsl.pengecekan.index',compact('nourutbox'));
 
         } else {
-            $nextnb = substr($maxnb, 2);
+            $nextnb = $maxnb[0];
+
             $nourutbox = $kd_kelompok . $nextnb;
 
             return view('ptsl.pengecekan.index',compact('nourutbox'));
@@ -104,14 +110,21 @@ class PengecekanController extends Controller
             return View::make('layouts/alerts');
         }else{
             $kelompok_id = auth()->user()->kelompok_id;
-            $maxnb = Pengecekan::where('kelompok_id', $kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
+
+            // return $user = DB::query('tbl_pengecekan')->substr('no_box',2)->first();
+            $maxnb = DB::table('tbl_pengecekan')
+                ->select(DB::raw('max(cast(substr(no_box,3) as signed)) as maxnb'))
+                ->where('kelompok_id', $kelompok_id)
+                ->pluck('maxnb');
+            
+            // $maxnb = Pengecekan::where('kelompok_id', $kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
             if ($maxnb == null) {
                 $maxnb = $kd_kelompok . '1';
             }
-            $cekbox25 = Pengecekan::where('no_box', $maxnb)->where('kelompok_id', $kelompok_id)->count();
+            $cekbox25 = Pengecekan::where('no_box', $kd_kelompok.$maxnb[0])->where('kelompok_id', $kelompok_id)->count();
 
             if ($cekbox25 >= 25) {
-                $nextnb = substr($maxnb, 2) + 1;
+                $nextnb = $maxnb[0] + 1;
                 $nourutbox = $kd_kelompok . $nextnb;
 
                 Pengecekan::create([
@@ -128,7 +141,7 @@ class PengecekanController extends Controller
                     'tahun' => $request->tahun,
                 ]);
             } else {
-                $nextnb = substr($maxnb, 2);
+                $nextnb = $maxnb[0];
                 $nourutbox = $kd_kelompok . $nextnb;
 
                 Pengecekan::create([
