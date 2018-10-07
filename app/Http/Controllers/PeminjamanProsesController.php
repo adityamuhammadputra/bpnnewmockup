@@ -18,6 +18,7 @@ use App\PeminjamanMaster;
 use App\PeminjamanDetail;
 use App\Pegawai;
 use App\Kegiatan;
+use App\Via;
 
 class PeminjamanProsesController extends Controller
 {
@@ -26,10 +27,19 @@ class PeminjamanProsesController extends Controller
     {
         $kegiatan = Kegiatan::orderBy('no_urut','asc')->pluck('nama_kegiatan','id')->toArray();
         $kegiatan = ['' => '---- Pilih Kegiatan ----'] + $kegiatan;
+
+        $via = Via::orderBy('nama','asc')->pluck('nama','nama')->toArray();
+        // $via = ['' => '---- Pilih Via ----'] + $via;
         
 
-        return view('peminjaman.peminjamanproses.index',compact('kegiatan'));
+        return view('peminjaman.peminjamanproses.index',compact('kegiatan','via'));
 
+    }
+
+    public function getVia(Request $request)
+    {
+        $via = Via::where('kegiatan_id',$request->peminjaman_id)->pluck('nama','nama');
+        return response()->json($via);
     }
 
     public function store(Request $request)
@@ -208,14 +218,14 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProses()
     {
-        $data = Peminjaman::with('kegiatan')->where('kd_kantor',auth()->user()->kd_kantor)->where('status',0)->orderBy('updated_at','desc');
+        $data = Peminjaman::with('kegiatan','kegiatanvia')->where('kd_kantor',auth()->user()->kd_kantor)->where('status',0)->orderBy('updated_at','desc');
         return Datatables::of($data)
            
             ->addColumn('action',function($data){
                 return ' <span class="label label-danger label-borok">' . $data->jumlahpinjam . '</span><a href="cetak/peminjamanproses/'.$data->id. '"  class ="btn btn-info"><em class="fa fa-print">
                         </em> </a>' .
                         ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" data-nip="'.$data->nip .'" data-unitkerja="'.$data->unit_kerja .'" 
-                            data-kegiatan="'.$data->kegiatan .'" data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali . '" 
+                            data-kegiatan="'.$data->kegiatan .'"data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali . '" 
                              data-via="' . $data->via . '" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
                         ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">

@@ -80,9 +80,9 @@
                             <thead>
                                 <tr>
                                     <th width="10%">Id Buku Tanah</th>
-                                    <th width="10%">No.Hak</th>
+                                    <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
-                                    <th width="10%">Desa </th> 
+                                    <th width="10%"></th> 
                                     <th width="10%">Kecamatan </th> 
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
@@ -191,9 +191,23 @@
                 },
             },
             
+            
             aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
             {{-- iDisplayLength: 15 --}}
         })
+        yadcf.init(TableDetail, [
+                {
+                    column_number: 1,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No. Hak"
+                },
+                {
+                    column_number: 3,
+                    filter_type: "text",
+                    filter_default_label: "Desa"
+                }
+            ]);
         
     });
     

@@ -66,7 +66,11 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name" class="control-label">Peminjaman Via</label>
-                    <input type="text" class="form-control" name="via" id="via">
+                    {{-- <input type="text" class="form-control" name="via" id="via"> --}}
+                    
+                    <select name="via" id="via" class="form-control">
+                        <option selected disabled>-- Peminjaman Via --</option>
+                    </select>
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
@@ -213,6 +217,29 @@
                         $("#nip").val(datashow[0].nip);
                         $("#unit_kerja").val(datashow[0].unit_kerja);
                         $('#kegiatan').val(datashow[0].kegiatan_id);
+                        $('#via').val(datashow[0].kegiatan_id);
+                        var peminjaman_id = datashow[0].kegiatan_id;
+                        if(peminjaman_id){
+                            $.ajax({
+                                type:"GET",
+                                url:"{{url('api/via')}}?peminjaman_id="+peminjaman_id,
+                                success:function(res){
+                                    if(res){
+                                        $("#via").empty();
+                                        $("#via").append('<option selected disabled>-- Peminjaman Via --</option>');
+                                        $.each(res,function(key,value) {
+                                            $("#via").append('<option value="'+key+'">'+value+'</option>');
+                                        });
+                                    }else{
+                                        $("#via").empty();
+
+                                    }
+                                }
+                            });
+                        }
+                        else{
+                            $("#via").empty();
+                        }
                     }
                 });
             },
@@ -233,6 +260,10 @@
             });
         });
     });
+
+    $('#kegiatan').change(function(){
+        
+     });
         
 </script>
 @endpush

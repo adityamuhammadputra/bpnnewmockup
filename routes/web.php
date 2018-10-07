@@ -45,8 +45,6 @@ Route::get('peminjaman/history','PeminjamanHistoryController@index');
 Route::get('api/peminjamanhistory', 'PeminjamanHistoryController@apiPeminjamanHistory');
 Route::get('peminjamanhistorycekpijam', 'PeminjamanHistoryController@cekpinjam');
 
-
-
 Route::resource('peminjaman/proses','PeminjamanProsesController');
 Route::delete('peminjamandetail/proses/{id}', 'PeminjamanProsesController@destroydetail');
 Route::get('api/peminjamanproses','PeminjamanProsesController@apiPeminjamanProses')->name('api.peminjaman.proses');
@@ -56,6 +54,8 @@ Route::get('autocompletepegawaishow','PeminjamanProsesController@autoCompletePeg
 Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
 Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@cetak');
+Route::get('api/via', 'PeminjamanProsesController@getVia');
+
 
 Route::resource('peminjaman/kegiatan', 'PeminjamanKegiatanController')->only(['index','edit','update']);
 Route::get('api/peminjamankegiatan', 'PeminjamanKegiatanController@apiPeminjamanKegiatan');

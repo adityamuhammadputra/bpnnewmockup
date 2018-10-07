@@ -32,4 +32,10 @@ class Peminjaman extends Model
     {
         return $this->belongsTo('App\Kegiatan', 'kegiatan', 'id');
     }
+
+    public function kegiatanvia()
+    {
+        return $this->belongsTo('App\Via', 'via', 'kegiatan_id');
+    }
+    
 }

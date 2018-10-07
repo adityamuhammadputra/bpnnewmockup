@@ -70,7 +70,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="control-label">Peminjaman Via</label>
-                                <input type="text" class="form-control" name="via" id="viadetail">
+                                {{-- {{ Form::select('via', $via, request()->get('id'), ['id' => 'viadetails', 'class' => 'form-control', 'required'=>'true']) }} --}}
+                                {{ Form::select('via', $via, request()->get('nama'), ['id' => 'viadetails', 'class' => 'form-control', 'required'=>'true']) }}
+
+                                {{-- <input type="text" class="form-control" id="viadetails"> --}}
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -145,7 +148,7 @@
         $("#namadetail").val(nama);
         $("#nipdetail").val(nip);
         $("#unit_kerjadetail").val(unitkerja);
-        $("#viadetail").val(via);
+        $("#viadetails").val(via);
         $("#kegiatandetail").val(kegiatan);
         $("#tanggal_pinjamdetail").val(tanggalpinjam);
         $("#tanggal_kembalidetail").val(tanggalkembali);
