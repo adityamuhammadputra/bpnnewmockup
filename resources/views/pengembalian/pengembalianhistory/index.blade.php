@@ -25,9 +25,8 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
                             <thead>
                                 <tr>
-                                    <th width="10%">Id Buku Tanah</th>
-                                    <th>NIP</th>
                                     <th width="10%">Nama</th>
+                                    <th width="10%">Via</th>
                                     <th>Tanggal Pinjam</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
@@ -89,9 +88,9 @@
             "bDestroy": true,
             ajax:"{{ url('api/pengembalianhistory')}}",
             columns: [
-                {data: 'idbukutanah',name:'idbukutanah'},
-                {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
+                // {data: 'idbukutanah',name:'idbukutanah'},
                 {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
+                {data: 'peminjamanheader.via',name:'peminjamanheader.via'},
                 {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
@@ -145,19 +144,19 @@
         }),
          yadcf.init(TableDetail, [
             {
-                column_number: 4,
+                column_number: 3,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
             },
             {
-                column_number: 6,
+                column_number: 5,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Desa "
             },
             {
-                column_number: 7,
+                column_number: 6,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Kecamatan"

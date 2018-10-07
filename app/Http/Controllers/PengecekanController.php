@@ -72,12 +72,13 @@ class PengecekanController extends Controller
             ->where('kelompok_id', $kelompok_id)
             ->pluck('maxnb');
 
-        if ($maxnb == null) {
-            $maxnb = $kd_kelompok . '1';
+        if ($maxnb[0] == null) {
+            $maxnb[0] = '1';
         }
+        
         $cekbox25 = Pengecekan::where('no_box', $kd_kelompok.$maxnb[0])->where('kelompok_id', $kelompok_id)->count();
 
-        if ($cekbox25 >= 25) {
+        if ($cekbox25 >= 2) {
             $nextnb = $maxnb[0] + 1;
 
             $nourutbox = $kd_kelompok . $nextnb;
@@ -118,12 +119,12 @@ class PengecekanController extends Controller
                 ->pluck('maxnb');
             
             // $maxnb = Pengecekan::where('kelompok_id', $kelompok_id)->groupBy('no_box')->pluck('no_box')->max();
-            if ($maxnb == null) {
-                $maxnb = $kd_kelompok . '1';
+            if ($maxnb[0] == null) {
+                $maxnb[0] = '1';
             }
             $cekbox25 = Pengecekan::where('no_box', $kd_kelompok.$maxnb[0])->where('kelompok_id', $kelompok_id)->count();
 
-            if ($cekbox25 >= 25) {
+            if ($cekbox25 >= 2) {
                 $nextnb = $maxnb[0] + 1;
                 $nourutbox = $kd_kelompok . $nextnb;
 
