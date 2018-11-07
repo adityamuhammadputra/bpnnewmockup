@@ -18,6 +18,7 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-master">
                             <thead>
                                 <tr>
+                                    <th>No.</th>
                                     <th></th>
                                     <th></th>
                                     <th>Jenis Hak</th>
@@ -56,6 +57,7 @@
                 ajax:"{{ url('api/peminjamanmasterwalboard') }}",
                 columns: [
                     {data: 'no_box',name:'no_box'},
+                    {data: 'no_box',name:'no_box'},
                     {data: 'idbukutanah',name:'idbukutanah'},
                     {data: 'jenis_hak',name:'jenis_hak'},
                     {data: 'no_hak',name:'no_hak'},
@@ -90,35 +92,39 @@
                     },
                 },
                 aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-                iDisplayLength: 15 
+                iDisplayLength: 75 
             })
         
             yadcf.init(Table, [
                 {
-                    column_number: 0,
+                    column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No Bundel"
                 },
                 {
-                    column_number: 1,
+                    column_number: 2,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "Buku Tanah"
                 },
                 {
-                    column_number: 3,
+                    column_number: 4,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No Hak"
                 },
                 
             ]);
-            {{--  Table.on( 'order.dt search.dt', function () {
+            setInterval( function () {
+                Table.ajax.reload( null, false ); // user paging is not reset on reload
+            }, 3000 );
+            
+            Table.on( 'order.dt search.dt', function () {
                 Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;
                 } );
-            } ).draw();  --}}
+            } ).draw();
         });
 
        

@@ -6,15 +6,7 @@
             color: white;
         }
 </style>
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <div class="row">
-        <ol class="breadcrumb">
-            <li><a href="#">
-                <em class="fa fa-check-square-o"></em>
-            </a></li>
-            <li class="active">Stock Opname Fisik Buku Tanah</li>
-        </ol>
-    </div><!--/.row-->
+<div class="">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
@@ -33,17 +25,18 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-master">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th></th>
                                     <th></th>
                                     <th>Jenis Hak</th>
                                     <th></th>
-                                    <th>Desa</th>
-                                    <th>Kecamatan</th>
+                                    <th></th>
+                                    <th></th>
                                     <th>Ruang</th>
                                     <th>Rak</th>
                                     <th>Baris</th>
                                     <th>Keterangan</th>
-                                    <th nowrap>Action</th>
+                                    <th style="coba"> Action </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +51,7 @@
 @push('scripts')
     <script>
         $('#form-panel').hide();
+        $('#sidebar-collapse').hide();
 
         var Table;
         $(document).ready(function () {
@@ -70,6 +64,7 @@
                 ajax:"{{ route('api.peminjaman.master') }}",
                 columns: [
                     {data: 'no_box',name:'no_box'},
+                    {data: 'no_box',name:'no_box'},
                     {data: 'idbukutanah',name:'idbukutanah'},
                     {data: 'jenis_hak',name:'jenis_hak'},
                     {data: 'no_hak',name:'no_hak'},
@@ -79,14 +74,14 @@
                     {data: 'rak',name:'rak'},
                     {data: 'baris',name:'baris'},
                     {   
-                        data: 'status',
-                        name:'status',
+                        data: 'status_pinjam',
+                        name:'status_pinjam',
                         "render": function ( data, type, row ){
-                            if(data === '1'){
+                            if(data == '0'){
                                 return '<span class="label label-success">Berkas Tersedia</span>';
                             }
                             else{
-                                return '<span class="label label-warning">Berkas Tidak Ada</span>';
+                                return '<span class="label label-warning">Sedang dipinjam</span>';
                             }
                             
                         }
@@ -94,11 +89,13 @@
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                  columnDefs: [ {
-                    searchable: false,
-                    orderable:false ,
-                    targets: 0
-                } ], 
-                order: [[ 10, 'desc' ]],
+                        searchable: false,
+                        orderable:false ,
+                        lengthChange: false,
+                        targets: 0
+                    },
+                    { width: '20%', targets: 11 } ], 
+                order: [[ 10, 'asc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -116,35 +113,47 @@
                     },
                 },
                 aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-                {{-- iDisplayLength: 15 --}}
+                // iDisplayLength: 15
             })
         
             yadcf.init(Table, [
                 {
-                    column_number: 0,
+                    column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
-                    filter_default_label: "No Bundel"
+                    filter_default_label: "Bundel"
                 },
                 {
-                    column_number: 1,
+                    column_number: 2,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "Buku Tanah"
                 },
                 {
-                    column_number: 3,
+                    column_number: 4,
                     filter_type: "text",
                     filter_delay: 500,
-                    filter_default_label: "No Hak"
+                    filter_default_label: "Hak"
+                },
+                {
+                    column_number: 5,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "Desa"
+                },
+                {
+                    column_number: 6,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "Kecamatan"
                 },
                 
             ]);
-            {{--  Table.on( 'order.dt search.dt', function () {
+            Table.on( 'order.dt search.dt', function () {
                 Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                     cell.innerHTML = i+1;
                 } );
-            } ).draw();  --}}
+            } ).draw();
         });
 
         function addData() {
@@ -258,28 +267,7 @@
             });
         }
 
-        $(document).on('click', "#cek", function (e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            var status = $(this).data('value');
-            $.ajaxSetup({
-                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-              });
-              $.ajax({
-              url: "{{ url('peminjamanmastercek')}}",
-              type: "GET",
-              data: {status:status , id:id},
-                success: function (data) {
-                  $('#data-master').dataTable().api().ajax.reload();
-                  $('div.flash-message').html(data);
-                },
-                error: function () {
-                  alert('Oops! error!');
-                }
-              });
-          });
+       
           $(document).on('click', "#cekpinjam", function (e) {
             e.preventDefault();
             var id = $(this).data('id');

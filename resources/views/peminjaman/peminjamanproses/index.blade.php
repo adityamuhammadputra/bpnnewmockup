@@ -29,7 +29,7 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-peminjaman">
                             <thead>
                                 <tr>
-                                    <th>No.Berkas</th>
+                                    <th>No</th>
                                     <th></th>
                                     <th>Kegiatan</th>
                                     <th>Peminjaman Via</th>
@@ -89,6 +89,39 @@
             });
         });
 
+        function cetak(url) {
+            var link = "cetak/peminjamanproses/"+url;
+            window.open(link,'_blank');
+            window.focus();
+            location.reload();
+        }
+
+        function roket(id) {
+            swal({
+                title: 'Konfirmasi Berkas?',
+                text: "Konfirmasi Berkas akan memindahkan berkas ke peminjaman kegiatan",
+                type:'warning',
+                showCancelButton:true,
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Konfirmasi',
+                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
+            }).then(function(){
+                $.ajax({
+                url: "{{ url('peminjaman/roket/peminjamanproses')}}/" + id,
+                type: "GET",
+                data: {id:id},
+                    success: function (data) {
+                        $('#data-peminjaman').dataTable().api().ajax.reload();
+                        $('div.flash-message').html(data);
+                    },
+                    error: function () {
+                        alert('Oops! error!');
+                    }
+                });
+            });
+        }
+
 
         var Table;
         $(document).ready(function () {
@@ -143,11 +176,12 @@
                 },
             ]);
             
-            {{--  Table.on( 'order.dt search.dt', function () {
-                Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
+             Table.on( 'draw.dt', function () {
+                var PageInfo = $('#data-peminjaman').DataTable().page.info();
+                     Table.column(0, { page: 'current' }).nodes().each( function (cell, i) {
+                        cell.innerHTML = i + 1 + PageInfo.start;
+                    } );
                 } );
-            } ).draw();  --}}
            
         });
         

@@ -56,7 +56,6 @@
             border-collapse: collapse;
             width: 100%;
             text-align: center;
-            padding-bottom: 20px;
         }
         
         #customers td, #customers th {
@@ -100,15 +99,13 @@
             position: relative;
             float: right;
             text-align: center;
-            height: 300px;
-            margin-top: 20px;
+            margin-top: 40px;
         }
-        .ttd2{
+        .tanggal{
+            float: left;
             width: 200px;
             position: relative;
-            float: left;
             text-align: center;
-            height: 300px;
         }
     </style>
 </head>
@@ -124,109 +121,60 @@
         </div>
     </div>
     <div class="atasjudul">
-        <b><u>PERMOHONAN PEMINJAMAN BUKUTANAH DAN WARKAH</u></b><br>
-        <i>Nomor : {{ $data->id }} / 2018</i>
+        <b><u>LAPORAN BERKAS BUKU TANAH</u></b><br>
+        <i>Bulan / Tahun : {{$bulan}} / {{$tahun}}</i>
     </div>
-    <div class="heaederorang">
-        <div class="heaederorangkiri">
-            <table >
-                <tr>
-                    <td>Nama Peminjam</td>
-                    <td>:</td>
-                    <td>{{ $data->nama }}</td>
-                </tr>
-                <tr>
-                    <td>NIP</td>
-                    <td>:</td>
-                    <td>{{ $data->nip }}</td>
-                </tr>
-                <tr>
-                    <td>Unit Kerja </td>
-                    <td>:</td>
-                    <td>{{ $data->unit_kerja }}</td>
-                </tr>
-                <tr>
-                    <td>Penggunaan</td>
-                    <td>:</td>
-                    <td>{{ $kegiatan->nama_kegiatan }}</td>
-                </tr>
-            </table>
-        </div>
 
-        <div class="heaederorangkanan">
-            <table >
-                <tr>
-                    <td>Tanggal Pinjam</td>
-                    <td>:</td>
-                    <td>{{ $data->tanggal_pinjam }}</td>
-                </tr>
-                <tr>
-                    <td>Tanggal Jatuh Tempo</td>
-                    <td>:</td>
-                    <td>{{ $data->tanggal_kembali }}</td>
-                </tr>
-                <tr>
-                    <td>Jumlah Peminjaman</td>
-                    <td>:</td>
-                    <td>Buku Tanah {{ $data->peminjamandetailcetak->count() }}</td>
-                </tr>
-                 <tr>
-                    <td>Peminjaman Via</td>
-                    <td>:</td>
-                    <td>{{ $data->via }}</td>
-                </tr>
-            </table>
-        </div>
-        
-    </div>
-   
     <div class="footer">
         &copy;2018 Badan Pertanahan Nasional Kabupaten Bogor.
     </div>
-    
-    
+
     <div class="isitable">
         <table id="customers">
             <thead>
                 <tr>
-                    <th width="10%">Jenis Hak</th>
-                    <th width="15%">Desa </th> 
-                    <th width="15%">Kecamatan </th> 
-                    <th width="10%">No.Hak</th>
-                    <th width="10%">No.Warkah</th>
-                    <th width="10%">No.SU</th>
-
+                    <th width="1%">No.</th>
+                    <th width="6%">Bundel</th>
+                    <th width="6%">Id Buku Tanah</th>
+                    <th width="14%">Desa / Kecamatan</th>
+                    <th width="8%">Jenis Hak</th>
+                    <th width="8%">No Hak</th>
+                    <th width="8%">Ruang</th>
+                    <th width="8%">Rak / Baris</th>
+                    <th width="20%">Tanggal Pinjam</th>
                 </tr>  
             </thead>
             <tbody>
-                @foreach($data->peminjamandetailcetak as $datas)
+                @php $no = 1; @endphp
+                @foreach($data as $datas)
                 <tr>
+                    <td> {{ $no++ }}</td>
+                    <td> {{ $datas->no_box }}</td>
+                    <td> {{ $datas->idbukutanah }}</td>
+                    <td> {{ $datas->desa }} / {{ $datas->kecamatan }}</td>
                     <td> {{ $datas->jenis_hak }}</td>
-                    <td> {{ $datas->desa }}</td>
-                    <td> {{ $datas->kecamatan }}</td>
                     <td> {{ $datas->no_hak }}</td>
-                    <td> {{ $datas->no_warkah }}</td>
-                    <td> {{ $datas->no_su }}</td>
+                    <td> {{ $datas->ruang }}</td>
+                    <td> {{ $datas->rak }} / {{ $datas->baris }}</td>
+                    <td> {{ $datas->created_at }}</td>
                 </tr>
                 @endforeach
             </tbody> 
         </table>
     </div>
     <div class="ttd">
-        Pemohon / Peminjam
+        Petugas Penyerahan
         <br><br>
         <br><br>
         <br><br>
-        <u>{{ $data->nama }}</u> <br>
-        <b>{{ $data->nip }}</b>
+        (...................................)
     </div>
-    <div class="ttd2">
-        Petugas  Peminjaman
-        <br><br>
-        <br><br>
-        <br><br>
-        <u>{{ auth()->user()->name }}</u> <br>
-    </div>
+
+   
+   
+    {{--  <div class="tanggalcetak">
+        <img src="images/print.png"> {{ \Carbon\Carbon::now() }} 
+    </div>  --}}
     
             
 

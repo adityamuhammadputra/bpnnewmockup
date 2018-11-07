@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Kelompok::class);
     }
+
+    // public function kegiatan()
+    // {
+    //     return $this->belongsTo()
+    // }
 }

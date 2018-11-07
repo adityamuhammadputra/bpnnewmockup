@@ -22,7 +22,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
+                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-pengembalianhistory">
                             <thead>
                                 <tr>
                                     <th width="10%">Nama</th>
@@ -68,7 +68,7 @@
             type: "GET",
             data: {status_detail:status_detail, id:id},
                 success: function (data) {
-                $('#data-detail').dataTable().api().ajax.reload();
+                $('#data-pengembalianhistory').dataTable().api().ajax.reload();
                 $('div.flash-message').html(data);
             },
                 error: function () {
@@ -81,7 +81,7 @@
     $(document).ready(function () {
         var TableDetail;
         'use strict';
-        TableDetail = $('#data-detail').DataTable({
+        TableDetail = $('#data-pengembalianhistory').DataTable({
             colReorder: true,
             processing: true,
             serverSide:true,
@@ -105,7 +105,7 @@
                     data: 'status_detail',
                     name:'status_detail',
                     "render": function ( data, type, row ){
-                        if(data === '2'){
+                        if(data === '4'){
                             return '<span class="label label-success">Sudah Dikembalikan</span>';
                         }
                         else{
@@ -140,7 +140,7 @@
             },
             
             aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-            {{-- iDisplayLength: 15 --}}
+            iDisplayLength: 25
         }),
          yadcf.init(TableDetail, [
             {

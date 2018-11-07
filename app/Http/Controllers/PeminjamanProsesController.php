@@ -83,6 +83,7 @@ class PeminjamanProsesController extends Controller
    
     public function show($id)
     {
+        
         return PeminjamanDetail::where('peminjaman_id',$id)->get();
     }
 
@@ -147,6 +148,29 @@ class PeminjamanProsesController extends Controller
         return View::make('layouts/alerts');
 
     }
+
+    public function roket($id)
+    {
+        PeminjamanDetail::where('peminjaman_id', $id)->where('status_tunggak',0)
+            ->update([
+                'status_detail' => '1',
+            ]);
+
+        Session::flash('info', 'Data Peminjaman Berhasil divalidasi');
+        return View::make('layouts/alerts');
+    }
+
+    public function roketdetail($id)
+    {
+        PeminjamanDetail::where('id', $id)
+            ->update([
+                'status_detail' => '2',
+                'status_tunggak' => '1'
+            ]);
+        Session::flash('info', 'Data Peminjaman dikirim ke peminjaman tungggakan');
+        return View::make('layouts/alerts');
+    }
+
     public function autoCompletePegawai(Request $request)
     {
         $query = $request->get('term','');
@@ -183,9 +207,9 @@ class PeminjamanProsesController extends Controller
     {
         $query = $request->get('term','');
 
-        $data=PeminjamanMaster::where('idbukutanah','LIKE','%'.$query.'%')->limit(20)->get();
+        $data=PeminjamanMaster::select('idbukutanah', 'jenis_hak', 'no_hak', 'desa', 'kecamatan')
+                ->where('idbukutanah','LIKE','%'.$query.'%')->limit(20)->get();
         $datas=array();
-
 
         foreach ($data as $d) {
             $datas[] = array('idbukutanah'=>$d->idbukutanah.' || Jenis Hak: '.$d->jenis_hak.' || No Hak: '.$d->no_hak. ' || Desa: '.$d->desa.' || Kec: '.$d->kecamatan, 'id'=>$d->idbukutanah);
@@ -218,12 +242,24 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProses()
     {
-        $data = Peminjaman::with('kegiatan','kegiatanvia')->where('kd_kantor',auth()->user()->kd_kantor)->where('status',0)->orderBy('updated_at','desc');
+        if(auth()->user()->modul_id == 1){
+            $data = Peminjaman::with('kegiatan','peminjamandetail')->whereHas('peminjamandetail', function($q){
+                $q->where('status_detail',0);  
+            })
+           ->orderBy('updated_at', 'desc');
+        }
+        else {
+            $data = Peminjaman::with('kegiatan','peminjamandetail')->whereHas('peminjamandetail', function ($q) {
+                $q->where('status_detail', 0);
+            })->where('created_by', auth()->user()->id)->orderBy('updated_at', 'desc');
+        }
         return Datatables::of($data)
            
             ->addColumn('action',function($data){
-                return ' <span class="label label-danger label-borok">' . $data->jumlahpinjam . '</span><a href="cetak/peminjamanproses/'.$data->id. '"  class ="btn btn-info"><em class="fa fa-print">
+                return ' <span class="label label-danger label-borok">' . $data->jumlahpinjam . '</span><a href="#" onclick="cetak('.$data->id.')"  class ="btn btn-info"><em class="fa fa-print">
                         </em> </a>' .
+                       ' <a href="#" onclick="roket(' . $data->id . ')"  class ="btn btn-warning"><em class="fa fa-rocket">
+                        </em> </a>'.
                         ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" data-nip="'.$data->nip .'" data-unitkerja="'.$data->unit_kerja .'" 
                             data-kegiatan="'.$data->kegiatan .'"data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali . '" 
                              data-via="' . $data->via . '" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
@@ -235,11 +271,13 @@ class PeminjamanProsesController extends Controller
 
     public function apiPeminjamanProsesDetail($id)
     {
-        $data = PeminjamanDetail::where('peminjaman_id',$id)->orderBy('updated_at','desc');
+        $data = PeminjamanDetail::where('peminjaman_id',$id)->where('status_detail',0)->orderBy('created_at','desc');
 
         return Datatables::of($data)
         ->addColumn('action',function($data){
-            return  ' <a onclick="deleteDetail('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
+            return ' <a href="#" onclick="roketDetail(' . $data->id . ')"  class ="btn btn-warning"><em class="fa fa-rocket">
+                        </em> </a>' . 
+                        ' <a onclick="deleteDetail('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
                     </i> </a>';
         })->rawColumns(['action'])->make(true);
 
@@ -248,15 +286,14 @@ class PeminjamanProsesController extends Controller
     public function cetak($id)
     {
         $datetime = Carbon::now();
+        // return $datetime;
         $replace = array(" ",":");
         $datetime = str_replace($replace, '-', $datetime);
 
-        $data = Peminjaman::with('peminjamandetail')->find($id);
+        $data = Peminjaman::with('peminjamandetailcetak')->find($id);
+        // return $data;
 
-        Peminjaman::where('id', $id)
-            ->update([
-                'status' => '1',
-            ]);
+        
 
         $kegiatan = $data->kegiatan()->first();
 
@@ -268,6 +305,7 @@ class PeminjamanProsesController extends Controller
         $pdf = PDF::loadView('peminjaman.peminjamanproses.cetak',$data);
         $pdf->save(storage_path().'/app/pdf/cetakpeminjamanproses'.$datetime.'.pdf');
         $pdf->setPaper('a4', 'landscape');
+
         return $pdf->stream();
 
         // $view = view('peminjaman.peminjamanproses.cetak', $data)->render();
@@ -282,4 +320,7 @@ class PeminjamanProsesController extends Controller
 
        
     }
+
+    
+
 }

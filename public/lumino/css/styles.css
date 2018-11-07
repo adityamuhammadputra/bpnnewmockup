@@ -1071,11 +1071,11 @@ p.back-link {
 }
 
 
-#yadcf-filter--data-detail-3
+#yadcf-filter--data-detail-4
 {
     width:80px !important;
 }
-#yadcf-filter--data-detail-1
+#yadcf-filter--data-detail-2
 {
     width:70px !important;
 }
@@ -1104,6 +1104,9 @@ p.back-link {
     width:100px !important;
 }
 #yadcf-filter--data-master-1{
+    width:65px !important;
+}
+#yadcf-filter--data-master-2{
     width:100px !important;
 
 }
@@ -1115,7 +1118,52 @@ p.back-link {
 {
     width:80px !important;
 }
+#yadcf-filter--data-master-4
+{
+    width:70px !important;
+}
+#yadcf-filter--data-master-5
+{
+    width:130px !important;
+}
+#yadcf-filter--data-master-6
+{
+    width:135px !important;
+}
+#yadcf-filter--data-master-7
+{
+    width:90px !important;
+}
+#yadcf-filter--data-peminjaman-1
+{
+    width:105px !important;
 
+}
+#yadcf-filter--data-peminjaman-2
+{
+    width:105px !important;
+}
+#yadcf-filter--data-peminjaman-4
+{
+    width:65px !important;
+
+}
+#yadcf-filter--data-peminjaman-6
+{
+    width:125px !important;
+
+}
+#yadcf-filter--data-pengembalianhistory-3{
+    width:65px !important;
+  
+}
+#yadcf-filter--data-pengembalianhistory-6{
+    width:125px !important;
+    
+}
+#yadcf-filter--data-pengembalianhistory-5{
+    width:125px !important;
+}
 
 
 .label-borok

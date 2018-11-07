@@ -109,7 +109,10 @@
 		<ul class="nav menu">
 			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard PTSL</a></li>
 			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
-			<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
+			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 2 )
+				<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
+			@endif
+			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 3 )
 			<li class="parent {{ request()->is('peminjaman/master') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-4">
 				<em class="fa fa-navicon">&nbsp;</em>BukuTanah <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -124,7 +127,9 @@
 						<span class="fa fa-arrow-right">&nbsp;</span> Buku Tanah History
 					</a></li>
 				</ul>
-			</li>		
+			</li>
+			@endif	
+			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 4 )
 			<li class="parent {{ request()->is('ptsl/pengecekan') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Program PTSL <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -137,21 +142,32 @@
 					</a></li>
 				</ul>
 			</li>
+			@endif	
+			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 5 || Auth::user()->modul_id == 6 )
 			<li class="parent {{ request()->is('peminjaman/proses') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-dropbox">&nbsp;</em> Peminjaman <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-2">
+					@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 5 )
 					<li><a class="" href="{{ url('peminjaman/proses') }}">
 							<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Proses
 					</a></li>
+					@endif
+					@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 6 )
 					<li><a class="" href="{{ url('peminjaman/kegiatan') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kegiatan
 					</a></li>
-					<li><a class="" href="{{ url('peminjaman') }}" >
+					@endif
+					<li><a class="" href="{{ url('peminjaman/tunggakan') }}" >
+						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Tunggakan
+					</a></li>
+					<li><a class="" href="{{ url('peminjaman/kontrol') }}" >
 						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kontrol
 					</a></li>
 				</ul>
 			</li>
+			@endif
+			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 7 )
 			<li class="parent {{ request()->is('pengembalian') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-3">
 				<em class="fa fa-reply-all">&nbsp;</em> Pengembalian <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -167,9 +183,13 @@
 					</a></li>
 				</ul>
 			</li>
+			@endif
 			{{-- <li class="{{ request()->is('pengembalian') ? 'active' : '' }}"><a href="{{ url('pengembalian') }}"><em class="fa fa-reply-all">&nbsp;</em> Pengembalian</a></li> --}}
 				
 			<li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			@if (Auth::user()->modul_id == 1 )
+			<li class="{{ request()->is('user') ? 'active' : '' }}"><a href="{{ url('user') }}"><em class="fa fa-users">&nbsp;</em> User</a></li>
+			@endif
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 				{{ csrf_field() }}
 			</form>

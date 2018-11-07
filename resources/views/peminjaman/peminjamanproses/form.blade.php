@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="name" class="control-label">NIP</label>
-                    <input type="number" class="form-control" name="nip" id="nip">
+                    <input type="text" class="form-control" name="nip" id="nip">
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
@@ -32,7 +32,6 @@
                     <label class="control-label">Kegiatan</label>
 
                     {{ Form::select('kegiatan', $kegiatan, request()->get('id'), ['id' => 'kegiatan', 'class' => 'form-control', 'required'=>'true']) }}
-
                         
                     <span class="help-block with-errors"></span>
                 </div>
@@ -53,7 +52,7 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label for="name" class="control-label">Tanggal Kembali</label>
+                    <label for="name" class="control-label">Tanggal Jatuh Tempo</label>
                     <div class='input-group'>
                         <input type='text' id="tanggalKembali" name="tanggal_kembali" class="form-control date" required/>
                         <span class="input-group-addon">
@@ -65,12 +64,12 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="name" class="control-label">Peminjaman Via</label>
-                    {{-- <input type="text" class="form-control" name="via" id="via"> --}}
+                <label for="name" class="control-label">Peminjaman Via</label>
+                    <input type="text" class="form-control" name="via" id="via">
                     
-                    <select name="via" id="via" class="form-control">
+                    {{-- <select name="via" id="via" class="form-control">
                         <option selected disabled>-- Peminjaman Via --</option>
-                    </select>
+                    </select> --}}
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
@@ -101,6 +100,9 @@
 </div>
 @push('scripts')
 <script type="text/javascript">
+    // $('#kegiatan').on('change',function () {
+    //     alert(this.value);
+    // })
     var i=$('table tr').length;
 
     $(document).ready(function(){
@@ -113,7 +115,7 @@
         html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
         html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
         html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
-        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU" /></td>';
+        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU / Nomor HT" /></td>';
         html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
         html += '</tr>';
         $('#item_table').append(html);
@@ -217,28 +219,32 @@
                         $("#nip").val(datashow[0].nip);
                         $("#unit_kerja").val(datashow[0].unit_kerja);
                         $('#kegiatan').val(datashow[0].kegiatan_id);
-                        $('#via').val(datashow[0].kegiatan_id);
-                        var peminjaman_id = datashow[0].kegiatan_id;
-                        if(peminjaman_id){
-                            $.ajax({
-                                type:"GET",
-                                url:"{{url('api/via')}}?peminjaman_id="+peminjaman_id,
-                                success:function(res){
-                                    if(res){
-                                        $("#via").empty();
-                                        $("#via").append('<option selected disabled>-- Peminjaman Via --</option>');
-                                        $.each(res,function(key,value) {
-                                            $("#via").append('<option value="'+key+'">'+value+'</option>');
-                                        });
-                                    }else{
-                                        $("#via").empty();
+                        // $('#via').val(datashow[0].kegiatan_id);
+                        // var peminjaman_id = datashow[0].kegiatan_id;
+                        // if(peminjaman_id){
+                        //     $.ajax({
+                        //         type:"GET",
+                        //         url:"{{url('api/via')}}?peminjaman_id="+peminjaman_id,
+                        //         success:function(res){
+                        //             if(res){
+                        //                 $("#via").empty();
+                        //                 $("#via").append('<option selected disabled>-- Peminjaman Via --</option>');
+                        //                 $.each(res,function(key,value) {
+                        //                     $("#via").append('<option value="'+key+'">'+value+'</option>');
+                        //                 });
+                        //             }else{
+                        //                 $("#via").empty();
 
-                                    }
-                                }
-                            });
-                        }
-                        else{
-                            $("#via").empty();
+                        //             }
+                        //         }
+                        //     });
+                        // }
+                        // else{
+                        //     $("#via").empty();
+                        // }
+                        var kegiatan = datashow[0].kegiatan_id;
+                        if(kegiatan == 4){
+                            
                         }
                     }
                 });

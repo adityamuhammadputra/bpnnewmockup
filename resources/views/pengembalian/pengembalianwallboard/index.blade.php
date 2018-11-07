@@ -61,32 +61,11 @@
                 $tableslide.children(selectors[+!s]).fadeIn();
             });
             state = !state;
-        }, 3000);
+        }, 7000);
     });
 
 
-    $(document).on('click', "#cekdetail", function (e) {
-        e.preventDefault();
-        var id = $(this).data('id_detail');
-        var status_detail = $(this).data('value');
-        $.ajaxSetup({
-            headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-            url: "{{ url('pengembaliancekdetail')}}",
-            type: "GET",
-            data: {id:id,status_detail:status_detail},
-                success: function (data) {
-                $('#data-detail').dataTable().api().ajax.reload();
-                $('div.flash-message').html(data);
-            },
-                error: function () {
-                alert('Oops! error!');
-            }
-        });
-    });
+    
 
     var TableDetail;
     $(document).ready(function () {
@@ -98,7 +77,7 @@
             processing: true,
             serverSide:true,
             "bDestroy": true,
-            ajax:"{{ url('api/pengembaliandetail')}}",
+            ajax:"{{ url('api/pengembalianwallboard')}}",
             columns: [
                 // {data: 'idbukutanah',name:'idbukutanah'},
                 // {data: 'peminjamanheader.nip',name:'peminjamanheader.nip'},
@@ -118,18 +97,23 @@
                     data: 'status_detail',
                     name:'status_detail',
                     "render": function ( data, type, row ){
-                        if(data === '2'){
-                            return '<span class="label label-success">Sudah Dikembalikan</span>';
+                        if(data === '1'){
+                            return '<span class="label label-success">Di Kegiatan</span>';
+                        }else  if(data === '3'){
+                            return '<span class="label label-success">Di Pengembalian</span>';
+                        }
+                        else  if(data === '4'){
+                            return '<span class="label label-success">Sudah Divalidasi</span>';
                         }
                         else{
-                            return '<span class="label label-warning">Belum Dikembalikan</span>';
+                            return '<span class="label label-warning">Di Tunggakan</span>';
                         }
                         
                     }
                 },
             ],   
             aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-            iDisplayLength: 15 
+            iDisplayLength: 25
         }),
          yadcf.init(TableDetail, [  
         ]);

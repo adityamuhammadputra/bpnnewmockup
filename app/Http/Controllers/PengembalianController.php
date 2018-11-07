@@ -101,9 +101,9 @@ class PengembalianController extends Controller
         // return $request->id;
         
         PeminjamanDetail::where('id', '=', $request->id)
-            ->update(['status_detail' => '2']);
+            ->update(['status_detail' => '4']);
       
-        Session::flash('info', 'Data Berhasil Dikembalikan');
+        Session::flash('info', 'Data berhasil divalidasi pengembalian');
         return View::make('layouts/alerts');
 
         
@@ -141,7 +141,7 @@ class PengembalianController extends Controller
     
     public function apiPengembalianDetail()
     {
-        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',1);
+        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',3)->orderby('tanggal_kembali','desc');
 
         return Datatables::of($data)
         ->addColumn('action',function($data){

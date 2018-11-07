@@ -124,8 +124,8 @@
         </div>
     </div>
     <div class="atasjudul">
-        <b><u>PERMOHONAN PEMINJAMAN BUKUTANAH DAN WARKAH</u></b><br>
-        <i>Nomor : {{ $data->id }} / 2018</i>
+        <b><u>LAPORAN PEMINJAMAN BUKUTANAH DAN WARKAH</u></b><br>
+        <i>Tanggal : {{ Carbon::now() }}</i>
     </div>
     <div class="heaederorang">
         <div class="heaederorangkiri">
@@ -133,47 +133,28 @@
                 <tr>
                     <td>Nama Peminjam</td>
                     <td>:</td>
-                    <td>{{ $data->nama }}</td>
+                    <td>{{ $data[0]->peminjamanheader->nama}}</td>
                 </tr>
                 <tr>
                     <td>NIP</td>
                     <td>:</td>
-                    <td>{{ $data->nip }}</td>
+                    <td>{{ $data[0]->peminjamanheader->nip}}</td>
                 </tr>
-                <tr>
-                    <td>Unit Kerja </td>
-                    <td>:</td>
-                    <td>{{ $data->unit_kerja }}</td>
-                </tr>
-                <tr>
-                    <td>Penggunaan</td>
-                    <td>:</td>
-                    <td>{{ $kegiatan->nama_kegiatan }}</td>
-                </tr>
+                
             </table>
         </div>
 
         <div class="heaederorangkanan">
             <table >
                 <tr>
-                    <td>Tanggal Pinjam</td>
+                    <td>Unit Kerja </td>
                     <td>:</td>
-                    <td>{{ $data->tanggal_pinjam }}</td>
+                    <td>{{ $data[0]->peminjamanheader->unit_kerja}}</td>
                 </tr>
                 <tr>
-                    <td>Tanggal Jatuh Tempo</td>
+                    <td>Tanggal Kembali</td>
                     <td>:</td>
-                    <td>{{ $data->tanggal_kembali }}</td>
-                </tr>
-                <tr>
-                    <td>Jumlah Peminjaman</td>
-                    <td>:</td>
-                    <td>Buku Tanah {{ $data->peminjamandetailcetak->count() }}</td>
-                </tr>
-                 <tr>
-                    <td>Peminjaman Via</td>
-                    <td>:</td>
-                    <td>{{ $data->via }}</td>
+                    <td>{{ Carbon::now() }}</td>
                 </tr>
             </table>
         </div>
@@ -189,6 +170,9 @@
         <table id="customers">
             <thead>
                 <tr>
+                    <th width="3%">No</th>
+                    <th width="15%">Peminjaman Via</th> 
+                    <th width="15%">Tanggal Pinjam</th> 
                     <th width="10%">Jenis Hak</th>
                     <th width="15%">Desa </th> 
                     <th width="15%">Kecamatan </th> 
@@ -199,8 +183,12 @@
                 </tr>  
             </thead>
             <tbody>
-                @foreach($data->peminjamandetailcetak as $datas)
+                @php $no = 1; @endphp
+                @foreach($data as $datas)
                 <tr>
+                    <td> {{ $no++ }}</td>
+                    <td> {{ $datas->peminjamanheader->via }}</td>
+                    <td> {{ $datas->peminjamanheader->tanggal_pinjam }}</td>
                     <td> {{ $datas->jenis_hak }}</td>
                     <td> {{ $datas->desa }}</td>
                     <td> {{ $datas->kecamatan }}</td>
@@ -217,16 +205,16 @@
         <br><br>
         <br><br>
         <br><br>
-        <u>{{ $data->nama }}</u> <br>
-        <b>{{ $data->nip }}</b>
+        <u>{{ $data[0]->peminjamanheader->nama}}</u> <br>
+        <b>{{ $data[0]->peminjamanheader->nip}}</b>
     </div>
-    <div class="ttd2">
+    {{-- <div class="ttd2">
         Petugas  Peminjaman
         <br><br>
         <br><br>
         <br><br>
         <u>{{ auth()->user()->name }}</u> <br>
-    </div>
+    </div> --}}
     
             
 

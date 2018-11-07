@@ -4,17 +4,17 @@
         {{method_field ('POST')}} 
         <input type="hidden" name="id" id="id">
         <div class="row">
-            <div class="col-md-4">
+             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="name" class="control-label">No Bundel</label>
-                    <input type="text" class="form-control" name="no_box" id="no_box" >
+                    <label for="name" class="control-label">Id Buku Tanah</label>
+                    <input type="text" class="form-control" name="idbukutanah" id="idbukutanah" required >
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="name" class="control-label">Id Buku Tanah</label>
-                    <input type="text" class="form-control" name="idbukutanah" id="idbukutanah" required >
+                    <label for="name" class="control-label">No Bundel</label>
+                    <input type="text" class="form-control" name="no_box" id="no_box" >
                     <span class="help-block with-errors"></span>
                 </div>
             </div>
@@ -78,10 +78,9 @@
         <div class="col-md-4">
                 <div class="form-group">
                     <label for="name" class="control-label">Keterangan</label>
-                    <select name="status" id="status" class="form-control">
-                        <option value="">--Pilih Keterangan Fisik Berkas--</option>
-                        <option value="1">Berkas Ada</option>
-                        <option value="0">Berkas Tidak Ada</option>
+                    <select name="status_pinjam" id="status" class="form-control" readonly>
+                        <option value="0">Berkas Tersedia</option>
+                        <option value="1" selected>Berkas Sedang Dipinjam</option>
                     </select>
                     <span class="help-block with-errors"></span>
                 </div>        
@@ -95,4 +94,52 @@
         </div>
     </form>
  </div>
+
+ @push('scripts')
+    <script>
+        $(document).ready(function() {
+        src = "{{ url('autocompletepeminjamanmaster') }}";
+        $("#idbukutanah").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: src,
+                    dataType: "json",
+                    data: {
+                        term : request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                }); 
+            },
+            select:function(event, ui){
+                var idbukutanah =ui.item.id;
+                $.ajax({
+                    type: "GET",
+                    url: "{{ url('autocompletepeminjamanmastershow')}}",
+                    data : {
+                        idbukutanah : idbukutanah
+                    },
+                    cache: false,
+                    dataType: "html",
+                    beforeSend  : function(){
+                        $(".prosesloading").show();   
+                    },
+                    success: function(data){
+                        var datashow = JSON.parse(data); 
+                        $("#no_box").val(datashow[0].no_box);
+                        $("#idbukutanah").val(datashow[0].idbukutanah);
+                        $("#jenis_hak").val(datashow[0].jenis_hak);
+                        $("#no_hak").val(datashow[0].no_hak);
+                        $('#desa').val(datashow[0].desa);
+                        $('#kecamatan').val(datashow[0].kecamatan);
+
+                    }
+                });
+            },
+            minLength: 2,
+        });
+    }); 
+    </script>
+ @endpush
           

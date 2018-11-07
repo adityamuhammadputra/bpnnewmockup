@@ -31,12 +31,12 @@ class PengembalianHistoryController extends Controller
 
     public function apiPengembalianHistory()
     {
-        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail', 2);
+        $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail', 4);
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
-            return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-success btn-sm">
-                <i class="fa fa-check-square-o"></i> 
+            return '<a id="cekdetail" data-value="' . $data->status_detail . '" data-peminjaman_id="' . $data->peminjaman_id . '" data-id="' . $data->id . '" class="btn btn-warning btn-sm">
+                <i class="fa fa-reply"></i> 
             </a> ' ;
             })->rawColumns(['action'])->make(true);
 
@@ -45,9 +45,9 @@ class PengembalianHistoryController extends Controller
     public function cekdetail(Request $request)
     {
         PeminjamanDetail::where('id', '=', $request->id)
-            ->update(['status_detail' => '1']);
+            ->update(['status_detail' => '3']);
 
-        Session::flash('info', 'Data Berhasil Dikembalikan Ke Pengembalian');
+        Session::flash('info', 'Data Berhasil Dikembalikan Ke Pengembalian Proses');
         return View::make('layouts/alerts');
 
     }

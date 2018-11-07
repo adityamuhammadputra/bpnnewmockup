@@ -15,4 +15,9 @@ class PeminjamanDetail extends Model
         return $this->belongsTo('App\Peminjaman', 'peminjaman_id', 'id')->with('kegiatan');
 
     }
+
+    public function peminjamanheaders()
+    {
+        return $this->hasOne('App\Peminjaman','id','peminjaman_id')->with('kegiatan');
+    }
 }

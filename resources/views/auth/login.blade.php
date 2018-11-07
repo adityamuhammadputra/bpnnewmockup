@@ -5,9 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
-
+                <div class="card-header text-center">Badan Pertanahan Kabupaten Bogor</div>
                 <div class="card-body">
+                    <div class="text-center">
+                        <img src="{{asset('images/bpnlogo.png')}}" width="90">
+                    </div>
+                    <br>
                     <form method="POST" action="{{ route('login') }}" aria-label="{{ __('Login') }}">
                         @csrf
 
@@ -40,7 +43,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
+                            
+                        </div>
+
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary text-right">
+                                    {{ __('Login') }}
+                                </button>
+
+                               
+                            </div>
+                            <div class="col-md-6 text-left">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
@@ -48,18 +62,6 @@
                                         {{ __('Remember Me') }}
                                     </label>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
                             </div>
                         </div>
                     </form>

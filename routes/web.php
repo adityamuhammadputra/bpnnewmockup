@@ -1,6 +1,6 @@
 <?php
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -36,6 +36,9 @@ Route::resource('peminjaman/master','PeminjamanMasterController');
 Route::get('peminjamanmastercek','PeminjamanMasterController@cek');
 Route::get('peminjamanmastercekpijam','PeminjamanMasterController@cekpinjam');
 Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaster')->name('api.peminjaman.master');
+Route::get('autocompletepeminjamanmaster', 'PeminjamanMasterController@autoCompletePeminjaman');
+Route::get('autocompletepeminjamanmastershow', 'PeminjamanMasterController@autoCompletePeminjamanshow');
+
 
 Route::get('peminjamanmasterwalboard', 'PeminjamanMasterWallboardController@index');
 Route::get('api/peminjamanmasterwalboard', 'PeminjamanMasterWallboardController@apiPeinjamanMasterWarllboard');
@@ -44,26 +47,38 @@ Route::get('peminjamanmasterwallboardcekpijam', 'PeminjamanMasterWallboardContro
 Route::get('peminjaman/history','PeminjamanHistoryController@index');
 Route::get('api/peminjamanhistory', 'PeminjamanHistoryController@apiPeminjamanHistory');
 Route::get('peminjamanhistorycekpijam', 'PeminjamanHistoryController@cekpinjam');
+Route::post('cetakhistorypeminjaman', 'PeminjamanHistoryController@cetak');
 
 Route::resource('peminjaman/proses','PeminjamanProsesController');
 Route::delete('peminjamandetail/proses/{id}', 'PeminjamanProsesController@destroydetail');
+Route::get('peminjamandetail/proses/{id}', 'PeminjamanProsesController@roketdetail');
 Route::get('api/peminjamanproses','PeminjamanProsesController@apiPeminjamanProses')->name('api.peminjaman.proses');
 Route::get('api/peminjamanproses/{id}','PeminjamanProsesController@apiPeminjamanProsesDetail');
+
 Route::get('autocompletepegawai','PeminjamanProsesController@autoCompletePegawai');
 Route::get('autocompletepegawaishow','PeminjamanProsesController@autoCompletePegawaiShow');
 Route::get('autocompletepeminjaman','PeminjamanProsesController@autoComplete')->name('peminjaman.proses.autocomplete');
 Route::get('autocompletepeminjamanshow','PeminjamanProsesController@showData')->name('peminjaman.proses.autocomplete.show');
+
 Route::get('peminjaman/cetak/peminjamanproses/{id}','PeminjamanProsesController@cetak');
 Route::get('api/via', 'PeminjamanProsesController@getVia');
+Route::get('peminjaman/roket/peminjamanproses/{id}', 'PeminjamanProsesController@roket');
 
 
-Route::resource('peminjaman/kegiatan', 'PeminjamanKegiatanController')->only(['index','edit','update']);
+Route::resource('peminjaman/kegiatan', 'PeminjamanKegiatanController')->only(['index','edit','update','store']);
 Route::get('api/peminjamankegiatan', 'PeminjamanKegiatanController@apiPeminjamanKegiatan');
 Route::get('api/peminjamankegiatan/{id}', 'PeminjamanKegiatanController@apiPeminjamanKegiatanDetail');
 Route::get('peminjamankegiatancek', 'PeminjamanKegiatanController@cek');
 Route::get('peminjamankegiatancekdetail', 'PeminjamanKegiatanController@cekdetail');
 Route::get('peminjamankegiatandetail/{id}', 'PeminjamanKegiatanController@datadetail');
 Route::patch('peminjamankegiatandetailupdate/{id}', 'PeminjamanKegiatanController@datadetailupdate');
+
+Route::get('peminjaman/kontrol','PeminjamanKontrolController@index');
+Route::get('api/kontrol', 'PeminjamanKontrolController@apiData');
+
+Route::resource('peminjaman/tunggakan','PeminjamanTunggakanController');
+Route::get('api/tunggakan', 'PeminjamanTunggakanController@apiData');
+Route::get('tunggakancekdetail', 'PeminjamanTunggakanController@tunggakancekdetail');
 
 
 
@@ -85,6 +100,7 @@ Route::get('pengembaliancekdetailhistory', 'PengembalianHistoryController@cekdet
 
 // Pengembalian Wallboard
 Route::resource('pengembalianwallboard', 'PengembalianWallboardController');
+Route::get('api/pengembalianwallboard', 'PengembalianWallboardController@apiData');
 
 
 

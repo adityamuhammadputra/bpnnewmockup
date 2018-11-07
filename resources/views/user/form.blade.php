@@ -7,7 +7,7 @@
               {{method_field ('POST')}} 
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modal-title"></h4>
+                <h4 class="modal-title" id="modal-title">User dan Akses</h4>
               </div>
               <div class="modal-body">
                 <input type="hidden" name="id" id="id">
@@ -25,6 +25,11 @@
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password</label>
+                    <input type="text" name="password" id="password" class="form-control" required>
+                    <span class="help-block with-errors"></span>            
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">Akses</label>
                     <input type="text" name="password" id="password" class="form-control" required>
                     <span class="help-block with-errors"></span>            
                 </div>

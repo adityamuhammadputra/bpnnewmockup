@@ -104,8 +104,8 @@
                     data: 'status_detail',
                     name:'status_detail',
                     "render": function ( data, type, row ){
-                        if(data === '2'){
-                            return '<span class="label label-success">Sudah Dikembalikan</span>';
+                        if(data === '3'){
+                            return '<span class="label label-warning">Belum Divalidasi</span>';
                         }
                         else{
                             return '<span class="label label-warning">Belum Dikembalikan</span>';
@@ -139,7 +139,7 @@
             },
             
             aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-            {{-- iDisplayLength: 15 --}}
+            iDisplayLength: 25
         }),
          yadcf.init(TableDetail, [
             {

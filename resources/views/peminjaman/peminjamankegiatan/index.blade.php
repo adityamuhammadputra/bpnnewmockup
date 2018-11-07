@@ -1,7 +1,74 @@
 @extends('layouts.master')
 
 @section('content')
+<style>
+    .containers {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    }
 
+    /* Hide the browser's default checkbox */
+    .containers input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    }
+
+    /* Create a custom checkbox */
+    .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .containers:hover input ~ .checkmark {
+    background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .containers input:checked ~ .checkmark {
+    background-color: #2196F3;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .containers input:checked ~ .checkmark:after {
+    display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .containers .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    }
+</style>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -19,41 +86,55 @@
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
-                    <button class="btn btn-primary pull-right btn-flat" onclick="cetak()"><i id="hiden" class="fa fa-print"></i> Cetak</button>
-
                 </div>
                 <div class="panel-body" id="form-panel">
-                    @include('peminjaman.peminjamankegiatan.form')
                 </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-peminjaman">
-                            <thead>
-                                <tr>
-                                    <th>No.Berkas</th>
-                                    <th></th>
-                                    <th>Kegiatan</th>
-                                    <th>Peminjaman Via</th>
-                                    <th>Tanggal Pinjam</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                <form method="POST" action="{{url('peminjaman/kegiatan')}}">
+                    @method('POST')
+                    @csrf
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-borderless table-responsive" id="data-peminjaman">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th width="10%">Id BukuTanah</th>
+                                        <th width="10%"></th>
+                                        <th width="10%">Jenis Hak</th>
+                                        <th width="10%"></th> 
+                                        <th width="10%">Kecamatan </th> 
+                                        <th width="10%">No.Warkah</th>
+                                        <th width="10%">No.SU</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Kirim</button>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-    @include('peminjaman.peminjamankegiatan.modaldetail')
+    {{-- @include('peminjaman.peminjamankegiatan.modaldetail') --}}
     @include('peminjaman.peminjamankegiatan.modaldetaildetail')
 
 
 @push('scripts')
     <script>
         $("#form-panel").hide();
-       
+        
+        // function cetak(url) {
+        //     var link = "cetak/peminjamanproses/"+url;
+        //     window.open(link,'_blank');
+        //     window.focus();
+        //     location.reload();
+        // }
+
         function datadetail(id) {
             save_method = 'edit';
             $('#modal-formdetail form')[0].reset();
@@ -119,16 +200,25 @@
             var Table;
             'use strict';
             Table = $('#data-peminjaman').DataTable({
+                //  "bPaginate": false,
+                //   "bInfo": false,
+                "sDom" : "tr",
+                //  "paging": false,
                 colReorder: true,
                 processing: true,
                 serverSide:true,
                 ajax:"{{ url('api/peminjamankegiatan') }}",
                 columns: [
                     {data: 'id',name:'id'},
-                    {data: 'nama',name:'nama'},
-                    {data: 'kegiatan.nama_kegiatan',name:'kegiatan.nama_kegiatan'},
-                    {data: 'via',name:'via'},
-                    {data: 'tanggal_pinjam',name:'tanggal_pinjam'},
+                    {data: 'peminjamanheader.via',name:'peminjamanheader.via'},
+                    {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
+                    {data: 'idbukutanah',name:'idbukutanah'},
+                    {data: 'no_hak',name:'no_hak'},
+                    {data: 'jenis_hak',name:'jenis_hak'},
+                    {data: 'desa',name:'desa'},
+                    {data: 'kecamatan',name:'kecamatan'},
+                    {data: 'no_warkah',name:'no_warkah'},
+                    {data: 'no_su',name:'no_su'},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                  columnDefs: [ {
@@ -155,7 +245,7 @@
                 },
                 
                 aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-                {{-- iDisplayLength: 15 --}}
+                iDisplayLength: -1
             }),
            
             yadcf.init(Table, [
@@ -163,15 +253,34 @@
                     column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
-                    filter_default_label: "Nama Peminjam"
+                    filter_default_label: "Pinjam Via"
+                },
+                {
+                    column_number: 2,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "Tgl Pinjam"
+                },
+                {
+                    column_number: 4,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No.Hak"
+                },
+                {
+                    column_number: 6,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "Desa"
                 },
             ]);
             
-            {{--  Table.on( 'order.dt search.dt', function () {
-                Table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-                    cell.innerHTML = i+1;
+            Table.on( 'draw.dt', function () {
+                var PageInfo = $('#data-peminjaman').DataTable().page.info();
+                     Table.column(0, { page: 'current' }).nodes().each( function (cell, i) {
+                        cell.innerHTML = i + 1 + PageInfo.start;
+                    } );
                 } );
-            } ).draw();  --}}
            
         });
         

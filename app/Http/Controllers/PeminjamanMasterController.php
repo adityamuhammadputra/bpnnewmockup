@@ -11,6 +11,8 @@ use Session;
 use App\User;
 use App\PeminjamanMaster;
 
+use App\PeminjamanPengecekan;
+
 class PeminjamanMasterController extends Controller
 {
     
@@ -19,36 +21,15 @@ class PeminjamanMasterController extends Controller
         return view('peminjaman.peminjamanmaster.index');
     }
 
-    public function cek(Request $request){
-
-        $checklike = PeminjamanMaster::where('id', '=', $request->id)
-        ->where('status', '=', $request->status)
-        ->first();
-
-        if($checklike->status == 0)
-        {
-            $data = PeminjamanMaster::find($request->id);
-            $data->status = 1;
-            $data->update();
-        }
-        else{
-            $data = PeminjamanMaster::find($request->id);
-            $data->status = 0;
-            $data->update();
-        }
-        Session::flash('info', 'Berhasil');
-        return View::make('layouts/alerts');
-
-    }
     public function cekpinjam(Request $request)
     {
 
-        $checklike = PeminjamanMaster::where('id', '=', $request->id)
+        $checklike = PeminjamanPengecekan::where('id', '=', $request->id)
             ->where('status_pinjam', '=', $request->status_pinjam)
             ->first();
 
         if ($checklike->status_pinjam == 0) {
-            $data = PeminjamanMaster::find($request->id);
+            $data = PeminjamanPengecekan::find($request->id);
             $data->status_pinjam = 1;
             $data->update();
 
@@ -56,11 +37,11 @@ class PeminjamanMasterController extends Controller
             return View::make('layouts/alerts');
 
         } else {
-            $data = PeminjamanMaster::find($request->id);
-            $data->status = 0;
+            $data = PeminjamanPengecekan::find($request->id);
+            $data->status_pinjam = 0;
             $data->update();
 
-            Session::flash('info', 'Data Telah Dihapus Diwallboard');
+            Session::flash('info', 'Data kembali tersedia');
             return View::make('layouts/alerts');
         }
         
@@ -71,52 +52,72 @@ class PeminjamanMasterController extends Controller
     {
         // return Datatables::of(PeminjamanMaster::orderBy('idbukutanah', 'asc'))->toJson();
 
-        $data = PeminjamanMaster::orderBy('status', 'desc');
+        $data = PeminjamanPengecekan::orderBy('status', 'desc');
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
-                if ($data->status == 1) {
-
-                    return '<a id="cek" data-value="' . $data->status . '" data-id="' . $data->id . '" class="btn btn-success">
-                            <i class="fa fa-check-square-o"></i> 
-                            </a> ' .
-                            ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
-                            </i> </a>' .
-                            ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
-                            </i> </a>'.
-                            '<a id="cekpinjam" data-value="' . $data->status_pinjam . '" data-id="' . $data->id . '" class="btn btn-warning">
+                if ($data->status_pinjam == 0) {
+                    return '<a id="cekpinjam" data-value="' . $data->status_pinjam . '" data-id="' . $data->id . '" class="btn btn-success">
                                 <i class="fa fa-rocket"></i> 
-                            </a>';
-                } else {
-                    return '<a id="cek" data-value="' . $data->status . '" data-id="' . $data->id . '" class="btn btn-warning">
-                            <i class="fa fa-window-close-o"></i> 
                             </a>' .
-                            ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
-                            </i> </a>' .
                             ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
                             </i> </a>'.
-                            '<a id="cekpinjam" data-value="' . $data->status_pinjam . '" data-id="' . $data->id . '" class="btn btn-warning">
+                            ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                            </i> </a>';
+                } else {
+                    return '<a id="cekpinjam" data-value="' . $data->status_pinjam . '" data-id="' . $data->id . '" class="btn btn-warning">
                                 <i class="fa fa-rocket"></i> 
-                            </a>';
+                            </a>' .
+                            ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                            </i> </a>'.
+                            '<a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                            </i> </a>';
                     
                 }
 
             })->rawColumns(['action'])->make(true);
 
     }
-    public function show($id)
+    public function autoCompletePeminjaman(Request $request)
     {
-        //
+        $query = $request->get('term','');
+        $dataptsl = PeminjamanMaster::where('idbukutanah', 'LIKE', '%' . $query . '%')->limit(20)->get();
+        $data = [];
+        foreach ($dataptsl as $d) {
+            $data[] = array('value' => $d->idbukutanah . ' || Jenis Hak: ' . $d->jenis_hak . ' || No Hak: ' . $d->no_hak . ' || Desa: ' . $d->desa . ' || Kec: ' . $d->kecamatan, 'id' => $d->idbukutanah);
+        }
+        if (count($data)) {
+            return $data;
+        } else {
+            return ['value' => 'Data tidak ada', 'id' => ''];
+        }
+    }
+
+    public function autoCompletePeminjamanshow(Request $request)
+    {
+        $id = $request->idbukutanah;
+
+        $datas = PeminjamanMaster::where('idbukutanah', $id)->first();
+        $data = array(
+            'idbukutanah' => $datas->idbukutanah,
+            'kecamatan' => $datas->kecamatan,
+            'desa' => $datas->desa,
+            'jenis_hak' => $datas->jenis_hak,
+            'no_hak' => $datas->no_hak,
+            'no_box' => $datas->no_box,
+        );
+        $row_set[] = $data;
+        return $return = json_encode($row_set);
     }
 
 
     public function edit($id)
     {
-        return PeminjamanMaster::find($id);
+        return PeminjamanPengecekan::find($id);
     }
 
     public function update(Request $request, $id)
     {
-        $data = PeminjamanMaster::find($id);
+        $data = PeminjamanPengecekan::find($id);
         $data->no_box = $request['no_box'];
         $data->idbukutanah = $request['idbukutanah'];
         $data->jenis_hak = $request['jenis_hak'];
@@ -138,14 +139,14 @@ class PeminjamanMasterController extends Controller
 
     public function destroy($id)
     {
-        PeminjamanMaster::destroy($id);
+        PeminjamanPengecekan::destroy($id);
         Session::flash('info', 'Data Berhasil Dihapus');
         return View::make('layouts/alerts');
     }
 
     public function store(Request $request)
     {
-        PeminjamanMaster::create($request->except(['_method', '_token']));
+        PeminjamanPengecekan::create($request->except(['_method', '_token']));
 
         Session::flash('info', 'Data Baru Berhasil Ditambah');
         return View::make('layouts/alerts');

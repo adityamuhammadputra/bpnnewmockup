@@ -71,9 +71,9 @@
                             <div class="form-group">
                                 <label for="name" class="control-label">Peminjaman Via</label>
                                 {{-- {{ Form::select('via', $via, request()->get('id'), ['id' => 'viadetails', 'class' => 'form-control', 'required'=>'true']) }} --}}
-                                {{ Form::select('via', $via, request()->get('nama'), ['id' => 'viadetails', 'class' => 'form-control', 'required'=>'true']) }}
+                                {{-- {{ Form::select('via', $via, request()->get('nama'), ['id' => 'viadetails', 'class' => 'form-control', 'required'=>'true']) }} --}}
 
-                                {{-- <input type="text" class="form-control" id="viadetails"> --}}
+                                <input type="text" class="form-control" id="viadetails" name="via">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -82,6 +82,7 @@
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-detail">
                             <thead>
                                 <tr>
+                                    <th width="1%">No.</th>
                                     <th width="10%">Id Buku Tanah</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
@@ -119,7 +120,7 @@
         html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
         html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
         html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
-        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU" /></td>';
+        html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU / Nomor HT" /></td>';
         html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
         html += '</tr>';
         $('#form-detail #data-detail tbody').append(html);
@@ -162,6 +163,7 @@
             "bDestroy": true,
             ajax:"{{ url('api/peminjamanproses') .'/'}}"+ id,
             columns: [
+                {data: 'id', name:'id'},
                 {data: 'idbukutanah',name:'idbukutanah'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
@@ -176,7 +178,7 @@
                 orderable:false,
                 targets: 0
             } ],  
-            order: [[ 4, 'desc' ]],
+            // order: [[ 4, 'desc' ]],
             language: {
                 lengthMenu: "Menampilkan _MENU_",
                 zeroRecords: "Data tidak ada",
@@ -200,17 +202,24 @@
 
          yadcf.init(TableDetail, [
                 {
-                    column_number: 1,
+                    column_number: 2,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No. Hak"
                 },
                 {
-                    column_number: 3,
+                    column_number: 4,
                     filter_type: "text",
                     filter_default_label: "Desa"
                 }
             ]);
+
+             TableDetail.on( 'draw.dt', function () {
+                var PageInfo = $('#data-detail').DataTable().page.info();
+                     TableDetail.column(0, { page: 'current' }).nodes().each( function (cell, i) {
+                        cell.innerHTML = i + 1 + PageInfo.start;
+                    } );
+                } );
         
     });
     function deleteDetail(id){
@@ -222,11 +231,30 @@
             },
             success: function(data) {
                 $('#data-detail').dataTable().api().ajax.reload();
+                $('#data-peminjaman').dataTable().api().ajax.reload();
                 $('div.flash-message').html(data);
                     
             },
             error: function () {
                 alert("Opppps gagal");
+            }
+        })
+    }
+
+    function roketDetail(id){
+        $.ajax({
+            url: "{{ url('peminjamandetail/proses')}}/" +id,
+            type: "GET",
+            data:{
+                id:id
+            },
+            success:function(data){
+                $('#data-detail').dataTable().api().ajax.reload();
+                $('#data-peminjaman').dataTable().api().ajax.reload();
+                $('div.flash-message').html(data);
+            },
+            error:function(){
+                alert("Terjadi kesalah");
             }
         })
     }

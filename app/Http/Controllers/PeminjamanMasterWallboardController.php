@@ -11,6 +11,9 @@ use Session;
 use App\User;
 use App\PeminjamanMaster;
 
+use App\PeminjamanPengecekan;
+use App\PeminjamanPengecekanHistory;
+
 class PeminjamanMasterWallboardController extends Controller
 {
     public function index()
@@ -20,7 +23,7 @@ class PeminjamanMasterWallboardController extends Controller
 
     public function apiPeinjamanMasterWarllboard()
     {
-        $data = PeminjamanMaster::where('status_pinjam', 1)->orderBy('updated_at', 'asc');
+        $data = PeminjamanPengecekan::where('status_pinjam', 1)->orderBy('updated_at', 'asc');
 
         return Datatables::of($data)
             ->addColumn('action', function ($data) {
@@ -32,12 +35,15 @@ class PeminjamanMasterWallboardController extends Controller
     }
     public function cekpinjam(Request $request)
     {
-
-        $data = PeminjamanMaster::find($request->id);
-        $data->status_pinjam = 2;
+        // return $request->all();
+        $data = PeminjamanPengecekan::find($request->id);
+        $data->status_pinjam = 0;
         $data->update();
 
-        Session::flash('info', 'Data Telah Dikirim Ke Bukutanah History');
+        $datas = PeminjamanPengecekan::select('idbukutanah', 'jenis_hak', 'kecamatan','desa', 'no_box', 'jenis_hak', 'no_hak', 'ruang', 'rak', 'baris')->find($request->id)->toArray();
+        PeminjamanPengecekanHistory::insert([$datas]);
+
+        Session::flash('info', 'Data telah dikirim ke peminjaman history');
         return View::make('layouts/alerts');
 
     }

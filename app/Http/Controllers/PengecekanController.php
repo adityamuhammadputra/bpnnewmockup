@@ -97,6 +97,7 @@ class PengecekanController extends Controller
    
     public function store(Request $request)
     {
+        // return $request;
         // return "ok";
         // return Pengecekan::create($request->except(['_method','_token']));
         $data = User::with('kelompok')->where('id', auth()->user()->id)->first();

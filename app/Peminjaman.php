@@ -14,13 +14,18 @@ class Peminjaman extends Model
 
     public function peminjamandetail()
     {
-        return $this->hasMany(PeminjamanDetail::class);
+        return $this->hasMany(PeminjamanDetail::class)->where('status_detail',[0]);
         
+    }
+
+    public function peminjamandetailcetak()
+    {
+        return $this->hasMany(PeminjamanDetail::class)->whereNotIn('status_detail', [1, 2, 3]);
     }
 
     public function getJumlahPinjamAttribute($value)
     {
-        return $this->peminjamandetail->count();
+        return $this->peminjamandetail->whereNotIn('status_detail', [1, 2, 3])->count();
     }
 
     public function getJumlahPinjamKegiatanAttribute($value)

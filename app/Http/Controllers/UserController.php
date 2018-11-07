@@ -24,8 +24,7 @@ class UserController extends Controller
             })
             ->addColumn('action',function($user){
 
-                return '<a href="#" class="btn btn-info btn-sm"><i class="glyphicon glyphicon-open"></i>Show</a> ' .
-                        ' <a onclick="editForm('.$user->id .')" class ="btn btn-primary btn-sm"><i class="glyphicon glyphicon-edit">
+                return' <a onclick="editForm('.$user->id .')" class ="btn btn-primary btn-sm"><i class="glyphicon glyphicon-edit">
                         </i> Edit </a>' .
                         ' <a onclick="deleteData('.$user->id .')" class ="btn btn-warning btn-sm"><i class="glyphicon glyphicon-trash">
                         </i> Delete </a>';
