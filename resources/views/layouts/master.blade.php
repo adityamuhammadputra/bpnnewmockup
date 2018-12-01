@@ -184,6 +184,22 @@
 				</ul>
 			</li>
 			@endif
+
+			<li class="parent {{ request()->is('penyerahan') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-5">
+				<em class="fa fa-book">&nbsp;</em> Penyerahan <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-5">
+					<li><a class="" href="{{ url('penyerahan') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Penyerahan Proses 
+					</a></li>
+					<li><a class="" href="{{ url('penyerahanloket') }}" target="_blank">
+						<span class="fa fa-arrow-right">&nbsp;</span> Penyerahan Loket
+					</a></li>
+					<li><a class="" href="{{ url('penyerahanhistory') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Penyerahan History
+					</a></li>
+				</ul>
+			</li>
 			{{-- <li class="{{ request()->is('pengembalian') ? 'active' : '' }}"><a href="{{ url('pengembalian') }}"><em class="fa fa-reply-all">&nbsp;</em> Pengembalian</a></li> --}}
 				
 			<li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>

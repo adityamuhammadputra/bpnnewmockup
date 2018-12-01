@@ -107,7 +107,7 @@
                                         <th width="10%">Kecamatan </th> 
                                         <th width="10%">No.Warkah</th>
                                         <th width="10%">No.SU</th>
-                                        <th></th>
+                                        <th><input type="checkbox" onclick="check(this.checked)"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -134,6 +134,18 @@
         //     window.focus();
         //     location.reload();
         // }
+
+       function check(isChecked) {
+           if (isChecked) {
+               $('.checkbox').each(function () {
+                   this.checked = true;
+               })
+           }else{
+               $('.checkbox').each(function () {
+                   this.checked = false;
+               })
+           }
+       }
 
         function datadetail(id) {
             save_method = 'edit';

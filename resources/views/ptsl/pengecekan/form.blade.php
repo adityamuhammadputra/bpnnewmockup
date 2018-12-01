@@ -69,7 +69,10 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for="name" class="control-label">Keterangan</label>
-                        <input type="text" class="form-control" name="keterangan" value="BERKAS LENGKAP" readonly>
+                        <select name="keterangan" class="form-control">
+                            <option value="BERKAS LENGKAP">BERKAS LENGKAP</option>
+                            <option value="BERKAS TIDAK LENGKAP">BERKAS TIDAK LENGKAP</option>
+                        </select>
                         <span class="help-block with-errors"></span>
                     </div>
                </div>

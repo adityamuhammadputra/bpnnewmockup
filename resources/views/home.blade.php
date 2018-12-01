@@ -136,6 +136,9 @@
             </div>
         </div>
     </div><!--/.row-->
+     {{-- @foreach($data as $d)
+                            {{ $d->pengecekan->count() }},
+                        @endforeach --}}
 @push('scripts')
 <script>
 
@@ -146,14 +149,12 @@
                 labels : ["Kelompok 1","Kelompok 2","Kelompok 3","Kelompok 4","Kelompok 5","Kelompok 6","Kelompok 7", "Kelompok 8"],
                 datasets : [
                     {
-                        fillColor : "rgba(220,220,220,0.5)",
-                        strokeColor : "rgba(220,220,220,0.8)",
-                        highlightFill: "rgba(220,220,220,0.75)",
-                        highlightStroke: "rgba(220,220,220,1)",
+                        fillColor : "rgba(255,255,0,0.5)",
+                        strokeColor : "rgba(255,255,0,0.8)",
+                        highlightFill: "rgba(255,255,0,0.75)",
+                        highlightStroke: "rgba(255,255,0,1)",
                         data : [
-                            @foreach($data as $d)
-                               {{ $d->pengecekan->count() }},
-                            @endforeach
+                            300, 600, 200, 400, 700,200,300,400
                         ]
 
                     },
@@ -163,9 +164,7 @@
                         highlightFill : "rgba(48, 164, 255, 0.75)",
                         highlightStroke : "rgba(48, 164, 255, 1)",
                         data : [
-                            @foreach($data as $d)
-                               {{ 1000-$d->pengecekan->count() }},
-                            @endforeach
+                            700, 400, 800, 600, 300,800,700,600
                         ]
                     }
                 ]

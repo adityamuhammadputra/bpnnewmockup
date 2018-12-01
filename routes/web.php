@@ -104,7 +104,35 @@ Route::get('api/pengembalianwallboard', 'PengembalianWallboardController@apiData
 
 
 
+//Penyerahan
+Route::resource('penyerahan', 'PenyerahanProsesController');
+Route::get('api/penyerahan', 'PenyerahanProsesController@apiPenyerahan');
 
+Route::resource('penyerahanloket', 'PenyerahanLoketController');
+Route::get('api/penyerahanloket', 'PenyerahanLoketController@apiPenyerahan');
+Route::get('api/penyerahanloketdetail/{id}', 'PenyerahanLoketController@apiDetail');
+Route::get('kamera', 'PenyerahanLoketController@kamera');
+Route::post('kamera', 'PenyerahanLoketController@kameraAksi');
+Route::get('cetak/penyerahanloket/{id}', 'PenyerahanLoketController@cetak');
+
+Route::get('storage/app/public/{filename}', function ($filename) {
+    $path = storage_path('app/public/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+
+
+// Route::ge
 
 
 

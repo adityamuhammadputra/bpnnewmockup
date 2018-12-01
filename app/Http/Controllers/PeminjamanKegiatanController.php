@@ -95,21 +95,16 @@ class PeminjamanKegiatanController extends Controller
         $replace = array(" ", ":");
         $datetime = str_replace($replace, '-', $date);
         $datacetak = PeminjamanDetail::with('peminjamanheader')->whereIn('id',$request->data)->get();
-        // $user = User::with('pegawai')->find(auth()->user()->id);
-        // return $user;
+        
         
         $data = [
             'data' => $datacetak,
-            // 'user' => $user
         ];
-        // return $data;
         $pdf = PDF::loadView('peminjaman.peminjamankegiatan.cetak', $data);
         $pdf->save(storage_path() . '/app/pdf/cetakpeminjamankegiatan' . $datetime . '.pdf');
         $pdf->setPaper('a4', 'landscape');
 
-
         $datas = PeminjamanDetail::whereIn('id', $request->data);
-
 
         $datas->update([
             'status_detail' => '3',
@@ -163,7 +158,7 @@ class PeminjamanKegiatanController extends Controller
     {
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',1)->whereHas('peminjamanheader',function($q){
             if(auth()->user()->kegiatan_id == 100){
-
+                
             }
             else{
                 $q->where('kegiatan', auth()->user()->kegiatan_id);
@@ -177,7 +172,7 @@ class PeminjamanKegiatanController extends Controller
                     class ="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o">
                 </i> </a>
                 
-                <input type="checkbox" name="data[]" value="'.$data->id. '"><span class="checkmark"></span></label>' .
+                <input type="checkbox" class="checkbox" name="data[]" value="'.$data->id. '"><span class="checkmark"></span></label>' .
               
                 '';
                

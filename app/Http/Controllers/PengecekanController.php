@@ -78,7 +78,7 @@ class PengecekanController extends Controller
         
         $cekbox25 = Pengecekan::where('no_box', $kd_kelompok.$maxnb[0])->where('kelompok_id', $kelompok_id)->count();
 
-        if ($cekbox25 >= 2) {
+        if ($cekbox25 >= 25) {
             $nextnb = $maxnb[0] + 1;
 
             $nourutbox = $kd_kelompok . $nextnb;
@@ -125,7 +125,7 @@ class PengecekanController extends Controller
             }
             $cekbox25 = Pengecekan::where('no_box', $kd_kelompok.$maxnb[0])->where('kelompok_id', $kelompok_id)->count();
 
-            if ($cekbox25 >= 2) {
+            if ($cekbox25 >= 25) {
                 $nextnb = $maxnb[0] + 1;
                 $nourutbox = $kd_kelompok . $nextnb;
 

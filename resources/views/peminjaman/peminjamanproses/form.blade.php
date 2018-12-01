@@ -80,9 +80,9 @@
                 <tr>
                     <th width="15%">Id Buku Tanah</th>
                     <th width="10%">No.Hak</th>
-                    <th width="10%">Jenis Hak</th>
-                    <th width="10%">Desa </th> 
-                    <th width="10%">Kecamatan </th> 
+                    <th width="10%">Jenis Hak <input type="checkbox" name="" id="samakan-jenishak"></th>
+                    <th width="10%">Desa  <input type="checkbox" name="" id="samakan-desa"></th> 
+                    <th width="10%">Kecamatan <input type="checkbox" name="" id="samakan-kecamatan"> </th> 
                     <th width="10%">No.Warkah</th>
                     <th width="10%">No.SU</th>
                     <th width="5%" style="text-align-center">
@@ -103,6 +103,35 @@
     // $('#kegiatan').on('change',function () {
     //     alert(this.value);
     // })
+    $('#samakan-jenishak').on('click',function () {
+        var jenis_hak = $('#jenis_hak3').val();
+        if($(this).prop('checked')){
+            $('.jenishak').val(jenis_hak);
+        }
+        else{
+            $('.jenishak').val('');
+        }
+    })
+    
+    $('#samakan-desa').on('click',function () {
+        var desa = $('#desa3').val();
+        if($(this).prop('checked')){
+            $('.desa').val(desa);
+        }
+        else{
+            $('.desa').val('');
+        }
+    })
+     $('#samakan-kecamatan').on('click',function () {
+        var kecamatan = $('#kecamatan3').val();
+        if($(this).prop('checked')){
+            $('.kecamatan').val(kecamatan);
+        }
+        else{
+            $('.kecamatan').val('');
+        }
+    })
+
     var i=$('table tr').length;
 
     $(document).ready(function(){
@@ -111,9 +140,9 @@
         html += '<tr>';
         html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_txt" placeholder="Cari Buku Tanah" /></td>';
         html += '<td><input type="text" name="no_hak[]" id="no_hak'+i+'" class="form-control" placeholder="Nomor Hak" /></td>';
-        html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control" placeholder="Jenis Hak" /></td>';
-        html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
-        html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
+        html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control jenishak" placeholder="Jenis Hak" /></td>';
+        html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control desa" placeholder="Desa" /></td>';
+        html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control kecamatan" placeholder="Kecamatan" /></td>';
         html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor Warkah" /></td>';
         html += '<td><input type="text" name="no_su[]" id="no_su'+i+'" class="form-control" placeholder="Nomor SU / Nomor HT" /></td>';
         html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
