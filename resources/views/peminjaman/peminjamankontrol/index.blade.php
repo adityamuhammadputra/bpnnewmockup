@@ -1,11 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
-<style>
-        .modal-title{
-            color: white;
-        }
-</style>
+
 <div class="">
     <div class="row">
         <div class="col-md-12">
@@ -33,7 +29,7 @@
                                     <th>Jatuh Tempo</th>
                                     <th>Penyerahan Kegiatan</th>
                                     <th>Tanggal Kembali</th>
-                                    <th width="10%">Status</th>
+                                    <th width="10%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,13 +45,23 @@
     <script>
         $(document).ready(function(){
             $('#sidebar-collapse').hide();
-            $('#form-panel').hide();
+            
+            //ini belum fungsi
+            $('#yadcf-filter--data-master-12').keyup(function(){
+                alert('adsad');
+                if($(this).val() = 'Di Proses'){
+                    $(this).val() = 0;
+                }
+            });
+            
+
         });
         
             
-
+        
         var Table;
         $(document).ready(function () {
+
             var Table;
             'use strict';
             Table = $('#data-master').DataTable({
@@ -72,8 +78,6 @@
                     {data: 'jenis_hak',name:'jenis_hak'},
                     {data: 'desa',name:'desa'},
                     {data: 'kecamatan',name:'kecamatan'},
-                    // {data: 'no_warkah',name:'no_warkah'},
-                    // {data: 'no_su',name:'no_su'},
                     {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
                     {data: 'peminjamanheader.tanggal_kembali',name:'peminjamanheader.tanggal_kembali'},
                     {data: 'tanggal_kegiatan',name:'tanggal_kegiatan'},
@@ -104,7 +108,7 @@
                     orderable:false ,
                     targets: 0
                 } ], 
-                order: [[ 10, 'asc' ]],
+                order: [[11, 'asc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data yang anda cari tidak ada, Silahkan masukan keyword lainnya",
@@ -149,6 +153,12 @@
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Kecamatan"
+            },
+            {
+                column_number: 12,
+                filter_type: "text",
+                filter_delay: 500,
+                filter_default_label: "Status"
             },
         ]);
          
