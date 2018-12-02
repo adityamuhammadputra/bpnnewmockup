@@ -81,10 +81,6 @@ class PengembalianController extends Controller
             PeminjamanDetail::where('peminjaman_id', '=', $request->id)
                 ->update(['status_detail' => '1']);
 
-            // $datas = PeminjamanDetail::where('peminjaman_id',$request->id)->get();
-            // return $datas;
-            // $datas->status_detail = 1;
-            // $datas->update();
         }
         else{
             $data = Peminjaman::find($request->id);
@@ -101,7 +97,10 @@ class PengembalianController extends Controller
         // return $request->id;
         
         PeminjamanDetail::where('id', '=', $request->id)
-            ->update(['status_detail' => '4']);
+            ->update([
+                'status_detail' => '4',
+                'tanggal_kembali' => Carbon::now(),
+            ]);
       
         Session::flash('info', 'Data berhasil divalidasi pengembalian');
         return View::make('layouts/alerts');

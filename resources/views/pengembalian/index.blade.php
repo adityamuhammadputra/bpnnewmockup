@@ -28,6 +28,7 @@
                                     <th width="10%">Penanggung Jawab</th>
                                     <th width="10%">Peminjaman Via</th>
                                     <th>Tanggal Pinjam</th>
+                                    <th>Jatuh Tempo</th>
                                     <th width="10%"></th>
                                     <th width="10%">Jenis Hak</th>
                                     <th width="10%"></th> 
@@ -35,7 +36,6 @@
                                     <th width="10%">No.Warkah</th>
                                     <th width="10%">No.SU</th>
                                     <th width="10%">Keterangan</th>
-                                    <th>Tanggal Kembali</th>
                                     <th width="10%">Status</th>
                                     <th width="12%">Action</th>
                                 </tr>
@@ -91,6 +91,7 @@
                 {data: 'peminjamanheader.nama',name:'peminjamanheader.nama'},
                 {data: 'peminjamanheader.via',name:'peminjamanheader.via'},
                 {data: 'peminjamanheader.tanggal_pinjam',name:'peminjamanheader.tanggal_pinjam'},
+                {data: 'peminjamanheader.tanggal_kembali',name:'peminjamanheader.tanggal_kembali'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
                 {data: 'desa',name:'desa'},
@@ -98,7 +99,6 @@
                 {data: 'no_warkah',name:'no_warkah'},
                 {data: 'no_su',name:'no_su'},
                 {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
-                {data: 'tanggal_kembali',name:'tanggal_kembali'},
 
                 {   
                     data: 'status_detail',
@@ -143,19 +143,19 @@
         }),
          yadcf.init(TableDetail, [
             {
-                column_number: 3,
+                column_number: 4,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "No Hak"
             },
             {
-                column_number: 5,
+                column_number: 6,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Desa "
             },
             {
-                column_number: 6,
+                column_number: 7,
                 filter_type: "text",
                 filter_delay: 500,
                 filter_default_label: "Kecamatan"

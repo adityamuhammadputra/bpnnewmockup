@@ -107,6 +107,7 @@
                                         <th width="10%">Kecamatan </th> 
                                         <th width="10%">No.Warkah</th>
                                         <th width="10%">No.SU</th>
+                                        <th>Jatuh Tempo</th>
                                         <th><input type="checkbox" onclick="check(this.checked)"></th>
                                     </tr>
                                 </thead>
@@ -231,6 +232,7 @@
                     {data: 'kecamatan',name:'kecamatan'},
                     {data: 'no_warkah',name:'no_warkah'},
                     {data: 'no_su',name:'no_su'},
+                    {data: 'peminjamanheader.tanggal_kembali',name:'peminjamanheader.tanggal_kembali'},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                  columnDefs: [ {

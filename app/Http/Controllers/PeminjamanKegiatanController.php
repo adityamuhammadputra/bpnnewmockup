@@ -91,6 +91,7 @@ class PeminjamanKegiatanController extends Controller
 
     public function store(Request $request)
     {
+        // return $data;
         $date = Carbon::now();
         $replace = array(" ", ":");
         $datetime = str_replace($replace, '-', $date);
@@ -108,7 +109,7 @@ class PeminjamanKegiatanController extends Controller
 
         $datas->update([
             'status_detail' => '3',
-            'tanggal_kembali' => $date,
+            'tanggal_kegiatan' => $date,
         ]);
 
 

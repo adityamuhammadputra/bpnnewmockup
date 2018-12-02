@@ -152,7 +152,7 @@
                     <td>{{ $data[0]->peminjamanheader->unit_kerja}}</td>
                 </tr>
                 <tr>
-                    <td>Tanggal Kembali</td>
+                    <td>Tanggal Penyerahan</td>
                     <td>:</td>
                     <td>{{ Carbon::now() }}</td>
                 </tr>

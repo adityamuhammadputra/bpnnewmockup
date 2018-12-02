@@ -263,9 +263,10 @@ class PeminjamanProsesController extends Controller
                         ' <a id="detailData" data-id="'.$data->id .'" data-nama="'.$data->nama .'" data-nip="'.$data->nip .'" data-unitkerja="'.$data->unit_kerja .'" 
                             data-kegiatan="'.$data->kegiatan .'"data-tanggalpinjam="'.$data->tanggal_pinjam .'" data-tanggalkembali="'.$data->tanggal_kembali . '" 
                              data-via="' . $data->via . '" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
-                        </i> </a>' .
-                        ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
-                        </i> </a>';
+                        </i> </a>' 
+                        // ' <a onclick="deleteData('.$data->id .')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                        // </i> </a>'
+                        ;
             })->rawColumns(['action'])->make(true);
     }
 
@@ -286,12 +287,10 @@ class PeminjamanProsesController extends Controller
     public function cetak($id)
     {
         $datetime = Carbon::now();
-        // return $datetime;
         $replace = array(" ",":");
         $datetime = str_replace($replace, '-', $datetime);
 
         $data = Peminjaman::with('peminjamandetailcetak')->find($id);
-        // return $data;
 
         
 

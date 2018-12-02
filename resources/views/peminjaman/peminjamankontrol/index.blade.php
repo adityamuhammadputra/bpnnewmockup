@@ -6,20 +6,12 @@
             color: white;
         }
 </style>
-<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-    <div class="row">
-        <ol class="breadcrumb">
-            <li><a href="#">
-                <em class="fa fa-check-square-o"></em>
-            </a></li>
-            <li class="active">Peminjaman</li>
-        </ol>
-    </div><!--/.row-->
+<div class="">
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    Peminjaman Kontrol
+                <div class="panel-heading" style="text-align:center";>
+                    <b>Peminjaman Kontrol</b>
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
@@ -37,9 +29,9 @@
                                     <th width="10%">Jenis Hak</th>
                                     <th width="10%"></th> 
                                     <th width="10%"></th> 
-                                    {{-- <th width="10%">No.Warkah</th> --}}
-                                    {{-- <th width="10%">No.SU</th> --}}
                                     <th width="10%">Keterangan</th>
+                                    <th>Jatuh Tempo</th>
+                                    <th>Penyerahan Kegiatan</th>
                                     <th>Tanggal Kembali</th>
                                     <th width="10%">Status</th>
                                 </tr>
@@ -55,7 +47,12 @@
 
 @push('scripts')
     <script>
-        $('#form-panel').hide();
+        $(document).ready(function(){
+            $('#sidebar-collapse').hide();
+            $('#form-panel').hide();
+        });
+        
+            
 
         var Table;
         $(document).ready(function () {
@@ -78,6 +75,8 @@
                     // {data: 'no_warkah',name:'no_warkah'},
                     // {data: 'no_su',name:'no_su'},
                     {data: 'peminjamanheader.kegiatan.nama_kegiatan',name:'peminjamanheader.kegiatan.nama_kegiatan'},
+                    {data: 'peminjamanheader.tanggal_kembali',name:'peminjamanheader.tanggal_kembali'},
+                    {data: 'tanggal_kegiatan',name:'tanggal_kegiatan'},
                     {data: 'tanggal_kembali',name:'tanggal_kembali'},
                     {   
                         data: 'status_detail',
@@ -91,10 +90,10 @@
                                 return '<span class="label label-warning">Di Tunggakan</span>';
                             }
                             else if(data === '3'){
-                                return '<span class="label label-danger">Di Pengembalian</span>';
+                                return '<span class="label label-default">Di Pinjam</span>';
                             }
                             else{
-                                return '<span class="label label-success">Sudah Validasi Kembali</span>';
+                                return '<span class="label label-success">Di Kembalikan</span>';
                             }
                             
                         }
@@ -123,7 +122,7 @@
                     },
                 },
                 aLengthMenu: [[10,25, 50, 75, -1], [10,25, 50, 75, "Semua"]],
-                iDisplayLength: -1
+                iDisplayLength: 25
             })
         
              yadcf.init(Table, [

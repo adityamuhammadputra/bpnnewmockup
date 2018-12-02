@@ -114,6 +114,7 @@
         $(document).on('click', '.adddetail', function(){
         var html = '';
         html += '<tr>';
+        html += '<td>'+i+'</td>';
         html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_detail" placeholder="ID Buku Tanah" /></td>';
         html += '<td><input type="text" name="no_hak[]" id="no_hak'+i+'" class="form-control" placeholder="Nomor Hak" /></td>';
         html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control" placeholder="Jenis Hak" /></td>';

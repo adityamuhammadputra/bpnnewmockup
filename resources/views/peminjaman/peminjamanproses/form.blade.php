@@ -103,8 +103,9 @@
     // $('#kegiatan').on('change',function () {
     //     alert(this.value);
     // })
+    
     $('#samakan-jenishak').on('click',function () {
-        var jenis_hak = $('#jenis_hak3').val();
+        var jenis_hak = $('#item_table tr input.jenishak:first').val();
         if($(this).prop('checked')){
             $('.jenishak').val(jenis_hak);
         }
@@ -114,7 +115,7 @@
     })
     
     $('#samakan-desa').on('click',function () {
-        var desa = $('#desa3').val();
+        var desa = $('#item_table tr input.desa:first').val();
         if($(this).prop('checked')){
             $('.desa').val(desa);
         }
@@ -123,7 +124,7 @@
         }
     })
      $('#samakan-kecamatan').on('click',function () {
-        var kecamatan = $('#kecamatan3').val();
+        var kecamatan = $('#item_table tr input.kecamatan:first').val();
         if($(this).prop('checked')){
             $('.kecamatan').val(kecamatan);
         }
