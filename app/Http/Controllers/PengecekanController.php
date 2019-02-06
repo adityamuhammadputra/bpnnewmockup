@@ -32,7 +32,6 @@ class PengecekanController extends Controller
             'id' => $id,
         ];
 
-
         $pdf = PDF::loadView('ptsl.pengecekan.cetak',$data);
         $pdf->save(storage_path().'/app/pdf/cetakpengecekanptsl'.$datetime.'.pdf');
         $pdf->setPaper('a4', 'landscape');
@@ -97,7 +96,6 @@ class PengecekanController extends Controller
    
     public function store(Request $request)
     {
-        // return $request;
         // return "ok";
         // return Pengecekan::create($request->except(['_method','_token']));
         $data = User::with('kelompok')->where('id', auth()->user()->id)->first();

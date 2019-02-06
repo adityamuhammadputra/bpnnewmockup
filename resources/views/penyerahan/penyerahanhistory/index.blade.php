@@ -15,25 +15,31 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Loket Penyerahan
+                    History Penyerahan
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
+                    <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-minus-circle"></i> Form Cetak</button>
+                
+                </div>
+                <div class="panel-body" id="form-panel">
+                    @include('penyerahan.penyerahanhistory.form')
                 </div>
                 <div class="panel-body">
+                    
                     <div class="table-responsive">
                         <table class="table table-hover table-striped table-borderless table-responsive" id="data-penyerahan">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Berkas</th>
+                                    <th></th>
                                     <th>Kode Box</th>
                                     <th></th>
-                                    <th>Email Notifikasi</th>
+                                    <th>Sms Notifikasi</th>
                                     <th>Kegiatan</th>
-                                    <th>Tanggal</th>
-                                    <th>Status Cetak</th>
-                                    <th></th>
+                                    <th>Tanggal Selesai</th>
+                                    <th>Status</th>
+                                    <th>Foto</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,46 +54,8 @@
 @push('scripts')
     <script>
         
-        function deleteData(id){
-            var csrf_token = $('meta[name="csrf-token"]').attr('content');
-            swal({
-                title: 'Apakah Anda yakin Menghapus Data?',
-                text: "Konfirmasi Penghapusan Data",
-                type:'warning',
-                showCancelButton:true,
-                cancelButtonColor:'#d33',
-                confirmButtonColor:'#3085d6',
-                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Hapus ini',
-                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
-            }).then(function(){                
-                $.ajax({
-                    url: "{{ url('penyerahanloket')}}/"+id,
-                    type: "POST",
-                    data: {'_method': 'DELETE','_token': csrf_token
-                    },
-                    success: function(data) {
-                        $('#data-penyerahan').dataTable().api().ajax.reload();
-                        $('div.flash-message').html(data);
-                    },
-                    error: function () {
-                        swal({
-                            title:'opss..',
-                            text: 'Terjadi Error, Silahkan Hubungi Pengembang',
-                            type:'error',
-                            timer: '1500'
-                        })
-                    }
-                });
-            });   
-        }
-
-        $(function () {
-            $('#form-penyerahanproses form').validator().on('submit', function (e) {
-
-            });
-        });
-
-
+        
+         
         var Table;
         $(document).ready(function () {
             var Table;
@@ -96,7 +64,8 @@
                 colReorder: true,
                 processing: true,
                 serverSide:true,
-                ajax:"{{ url('api/penyerahanloket') }}",
+                ajax:"{{ url('api/penyerahanhistory') }}",
+                type: "POST",
                 columns: [
                    {data: 'id',name:'id'},
                     {data: 'no_berkas',name:'no_berkas'},
@@ -110,14 +79,14 @@
                         name:'foto',
                         "render": function ( data, type, row ){
                             if(data === 'app/public/default.png'){
-                                return '<span class="label label-warning">Belum Dicetak</span>';
+                                return '<span class="label label-warning">Belum Diserahkan</span>';
                             }
                             else{
-                                return '<span class="label label-success">Sudah Dicetak</span>';
+                                return '<span class="label label-success">Sudah Diserahkan</span>';
                             }
                         }
                     },
-                    {data: 'action',name:'action',orderable:false, searchable:false}
+                    {data: 'fotos', name: 'fotos'}
                 ],
                  columnDefs: [ {
                     searchable: false,
@@ -148,6 +117,12 @@
            
             yadcf.init(Table, [
                 {
+                    column_number: 1,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No Berkas"
+                },
+                 {
                     column_number: 3,
                     filter_type: "text",
                     filter_delay: 500,
@@ -164,36 +139,7 @@
            
         });
         
-        function addData() {
-            save_method = "add";
-            $('input[name=_method]').val('POST');
-            $("#form-panel").slideToggle();
-        }
 
-        function btnCancel(){
-            $('#nama').val('');
-            $('#nik').val('');
-            $('#unit_kerja').val('');
-        }
-        
-        function cetak(url) {
-            var link = "cetak/penyerahanloket/"+url;
-             swal({
-                title: 'Konfirmasi Cetak Data',
-                text: "Mencatak data artinya mencetak dan validasi, Apakah anda yakin ?",
-                type:'warning',
-                showCancelButton:true,
-                cancelButtonColor:'#d33',
-                confirmButtonColor:'#3085d6',
-                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Cetak data ini',
-                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
-            }).then(function(){  
-                window.open(link,'_blank');
-                window.focus();
-                location.reload();
-                
-            })
-        }
 
     </script>
 

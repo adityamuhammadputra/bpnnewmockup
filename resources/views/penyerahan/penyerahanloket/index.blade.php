@@ -26,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Berkas</th>
+                                    <th></th>
                                     <th>Kode Box</th>
                                     <th></th>
                                     <th>Sms Notifikasi</th>
@@ -152,6 +152,12 @@
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "Nama Pemohon"
+                },
+                {
+                    column_number: 1,
+                    filter_type: "text",
+                    filter_delay: 500,
+                    filter_default_label: "No Berkas"
                 },
             ]);
             

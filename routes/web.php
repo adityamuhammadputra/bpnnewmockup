@@ -1,9 +1,17 @@
 <?php
 Route::get('/', function () {
-    return view('auth.login');
+    // return view('auth.login');
+    return redirect(url('login'));
+
+});
+
+Route::get('/register', function () {
+    return redirect(url('login'));
 });
 
 Auth::routes();
+
+Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 // Dashboard Arsip
@@ -33,9 +41,16 @@ Route::get('api/peminjamanmaster', 'PeminjamanMasterController@apipeminjamanmast
 
 //Peminjaman
 Route::resource('peminjaman/master','PeminjamanMasterController');
+Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaster')->name('api.peminjaman.master');
+
+Route::resource('peminjaman/master2','PeminjamanMasterController2');
+// Route::get('api/peminjamanmaster2','PeminjamanMasterControlle2r@apiPeminjamanMaster');
+Route::get('api/peminjamanmaster2','PeminjamanMasterController2@apiPeminjamanMaster');
+
+
 Route::get('peminjamanmastercek','PeminjamanMasterController@cek');
 Route::get('peminjamanmastercekpijam','PeminjamanMasterController@cekpinjam');
-Route::get('api/peminjamanmaster','PeminjamanMasterController@apiPeminjamanMaster')->name('api.peminjaman.master');
+Route::get('peminjamanmastercekpijam2','PeminjamanMasterController@cekpinjam2');
 Route::get('autocompletepeminjamanmaster', 'PeminjamanMasterController@autoCompletePeminjaman');
 Route::get('autocompletepeminjamanmastershow', 'PeminjamanMasterController@autoCompletePeminjamanshow');
 
@@ -80,13 +95,6 @@ Route::resource('peminjaman/tunggakan','PeminjamanTunggakanController');
 Route::get('api/tunggakan', 'PeminjamanTunggakanController@apiData');
 Route::get('tunggakancekdetail', 'PeminjamanTunggakanController@tunggakancekdetail');
 
-
-
-
-
-
-
-
 //pengembalian
 Route::resource('pengembalian','PengembalianController');
 // Route::get('api/pengembalian','PengembalianController@apiPengembalian');
@@ -107,6 +115,10 @@ Route::get('api/pengembalianwallboard', 'PengembalianWallboardController@apiData
 //Penyerahan
 Route::resource('penyerahan', 'PenyerahanProsesController');
 Route::get('api/penyerahan', 'PenyerahanProsesController@apiPenyerahan');
+Route::post('cetak/penyerahan', 'PenyerahanProsesController@cetak');
+Route::post('cetak/penyerahanbox', 'PenyerahanProsesController@cetakbox');
+Route::get('penyerahanprosesstatus', 'PenyerahanProsesController@penyerahanprosesstatus');
+
 
 Route::resource('penyerahanloket', 'PenyerahanLoketController');
 Route::get('api/penyerahanloket', 'PenyerahanLoketController@apiPenyerahan');
@@ -114,6 +126,23 @@ Route::get('api/penyerahanloketdetail/{id}', 'PenyerahanLoketController@apiDetai
 Route::get('kamera', 'PenyerahanLoketController@kamera');
 Route::post('kamera', 'PenyerahanLoketController@kameraAksi');
 Route::get('cetak/penyerahanloket/{id}', 'PenyerahanLoketController@cetak');
+
+Route::get('penyerahanhistory', 'PenyerahanHistoryController@index');
+Route::get('api/penyerahanhistory', 'PenyerahanHistoryController@apiPenyerahan');
+Route::post('cetak/penyerahanhistory', 'PenyerahanHistoryController@cetak');
+
+
+
+
+Route::resource('user', 'UserController');
+Route::get('api/user','UserController@apiUser')->name('api.user');
+Route::get('editprofile/{id}', 'UserController@editprofile');
+Route::patch('editprofile/{id}', 'UserController@updateprofile');
+Route::post('editprofile/cekusers', 'UserController@cekusers');
+
+
+});
+
 
 Route::get('storage/app/public/{filename}', function ($filename) {
     $path = storage_path('app/public/' . $filename);
@@ -130,14 +159,3 @@ Route::get('storage/app/public/{filename}', function ($filename) {
 
     return $response;
 });
-
-
-// Route::ge
-
-
-
-
-//user
-Route::resource('user', 'UserController');
-Route::get('api/user','UserController@apiUser')->name('api.user');
-

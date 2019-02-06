@@ -130,7 +130,7 @@
     <div class="atasjudul">
         <br>
         <b><u>TANDA TERIMA DOKUMEN</u></b><br>
-        <i>Nomor Berkas : {{ $data->no_berkas }} / 2018</i>
+        <i>Nomor Berkas : {{ $data->no_berkas }}</i>
     </div>
     <div class="heaederorang">
         <div class="heaederorangkiri">
@@ -189,7 +189,7 @@
                 
                 <tr>
                     <td>
-                        <img src="{{'../storage/'.$data->foto}}" width="100px">
+                        <img src="{{'https://kantahkabbogor.id/storage/'.$data->foto}}" width="100px">
                     </td>
                     <td></td>
                     <td></td>
@@ -216,7 +216,6 @@
                     <th width="10%">No.Hak</th>
                     <th width="10%">Jenis Hak</th>
                     <th width="10%">No. DI 208</th>
-                    <th width="10%">Tahun</th>
                     <th width="15%">Desa </th> 
                     <th width="15%">Kecamatan </th> 
 
@@ -228,7 +227,6 @@
                     <td> {{ $datas->no_hak }}</td>
                     <td> {{ $datas->jenis_hak }}</td>
                     <td> {{ $datas->no_warkah }}</td>
-                    <td> {{ $datas->tahun }}</td>
                     <td> {{ $datas->desa }}</td>
                     <td> {{ $datas->kecamatan }}</td>
                 </tr>
@@ -242,14 +240,17 @@
         <br><br>
         <br><br>
         <u>{{ $data->nama2 }}</u> <br>
-        <b>{{ $data->nik2 }}</b>
+        (................................)
     </div>
     <div class="ttd2">
         Petugas  Penyerahan
         <br><br>
         <br><br>
         <br><br>
+
         <u>{{ auth()->user()->name }}</u> <br>
+        (.................................)
+
     </div>
     
             

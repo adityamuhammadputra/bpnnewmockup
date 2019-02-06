@@ -87,16 +87,16 @@
                                     <input type="text" class="form-control" name="nama2" id="nama2" value="{{$data['detail']->nama2}}" required >
                                     <span class="help-block with-errors"></span>
                                 </div>
-                                {{-- @if($data['detail']->kuasa == 1) --}}
+                                {{-- @if($data['detail']->kuasa == 0) --}}
                                 <div id="nonkuasa">
                                     <div class="form-group">
                                         <label for="name" class="control-label">NIK Penerima Dokumen</label>
-                                        <input type="text" class="form-control" name="nik2" id="nik2" value="{{$data['detail']->nik2}}" required>
+                                        <input type="text" class="form-control" name="nik2" id="nik2" value="{{$data['detail']->nik2}}">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Alamat Penerima Dokumen</label>
-                                        <input type="text" class="form-control" name="alamat2" id="alamat2" value="{{$data['detail']->alamat2}}" required>
+                                        <input type="text" class="form-control" name="alamat2" id="alamat2" value="{{$data['detail']->alamat2}}">
                                         <span class="help-block with-errors"></span>
                                     </div>
                                 </div>
@@ -115,7 +115,9 @@
                             <div class="col-md-4">
                                 <div class="form-group" id="group-foto">
                                     <img src="{{asset('storage/'.$data['detail']->foto)}}"><br>
-                                    <a id="detailData" data-id="{{$data['detail']->id}}" data-no_berkas="{{$data['detail']->no_berkas}}" class="btn btn-primary"><i class="fa fa-camera"></i> Ambil Gambar</a>
+                                    @if ($data['detail']->nama2)
+                                        <a id="detailData" data-id="{{$data['detail']->id}}" data-no_berkas="{{ $data['detail']->no_berkas }}" class="btn btn-primary"><i class="fa fa-camera"></i> Ambil Gambar</a>
+                                    @endif
                                 </div>
                             
                             </div>
@@ -129,13 +131,12 @@
                                 <thead>
                                     <tr>
                                         <th width="1%">No.</th>
-                                        <th width="15%">Id Buku Tanah</th>
                                         <th width="10%"></th>
                                         <th width="10%">Jenis Hak</th>
-                                        <th width="7%">No.DI 208</th>
-                                        <th width="7%">Tahun</th>
-                                        <th width="10%"> </th> 
+                                        <th width="10%"></th> 
                                         <th width="10%">Kecamatan </th> 
+                                        <th width="7%">No.DI 208</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -153,13 +154,13 @@
 
 @push('scripts')    
 <script>
-    if($('#kuasa').val() == '0'){
+    if($('#kuasa').val() == '1'){
         $("#nonkuasa").hide();
     }
     $("#kuasa").on("change",function () {
         var cek = $("#kuasa").val();
         var nama = $("#nama1").val();
-        if(cek == 1){
+        if(cek == 0){
             $("#nonkuasa").show();
             $('#nonkuasa').find('input').attr('required', true);
             $("#nama2").val('');
@@ -175,6 +176,10 @@
         }
     })
 
+    $(document).ready(function () {
+        var nama1 = $('#nama1').val();
+        $('#nama2').val(nama1);
+    })
 
     
     $(document).on("click","#detailData",function () {
@@ -199,7 +204,7 @@
             window.open(link,'_blank');
             // window.focus();
             // location.reload();
-            window.location.replace("http://127.0.0.1:8000/penyerahanloket");
+            window.location.replace("https://kantahkabbogor.id/penyerahanloket");
         })
     }
    
@@ -207,13 +212,13 @@
         $(document).on('click', '.adddetail', function(){
         var html = '';
         html += '<tr>';
-        html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_txt" placeholder="Id Buku Tanah" /></td>';
+        // html += '<td><input type="text" name="idbukutanah[]" id="idbukutanah'+i+'" data-type="idbukutanah" class="form-control autocomplete_txt" placeholder="Id Buku Tanah" /></td>';
         html += '<td><input type="text" name="no_hak[]" id="no_hak'+i+'" class="form-control" placeholder="Nomor Hak" /></td>';
         html += '<td><input type="text" name="jenis_hak[]" id="jenis_hak'+i+'" class="form-control" placeholder="Jenis Hak" /></td>';
-        html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor DI 208" /></td>';
-        html += '<td><input type="number" name="tahun[]" id="tahun'+i+'" class="form-control" placeholder="Tahun" /></td>';
+        // html += '<td><input type="number" name="tahun[]" id="tahun'+i+'" class="form-control" placeholder="Tahun" /></td>';
         html += '<td><input type="text" name="desa[]" id="desa'+i+'" class="form-control" placeholder="Desa" /></td>';
         html += '<td><input type="text" name="kecamatan[]" id="kecamatan'+i+'" class="form-control" placeholder="Kecamatan" /></td>';
+        html += '<td><input type="text" name="no_warkah[]" id="no_warkah'+i+'" class="form-control" placeholder="Nomor DI 208" /></td>';
         html += '<td><button type="button" name="remove" class= "btn btn-danger remove"><i class="fa fa-minus"></i></button></td>';
         html += '</tr>';
         $('#data-detail tbody').append(html);
@@ -237,13 +242,11 @@
             ajax:"{{ url('api/penyerahanloketdetail') .'/'}}"+ id,
             columns: [
                 {data: 'id', name:'id'},
-                {data: 'idbukutanah',name:'idbukutanah'},
                 {data: 'no_hak',name:'no_hak'},
                 {data: 'jenis_hak',name:'jenis_hak'},
-                {data: 'no_warkah',name:'no_warkah'},
-                {data: 'tahun',name:'tahun'},
                 {data: 'desa',name:'desa'},
                 {data: 'kecamatan',name:'kecamatan'},
+                {data: 'no_warkah',name:'no_warkah'},
             ],
                 columnDefs: [ {
                 searchable: false,
@@ -274,13 +277,13 @@
 
          yadcf.init(TableDetail, [
                 {
-                    column_number: 2,
+                    column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
                     filter_default_label: "No. Hak"
                 },
                 {
-                    column_number: 6,
+                    column_number: 3,
                     filter_type: "text",
                     filter_default_label: "Desa"
                 }

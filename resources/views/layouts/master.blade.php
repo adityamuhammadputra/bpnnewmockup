@@ -19,11 +19,55 @@
 	<link href="{{asset('lumino/css/googlefont.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/styles.css')}}" rel="stylesheet">
     
-    <link rel="shortcut icon" href="{{ asset('images/Logos.png') }}">
+    <link rel="shortcut icon" href="{{ asset('images/bpnlogo.png') }}">
 
 	
 
 </head>
+<style>
+.time-custom{
+	float: left;
+    position: relative;
+    left: -20px;
+	top: 20px;
+	font-size: 16px
+}
+#date{
+	margin-right: 10px;
+	color: white;
+}
+#time{
+	color: white;
+
+}
+</style>
+<script>
+window.onload = setInterval(clock,1000);
+
+    function clock()
+    {
+	  var d = new Date();
+	  
+	  var date = d.getDate();
+	  
+	  var month = d.getMonth();
+	  var montharr =["Jan","Feb","Mar","April","May","June","July","Aug","Sep","Oct","Nov","Dec"];
+	  month=montharr[month];
+	  
+	  var year = d.getFullYear();
+	  
+	  var day = d.getDay();
+	  var dayarr =["Sun","Mon","Tues","Wed","Thurs","Fri","Sat"];
+	  day=dayarr[day];
+	  
+	  var hour =d.getHours();
+      var min = d.getMinutes();
+	  var sec = d.getSeconds();
+	
+	  document.getElementById("date").innerHTML=day+" "+date+" "+month+" "+year;
+	  document.getElementById("time").innerHTML=hour+":"+min+":"+sec;
+    }
+</script>
 <body>
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
@@ -34,54 +78,30 @@
 					<span class="icon-bar"></span></button>
 				<a href="{{ asset('images/Logos.png') }}" target="_blank"><img src="{{ asset('images/Logos.png') }}" class="imglogoss"></a><c class="hidden-xs"><span class="namabpn"><a> BPN</a>Kab.bogor</span></c>
 				<ul class="nav navbar-top-links navbar-right">
-					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-						<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
+					<a class="time-custom">
+					<em class="fa fa-calendar-check-o" style="color:white"></em> <span id="date"></span>
+					<em class="fa fa-clock-o" style="color:white"></em> <span id="time"></span>
 					</a>
-						<ul class="dropdown-menu dropdown-messages">
-							<li>
-								<div class="dropdown-messages-box"><a href="profile.html" class="pull-left">
-									<img alt="image" class="img-circle" src="http://placehold.it/40/30a5ff/fff">
-									</a>
-									<div class="message-body"><small class="pull-right">3 mins ago</small>
-										<a href="#"><strong>John Doe</strong> commented on <strong>your photo</strong>.</a>
-									<br /><small class="text-muted">1:24 pm - 25/03/2015</small></div>
-								</div>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<div class="dropdown-messages-box"><a href="profile.html" class="pull-left">
-									<img alt="image" class="img-circle" src="http://placehold.it/40/30a5ff/fff">
-									</a>
-									<div class="message-body"><small class="pull-right">1 hour ago</small>
-										<a href="#">New message from <strong>Jane Doe</strong>.</a>
-									<br /><small class="text-muted">12:27 pm - 25/03/2015</small></div>
-								</div>
-							</li>
-							<li class="divider"></li>
-							<li>
-								<div class="all-button"><a href="#">
-									<em class="fa fa-inbox"></em> <strong>All Messages</strong>
-								</a></div>
-							</li>
-						</ul>
-					</li>
-					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
-						<em class="fa fa-bell"></em><span class="label label-info">5</span>
-					</a>
+					<li class="dropdown">
+						{{-- <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#"> --}}
+						{{-- <em class="fa fa-bell"></em><span class="label label-info">5</span> --}}
+						<img src="{{ asset(auth()->user()->photo) }}" data-toggle="dropdown" class="img-circle" alt="User Image" width="40px" height="40px">
+
+					{{-- </a> --}}
 						<ul class="dropdown-menu dropdown-alerts">
-							<li><a href="#">
-								<div><em class="fa fa-envelope"></em> 1 New Message
-									<span class="pull-right text-muted small">3 mins ago</span></div>
+							<li><a href="{{ url('editprofile',Auth::user()->id) }}">
+								<div><em class="fa fa-user"></em> {{ Auth::user()->name }}
+								</div>
 							</a></li>
 							<li class="divider"></li>
 							<li><a href="#">
-								<div><em class="fa fa-heart"></em> 12 New Likes
-									<span class="pull-right text-muted small">4 mins ago</span></div>
+								<div><em class="fa fa-key"></em> {{ Auth::user()->jabatan_profile }}
+								</div>
 							</a></li>
 							<li class="divider"></li>
-							<li><a href="#">
-								<div><em class="fa fa-user"></em> 5 New Followers
-									<span class="pull-right text-muted small">4 mins ago</span></div>
+							<li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+								<div><em class="fa fa-power-off"></em> Logout
+								</div>
 							</a></li>
 						</ul>
 					</li>
@@ -90,25 +110,20 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<div class="profile-sidebar">
-			<div class="profile-userpic">
-				<a href="{{ asset(auth()->user()->photo) }}" target="_blank"><img src="{{ asset(auth()->user()->photo) }}" class="img-responsive" alt="User Image"></a>
-			</div>
-			<div class="profile-usertitle">
-				<div class="profile-usertitle-name">{{ Auth::user()->name }}</div>
-				<div class="profile-usertitle-status"><span class="indicator label-success"></span>10 Online</div>
-			</div>
-			<div class="clear"></div>
-		</div>
+		
 		<div class="divider"></div>
 		<form role="search">
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="Search">
 			</div>
 		</form>
+		<div class="clear"></div>
+
 		<ul class="nav menu">
+			@if (Auth::user()->kegiatan_penyerahan_id == null || Auth::user()->id == 2)
 			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard PTSL</a></li>
 			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
+			@endif
 			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 2 )
 				<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
 			@endif
@@ -184,25 +199,41 @@
 				</ul>
 			</li>
 			@endif
+			@if (Auth::user()->kegiatan_penyerahan_id || Auth::user()->id == 2)
+			@if (Auth::user()->penyerahan_menu == 1|| Auth::user()->id == 2)
+			<li class="{{ request()->is('penyerahan') ? 'active' : '' }}"><a href="{{ url('penyerahan') }}"><em class="fa fa-book">&nbsp;</em> Penyerahan Proses</a></li>
+			@endif
+			@if (Auth::user()->penyerahan_menu == 2 || Auth::user()->id == 2)
+			<li class="{{ request()->is('penyerahanloket') ? 'active' : '' }}"><a href="{{ url('penyerahanloket') }}"><em class="fa fa-laptop">&nbsp;</em> Penyerahan Loket</a></li>
+			@endif
+			<li class="{{ request()->is('penyerahanhistory') ? 'active' : '' }}"><a href="{{ url('penyerahanhistory') }}"><em class="fa fa-calendar-times-o">&nbsp;</em> Penyerahan History</a></li>
 
-			<li class="parent {{ request()->is('penyerahan') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-5">
-				<em class="fa fa-book">&nbsp;</em> Penyerahan <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
+			
+			{{-- <li class="parent {{ request()->is('penyerahan') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-5">
+				<em class="fa fa fa-book">&nbsp;</em> Penyerahan Sertifikat <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-5">
+					@if (Auth::user()->penyerahan_menu == 1|| Auth::user()->id == 2)
 					<li><a class="" href="{{ url('penyerahan') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Penyerahan Proses 
 					</a></li>
-					<li><a class="" href="{{ url('penyerahanloket') }}" target="_blank">
+					@endif
+
+					@if (Auth::user()->penyerahan_menu == 2 || Auth::user()->id == 2)
+					<li><a class="" href="{{ url('penyerahanloket') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Penyerahan Loket
 					</a></li>
+					@endif
+
 					<li><a class="" href="{{ url('penyerahanhistory') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Penyerahan History
 					</a></li>
 				</ul>
-			</li>
-			{{-- <li class="{{ request()->is('pengembalian') ? 'active' : '' }}"><a href="{{ url('pengembalian') }}"><em class="fa fa-reply-all">&nbsp;</em> Pengembalian</a></li> --}}
+			</li> --}}
+			@endif
+
 				
-			<li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			{{-- <li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li> --}}
 			@if (Auth::user()->modul_id == 1 )
 			<li class="{{ request()->is('user') ? 'active' : '' }}"><a href="{{ url('user') }}"><em class="fa fa-users">&nbsp;</em> User</a></li>
 			@endif

@@ -46,10 +46,6 @@
             padding-left: 30px;
             float: right;
         }
-        .heaederorangkanan img{
-            width: 205px;
-            height: 200px;
-        }
         .isitable{
             padding-top: 20px;
         }
@@ -60,7 +56,6 @@
             border-collapse: collapse;
             width: 100%;
             text-align: center;
-            padding-bottom: 20px;
         }
         
         #customers td, #customers th {
@@ -68,9 +63,9 @@
             padding: 8px;
         }
         
-        /* #customers tr:nth-child(even){background-color: #f2f2f2;} */
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
         
-        /* #customers tr:hover {background-color: #ddd;} */
+        #customers tr:hover {background-color: #ddd;}
         
         #customers th {
             padding-top: 12px;
@@ -104,15 +99,19 @@
             position: relative;
             float: right;
             text-align: center;
-            height: 300px;
-            margin-top: 20px;
+            margin-top: 40px;
         }
         .ttd2{
+            float: left;
             width: 200px;
             position: relative;
+               text-align: center;
+        }
+        .tanggal{
             float: left;
+            width: 200px;
+            position: relative;
             text-align: center;
-            height: 300px;
         }
     </style>
 </head>
@@ -122,135 +121,79 @@
             <img src="images/bpnlogo.png" width="100px">
         </div>
         <div class="atasheader">
-            <b class="tulisanpalingatas">KEMENTRIAN AGRARIA DAN TATARUANG</b><br>
+            <b class="tulisanpalingatas">BADAN PERTANAHAN NASIONAL - RI</b><br>
             <b class="tulisanpalingatas">KANTOR PERTANAHAN KABUPATEN BOGOR</b>
             <p>Jl.Tegar Beriman, Kecamatan Cibonong  Kab. Bogor Telp (0251)87901140, 87090114</p>
         </div>
     </div>
     <div class="atasjudul">
-        <br>
-        <b><u>TANDA TERIMA DOKUMEN</u></b><br>
-        <i>Nomor Berkas : {{ $data->no_berkas }} / 2018</i>
+        <b><u>LAMPIRAN PENYERAHAN BERKAS</u></b><br>
+        <i>Tanggal Penyerahan : . . . / . . . / 20 . . .</i>
     </div>
-    <div class="heaederorang">
-        <div class="heaederorangkiri">
-            <table >
-                <tr>
-                    <td><b>Pemohon</b></td>
-                </tr>
-                <tr>
-                    <td>Nama </td>
-                    <td>:</td>
-                    <td>{{ $data->nama1 }}</td>
-                </tr>
-                <tr>
-                    <td>Jenis Permohonan </td>
-                    <td>:</td>
-                    <td>{{ $data->kegiatan->nama_kegiatan }}</td>
-                </tr>
-                <tr>
-                    <td>Tanggal Selesai</td>
-                    <td>:</td>
-                    <td>{{ $data->tanggal1 }}</td>
-                </tr>
-                 <tr>
-                    <td>Jumlah Berkas</td>
-                    <td>:</td>
-                    <td> {{ $data->penyerahandetail->count() }}</td>
-                </tr>
-                <tr>
-                    <td><b>Penerima Berkas</b></td>
-                </tr>
-                 <tr>
-                    <td>Nama Penerima</td>
-                    <td>:</td>
-                    <td>{{ $data->nama2 }}</td>
-                </tr>
-                <tr>
-                    <td>Nik Penerima</td>
-                    <td>:</td>
-                    <td>{{ $data->nik2 }}</td>
-                </tr>
-                <tr>
-                    <td>Alamat Penerima </td>
-                    <td>:</td>
-                    <td>{{ $data->alamat2 }}</td>
-                </tr>
-                <tr>
-                    <td>Tanggal Cetak Dokumen </td>
-                    <td>:</td>
-                    <td>{{ $data->tanggal2 }}</td>
-                </tr>
-            </table>
-        </div>
 
-        <div class="heaederorangkanan">
-            <table>
-                
-                <tr>
-                    <td>
-                        <img src="{{'https://haruni.online/storage/'.$data->foto}}" width="100px">
-                    </td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
-        
-    </div>
-   
     <div class="footer">
         &copy;2018 Badan Pertanahan Nasional Kabupaten Bogor.
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    
+
     <div class="isitable">
         <table id="customers">
             <thead>
                 <tr>
-                    <th width="10%">No.Hak</th>
-                    <th width="10%">Jenis Hak</th>
-                    <th width="10%">No. DI 208</th>
-                    <th width="10%">Tahun</th>
-                    <th width="15%">Desa </th> 
-                    <th width="15%">Kecamatan </th> 
-
+                    <th width="8%">No.Berkas</th>
+                    <th width="10%">Nama Pemohon</th>
+                    <th width="10%">No Hp</th>
+                    <th width="5%">Kode Box</th>
+                    <th width="8%">Kegiatan</th>
+                    <th width="10%">Tanggal</th>
+                    <th width="8%">Status</th>
                 </tr>  
             </thead>
             <tbody>
-                @foreach($data->penyerahandetail as $datas)
+                @foreach($data as $datas)
                 <tr>
-                    <td> {{ $datas->no_hak }}</td>
-                    <td> {{ $datas->jenis_hak }}</td>
-                    <td> {{ $datas->no_warkah }}</td>
-                    <td> {{ $datas->tahun }}</td>
-                    <td> {{ $datas->desa }}</td>
-                    <td> {{ $datas->kecamatan }}</td>
+                    <td> {{ $datas->no_berkas }}</td>
+                    <td> {{ $datas->nama1 }}</td>
+                    <td> {{ $datas->email }}</td>
+                    <td> {{ $datas->kd_box }}</td>
+                    <td> {{ $datas->kegiatan->nama_kegiatan }}</td>
+                    <td> {{ $datas->tanggal1 }}</td>
+                    <td> 
+                        @if ($datas->status == 3)
+                            {{ "Selesai" }}
+                        @elseif($datas->status == 2)
+                            {{ "Tidak Lengkap" }}
+                        @else
+                            {{ "Tunggakan" }}
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody> 
         </table>
     </div>
     <div class="ttd">
-        Penerima Berkas
+        Petugas Penyerahan
         <br><br>
         <br><br>
         <br><br>
-        <u>{{ $data->nama2 }}</u> <br>
-        <b>{{ $data->nik2 }}</b>
+        (...................................)
+        <br>
+        {{ Auth::user()->name  }}
     </div>
     <div class="ttd2">
-        Petugas  Penyerahan
+        Petugas Penerima
         <br><br>
         <br><br>
         <br><br>
-        <u>{{ auth()->user()->name }}</u> <br>
+        (...................................)
+        <br>
     </div>
+
+   
+   
+    {{--  <div class="tanggalcetak">
+        <img src="images/print.png"> {{ \Carbon\Carbon::now() }} 
+    </div>  --}}
     
             
 

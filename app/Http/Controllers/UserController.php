@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Datatables;
-
+use Illuminate\Support\Facades\Auth;
 use App\User;
 
 class UserController extends Controller
@@ -126,5 +126,60 @@ class UserController extends Controller
             'message' => 'Contact Deleted'
         ]);
 
+    }
+
+    public function editprofile($id)
+    {
+        if($id != Auth::user()->id){
+            return redirect()->back()->withDanger('Mohon maaf anda tidak mempunyai untuk mengubah akun lain');
+        }
+
+        return view('user.editprofile',compact('id'));
+    }
+
+    public function updateprofile(Request $request,$id)
+    {
+        $user = User::find($id);
+        $input = $request->except('password');
+        $input['email'] = $input['email'].'@gmail.com';
+        
+        if($request->password)
+        {
+            $input['password'] = Hash::make($request->password);
+        }
+
+        if($request->file('photo')){
+
+            $filesize = $request->file('photo')->getClientSize();
+            if ($filesize >= 2009834) {
+                return redirect()->back()->withInput($request->all())->withInfo('Ukutan foto lebih dari 2Mb');
+            }
+
+            if($user->photo){
+                unlink(public_path($user->photo));
+            }
+            $input['photo'] = '/upload/photo/'.str_slug($input['name'].$id).'.'.$request->photo->getClientOriginalExtension();
+            $request->photo->move(public_path('/upload/photo'), $input['photo']);
+        }
+
+        $user->update(
+            $input
+        );
+
+        return redirect()->back()->withSuccess('Profile Berhasil diupdate');
+    }
+
+    public function cekusers(Request $request)
+    {
+        $email = $request->email."@gmail.com";
+        if($request->email){
+            $data = User::where('email', $email)->count();
+            if($data == 1 && Auth::user()->email."@gmail.com" != $email){
+                echo "ada";
+            }
+            else {
+                echo "tidak";
+            }
+        }
     }
 }

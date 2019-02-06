@@ -11,7 +11,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "~5.0",
-        "nexmo/laravel": "^1.1",
+        
         "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {
@@ -26,6 +26,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/helpers.php"
         ],
         "psr-4": {
             "App\\": "app/"

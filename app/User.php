@@ -9,20 +9,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'name', 'email', 'password','nik','photo','status'
+        'name', 'email', 'password','nik','photo','status', 'jabatan_profile'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -32,8 +22,9 @@ class User extends Authenticatable
         return $this->belongsTo(Kelompok::class);
     }
 
-    // public function kegiatan()
-    // {
-    //     return $this->belongsTo()
-    // }
+    public function getEmailAttribute($value)
+    {
+        return substr($value, 0, -10); //menghapus @gmail.com
+    }
+    
 }

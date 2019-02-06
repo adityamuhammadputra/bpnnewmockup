@@ -21,14 +21,9 @@ use App\PenyerahanDetail;
 
 class PenyerahanLoketController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
-       
 
         return view('penyerahan.penyerahanloket.index');
     }
@@ -54,7 +49,7 @@ class PenyerahanLoketController extends Controller
 
     public function update(Request $request, $id)
     {
-        $input = $request->except('_method','_token', 'data-detail_length');
+        $input = $request->except('_method','_token','status', 'data-detail_length');
         // return $input;
         $data = Penyerahan::where('id',$id)->update(
           $input
@@ -79,7 +74,6 @@ class PenyerahanLoketController extends Controller
 
     public function kameraAksi(Request $request)
     {
-        // return $request->namafile;
         $img = $request['image'];
         $image_parts = explode(";base64,", $img);
         $image_type_aux = explode("image/", $image_parts[0]);
@@ -93,24 +87,21 @@ class PenyerahanLoketController extends Controller
         Storage::put($namafiledanpath, $image_base64);
 
         Penyerahan::where('id',$request->id_kamera)->update(['foto' => 'app/'.$namafiledanpath]);
-
         return redirect()->back()->withSuccess('Foto berhasil ditambah');
-
-
         
     }
 
     public function cetak($id)
     {
         $datetime = Carbon::now();
-        // return $datetime;
         $replace = array(" ", ":");
         $datetime = str_replace($replace, '-', $datetime);
 
         $data = Penyerahan::with('penyerahandetail')->find($id);
-        $data->update([
+         $data->update([
             'status_cetak' => '1',
         ]);
+
         $kegiatan = $data->kegiatan()->first();
 
 
@@ -128,7 +119,7 @@ class PenyerahanLoketController extends Controller
     public function apiPenyerahan()
     {
         
-        $data = Penyerahan::with('kegiatan', 'penyerahandetail')->where('user_id', auth()->user()->id)->whereNull('status_cetak')->orderBy('updated_at', 'desc');
+        $data = Penyerahan::with('kegiatan', 'penyerahandetail')->where('status', '3')->whereNull('status_cetak');
         // return $data->get();
         return Datatables::of($data)
 

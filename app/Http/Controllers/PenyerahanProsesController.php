@@ -16,11 +16,21 @@ use App\User;
 use App\Kegiatan;
 use App\Penyerahan;
 use App\PenyerahanDetail;
+use App\KodeBox;
 
 use App\Mail\NotifMail;
 
 class PenyerahanProsesController extends Controller
 {
+    public function __construct()
+    {
+        $datetime = Carbon::now();
+        $replace = array(" ", ":");
+        $datetime = str_replace($replace, '-', $datetime);
+
+        $this->datetime = $datetime;
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,25 +41,37 @@ class PenyerahanProsesController extends Controller
         $kegiatan = Kegiatan::orderBy('no_urut', 'asc')->pluck('nama_kegiatan', 'id')->toArray();
         $kegiatan = ['' => '---- Pilih ----'] + $kegiatan;
 
-        return view('penyerahan.penyerahanproses.index',compact('kegiatan'));
+        $max = DB::table('penyerahan')
+            ->select(DB::raw('max(no_urut) as no_urut'))
+            ->where('user_id', Auth::user()->id)
+            ->pluck('no_urut');
+
+        $no_urut = $max[0];
+        $data = Penyerahan::where('kd_cetak', Auth::user()->id . $max[0])->count();
+
+        if($data < 1){
+            $data = '1';
+            $no_urut = '1';
+        }elseif($data >= 25) {
+            $data = $max[0] + 1;
+            $no_urut = $no_urut+1;
+        }else {
+            $data = $max[0];
+        }
+
+        $kd_cetak = Auth::user()->id. $data;
+
+        $kodebox = KodeBox::pluck('value','label');
+
+        return view('penyerahan.penyerahanproses.index',compact('kegiatan', 'kd_cetak', 'kodebox','no_urut'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         Penyerahan::create([
@@ -61,108 +83,266 @@ class PenyerahanProsesController extends Controller
             'status' => $request->status,
             'kegiatan_id' => $request->kegiatan_id,
             'user_id' => auth()->user()->id,
+            'no_urut' => $request->no_urut,
+            'kd_cetak' => $request->kd_cetak,
+            'catatan' => $request->catatan,
         ]);
         $penyerahanid = DB::getPdo()->lastInsertId();
 
-        if ($request->idbukutanah != null) {
+        if ($request->jenis_hak != null) {
             $datas = [];
-            for ($i = 0; $i < count($request->idbukutanah); $i++) {
+            for ($i = 0; $i < count($request->jenis_hak); $i++) {
                 $datas = [
                     'penyerahan_id' => $penyerahanid,
-                    'idbukutanah' => $request->idbukutanah[$i],
                     'no_hak' => $request->no_hak[$i],
                     'jenis_hak' => $request->jenis_hak[$i],
                     'desa' => $request->desa[$i],
                     'kecamatan' => $request->kecamatan[$i],
                     'no_warkah' => $request->no_warkah[$i],
-                    'tahun' => $request->tahun[$i],
                 ];
 
                 PenyerahanDetail::insert($datas);
             }
         }
+        $kegiatan = Kegiatan::find($request->kegiatan_id);
+        
+        if ($request->status == 1) {//Tunggakan
+            $text = 'YTH: ' . $request->nama1 . ' Dengan NoBerkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas Anda. Terimakasih';
+        }elseif ($request->status == 2) { //Tidak lengkap
+            $text = 'YTH: ' . $request->nama1 . ' Dengan NoBerkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak lengkap (' . $request->catatan . ') Silahkan datang ke Kantor Pertanahan Kab.Bogor';
+        }else { //selesai
+            $text = 'YTH: ' . $request->nama1 . ' Dengan NoBerkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah selesai diproses. Silahkan datang ke Loket Penyerahan Kantor Pertanahan Kab.Bogor';
+        }
+        
 
-        $nexmo = app('Nexmo\Client');
+        $sms = new smsmasking();
 
-        $nexmo->message()->send([
-            'to' => '6288225872452',
-            'from' => 'BPN Bogor',
-            'text' => 'Hay '.$request->nama1.', Nomor Berkas anda #'.$request->no_berkas.', Sudah selesai diproses....',
-        ]);
+        $sms->username = 'adityamuhammadputra';
+        $sms->password = '27Oktober';
+        $sms->apikey = '31208ea4c56acbb64c8973004d1351ed';
+        $sms->setTo($request->email);
+        $sms->setText($text);
+        $sts = $sms->smssend();     
 
-
-        // $to = $request->email;
-        // $data = [
-        //     'no_berkas' => $request->no_berkas,
-        //     'nama1' => $request->nama1,
-        //     'admin' => auth()->user()->name,
-
-        // ];
-
-        // \Mail::to($to)->send(new NotifMail($data));
-
-
-        return redirect()->back()->with('success', 'Data Berhasil Disimpan');
+        return redirect()->back()->withInput()->with('success', 'Data Berhasil Disimpan');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show($id)
     {
         //
     }
+    public function cetak(Request $request)
+    {
+        $datetime = $this->datetime;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+        $id = $request->cetak;
+        $data = Penyerahan::with('kegiatan')->where('kd_cetak', $id)->where('status',3)->get();
+        $data = [
+            'data' => $data,
+            'id' => $id,
+        ];
+        Penyerahan::where('kd_cetak', $id)->update([
+            'tanggal_penyerahan' => $datetime,
+        ]);
+
+
+        $pdf = PDF::loadView('penyerahan.penyerahanproses.cetak', $data);
+        $pdf->save(storage_path() . '/app/pdf/cetakpenyerahanproses' . $datetime . '.pdf');
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream();
+    }
+
+    public function cetakbox(Request $request)
+    {
+        $datetime = $this->datetime;
+
+        $id = $request->id;
+        $data = Penyerahan::with('kegiatan')->whereIn('id',$id)->get();
+        $data = [
+            'data' => $data,
+        ];
+        $pdf = PDF::loadView('penyerahan.penyerahanproses.cetak', $data);
+        $pdf->save(storage_path() . '/app/pdf/cetakpenyerahanprosescombox' . $datetime . '.pdf');
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream();
+
+    }
+   
     public function edit($id)
     {
-        //
+        return Penyerahan::with('kegiatan', 'penyerahandetail')->find($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function update(Request $request, $id)
     {
-        //
+        $inputpenyerahan = $request->only('no_berkas', 'nama1', 'email', 'status', 'kegiatan_id', 'kd_box', 'no_urut' , 'kd_cetak', 'tanggal1' , 'catatan');
+        $data = Penyerahan::find($id);
+        $data->update(
+            $inputpenyerahan
+        );
+
+        if($request->no_hak){
+            PenyerahanDetail::where('penyerahan_id', $id)->delete();
+            for ($i = 0; $i < count($request->jenis_hak); $i++) {
+                $datas[] = [
+                    'penyerahan_id' => $id,
+                    'no_hak' => $request->no_hak[$i],
+                    'jenis_hak' => $request->jenis_hak[$i],
+                    'desa' => $request->desa[$i],
+                    'kecamatan' => $request->kecamatan[$i],
+                    'no_warkah' => $request->no_warkah[$i],
+                    'user_id' => Auth::user()->id,
+                ];
+            }
+            PenyerahanDetail::insert($datas);
+        }
+
+        $penyerahan = Penyerahan::find($id);
+        $kegiatan = Kegiatan::find($penyerahan->kegiatan_id);
+
+        if ($request->status == 1) {//Tunggakan
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas Anda. Terimakasih';
+        } elseif ($request->status == 2) { //Tidak lengkap
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak lengkap (' . $penyerahan->catatan . ') Silahkan datang ke Kantor Pertanahan Kab.Bogor';
+        } else { //selesai
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah selesai diproses. Silahkan datang ke Loket Penyerahan Kantor Pertanahan Kab.Bogor';
+        }
+
+
+        $sms = new smsmasking();
+
+        $sms->username = 'adityamuhammadputra';
+        $sms->password = '27Oktober';
+        $sms->apikey = '31208ea4c56acbb64c8973004d1351ed';
+        $sms->setTo($penyerahan->email);
+        $sms->setText($text);
+        $sts = $sms->smssend();  
+
+        return redirect()->back()->withSuccess('Data berhasil diperbaharui');
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function destroy($id)
     {
-        
         Penyerahan::destroy($id);
 
         Session::flash('info', 'Data Berhasil Dihapus');
         return View::make('layouts/alerts');
     }
 
+    public function penyerahanprosesstatus(Request $request)
+    {
+        $max = DB::table('penyerahan')
+            ->select(DB::raw('max(no_urut) as no_urut'))
+            ->where('user_id', Auth::user()->id)
+            ->pluck('no_urut');
+
+        $no_urut = $max[0];
+        $data = Penyerahan::where('kd_cetak', Auth::user()->id . $max[0])->count();
+
+        if ($data < 1) {
+            $data = '1';
+            $no_urut = '1';
+        } elseif ($data >= 25) {
+            $data = $max[0] + 1;
+            $no_urut = $no_urut + 1;
+        } else {
+            $data = $max[0];
+        }
+
+        $kd_cetak = Auth::user()->id . $data;
+        
+        Penyerahan::where('id', $request->id)->update([
+            'status' => $request->status_update,
+            'kd_box' => $request->kd_box_update,
+            'tanggal1' => $request->tanggal1,
+            'kd_cetak' => $kd_cetak,
+            'user_id' => Auth::user()->id,
+        ]);
+
+
+        $penyerahan = Penyerahan::find($request->id);
+        $kegiatan = Kegiatan::find($penyerahan->kegiatan_id);
+
+        if ($request->status_update == 1) {//Tunggakan
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas Anda. Terimakasih';
+        } elseif ($request->status_update == 2) { //Tidak lengkap
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak lengkap (' . $penyerahan->catatan . ') Silahkan datang ke Kantor Pertanahan Kab.Bogor';
+        } else { //selesai
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah selesai diproses. Silahkan datang ke Loket Penyerahan Kantor Pertanahan Kab.Bogor';
+        }
+
+
+        $sms = new smsmasking();
+
+        $sms->username = 'adityamuhammadputra';
+        $sms->password = '27Oktober';
+        $sms->apikey = '31208ea4c56acbb64c8973004d1351ed';
+        $sms->setTo($penyerahan->email);
+        $sms->setText($text);
+        $sts = $sms->smssend();     
+
+        Session::flash('success', 'Status berhasil dirubah');
+        return View::make('layouts/alerts');
+
+    }
+
     public function apiPenyerahan()
     {
         
-        $data = Penyerahan::with('kegiatan', 'penyerahandetail')->where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc');
+        $data = Penyerahan::with('kegiatan', 'penyerahandetail');
+        if (Auth::user()->id != 2) {
+            $data->where('kegiatan_id',Auth::user()->kegiatan_penyerahan_id);
+        }
+        
         return Datatables::of($data)
+            ->addColumn('status_update', function($data){
+                if ($data->status == 3) {
+                    return '<span class="label label-success control-label"> Berkas Selesai </span>';
+                }else {
 
+                    if ($data->status == 1) {
+                        $judul = 'Tunggakan';
+                    }elseif($data->status == 2) {
+                        $judul = 'Tidak Lengkap';
+                    }else {
+                        $judul = 'Selesai';
+                    }
+                    return '
+                        <select class="form-control" name="status_update" id="status_update"  style="width: 150px;"  data-id="'.$data->id.'">
+                            <option value="'.$data->status.'" name="selesai">'.$judul.'</option>
+                            <option value="3" name="selesai">Selesai</option>
+                            <option value="2" name="revisi">Tidak Lengkap</option>
+                            <option value="1" name="tunggakan">Tunggakan</option>
+                        </select>
+                    ';
+                }
+            })
+            ->addColumn('kd_box_update', function($data){
+                if ($data->status == 3) {
+                    return '<input type="text" class="form-control" value="' . $data->kd_box . '" style="width: 80px;" readonly>';
+                } else {
+                    return '
+                        <input type="text" name="kd_box_update" class="form-control" value="'.$data->kd_box.'" id="kd_box_update" style="width: 80px;">
+                    ';
+                }
+            })
+            ->addColumn('cekbox', function ($data){
+                return '<input type="checkbox" onchange="hideshow()" id="checkboxone'.$data->id.'" name="id[]" value="'. $data->id. '" class="inp-cbx checkbox" style="display: none;">
+                        <label class="cbx" for="checkboxone'.$data->id.'"><span>
+                        <svg width="12px" height="10px" viewbox="0 0 12 10">
+                        <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                        </svg></span><span></span></label>
+                        ';
+            })
             ->addColumn('action', function ($data) {
-                return ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
+                return ' <a onclick="editForm(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+                        </i> </a>' . 
+                        ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';
-            })->rawColumns(['action'])->make(true);
+            })->rawColumns(['action', 'kd_box_update', 'status_update', 'cekbox'])->make(true);
     }
 }

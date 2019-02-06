@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">Badan Pertanahan Kabupaten Bogor</div>
+                <div class="card-header text-center">Sistem Kearsipan Kantor Pertanahan Kabupaten Bogor</div>
                 <div class="card-body">
                     <div class="text-center">
                         <img src="{{asset('images/bpnlogo.png')}}" width="90">
@@ -15,10 +15,11 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-sm-4 col-form-label text-md-right">{{ __('Username') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="text" name="mail" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('mail') }}" required autofocus>
+                                <input id="emailasli" type="hidden" name="email" autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -70,4 +71,18 @@
         </div>
     </div>
 </div>
+<script src="{{asset('lumino/js/jquery.min.js')}}"></script>
+<script>
+    $(document).ready(function () {
+        $(document).on('blur','#email',function () {
+            var email = $(this).val();
+            var Username = $('#emailasli').val();
+            $('#emailasli').val(email+"@gmail.com");
+        });
+        $('#emailasli').val($('#email').val()+"@gmail.com");
+
+    })
+</script>
+{{-- @endpush --}}
 @endsection
+

@@ -8,35 +8,32 @@
             <li><a href="#">
                 <em class="fa fa-dropbox"></em>
             </a></li>
-            <li class="active">Penyerahan</li>
+            <li class="active">Peminjaman</li>
         </ol>
     </div><!--/.row-->
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Proses Penyerahan
+                    Proses Peminjaman
                     <div class="pull-right">
                         <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                     </div>
                         <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-minus-circle"></i> Hide Form</button>
                 </div>
                 <div class="panel-body" id="form-panel">
-                    @include('penyerahan.penyerahanproses.form')
+                    @include('peminjaman.peminjamanproses.form')
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-penyerahan">
+                        <table class="table table-hover table-striped table-borderless table-responsive" id="data-peminjaman">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>No Berkas</th>
-                                    <th>Kode Box</th>
                                     <th></th>
-                                    <th>Email Notifikasi</th>
                                     <th>Kegiatan</th>
-                                    <th>Tanggal</th>
-                                    <th>Status</th>
+                                    <th>Peminjaman Via</th>
+                                    <th>Tanggal Pinjam</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -66,12 +63,12 @@
                 cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
             }).then(function(){                
                 $.ajax({
-                    url: "{{ url('penyerahan')}}/"+id,
+                    url: "{{ url('peminjaman/proses')}}/"+id,
                     type: "POST",
                     data: {'_method': 'DELETE','_token': csrf_token
                     },
                     success: function(data) {
-                        $('#data-penyerahan').dataTable().api().ajax.reload();
+                        $('#data-peminjaman').dataTable().api().ajax.reload();
                         $('div.flash-message').html(data);
                     },
                     error: function () {
@@ -87,7 +84,7 @@
         }
 
         $(function () {
-            $('#form-penyerahanproses form').validator().on('submit', function (e) {
+            $('#form-peminjamanproses form').validator().on('submit', function (e) {
 
             });
         });
@@ -99,31 +96,48 @@
             location.reload();
         }
 
+        function roket(id) {
+            swal({
+                title: 'Konfirmasi Berkas?',
+                text: "Konfirmasi Berkas akan memindahkan berkas ke peminjaman kegiatan",
+                type:'warning',
+                showCancelButton:true,
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Konfirmasi',
+                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
+            }).then(function(){
+                $.ajax({
+                url: "{{ url('peminjaman/roket/peminjamanproses')}}/" + id,
+                type: "GET",
+                data: {id:id},
+                    success: function (data) {
+                        $('#data-peminjaman').dataTable().api().ajax.reload();
+                        $('div.flash-message').html(data);
+                    },
+                    error: function () {
+                        alert('Oops! error!');
+                    }
+                });
+            });
+        }
+
 
         var Table;
         $(document).ready(function () {
             var Table;
             'use strict';
-            Table = $('#data-penyerahan').DataTable({
+            Table = $('#data-peminjaman').DataTable({
                 colReorder: true,
                 processing: true,
                 serverSide:true,
-                ajax:"{{ url('api/penyerahan') }}",
+                ajax:"{{ route('api.peminjaman.proses') }}",
                 columns: [
                     {data: 'id',name:'id'},
-                    {data: 'no_berkas',name:'no_berkas'},
-                    {data: 'kd_box',name:'kd_box'},
-                    {data: 'nama1',name:'nama1'},
-                    {data: 'email',name:'email'},
+                    {data: 'nama',name:'nama'},
                     {data: 'kegiatan.nama_kegiatan',name:'kegiatan.nama_kegiatan'},
-                    {data: 'tanggal1',name:'tanggal1'},
-                    {   
-                        data: 'status',
-                        name:'status',
-                        "render": function ( data, type, row ){
-                            return '<span class="label label-success">Siap Diserahkan</span>';
-                        }
-                    },
+                    {data: 'via',name:'via'},
+                    {data: 'tanggal_pinjam',name:'tanggal_pinjam'},
                     {data: 'action',name:'action',orderable:false, searchable:false}
                 ],
                  columnDefs: [ {
@@ -131,7 +145,7 @@
                     orderable:false,
                     targets: 0
                 } ],  
-                order: [[ 6, 'desc' ]],
+                order: [[ 4, 'desc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data tidak ada",
@@ -155,15 +169,15 @@
            
             yadcf.init(Table, [
                 {
-                    column_number: 3,
+                    column_number: 1,
                     filter_type: "text",
                     filter_delay: 500,
-                    filter_default_label: "Nama Pemohon"
+                    filter_default_label: "Nama Peminjam"
                 },
             ]);
             
              Table.on( 'draw.dt', function () {
-                var PageInfo = $('#data-penyerahan').DataTable().page.info();
+                var PageInfo = $('#data-peminjaman').DataTable().page.info();
                      Table.column(0, { page: 'current' }).nodes().each( function (cell, i) {
                         cell.innerHTML = i + 1 + PageInfo.start;
                     } );
