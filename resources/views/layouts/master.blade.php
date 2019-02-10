@@ -235,7 +235,22 @@ window.onload = setInterval(clock,1000);
 				
 			{{-- <li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li> --}}
 			@if (Auth::user()->modul_id == 1 )
-			<li class="{{ request()->is('user') ? 'active' : '' }}"><a href="{{ url('user') }}"><em class="fa fa-users">&nbsp;</em> User</a></li>
+			<li class="parent {{ request()->is('user') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-sub-item-user">
+				<em class="fa fa-users">&nbsp;</em> Users <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
+				</a>
+				<ul class="children collapse" id="sub-item-sub-item-user">
+					<li><a class="" href="{{ url('user') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Users List 
+					</a></li>
+					<li><a class="" href="{{ url('userrole') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Users Roles
+					</a></li>
+					<li><a class="" href="{{ url('userpermission') }}">
+						<span class="fa fa-arrow-right">&nbsp;</span> Users Permission
+					</a></li>
+				</ul>
+			</li>
+			{{-- <li class="{{ request()->is('user') ? 'active' : '' }}"><a href="{{ url('user') }}"><em class="fa fa-users">&nbsp;</em> User</a></li> --}}
 			@endif
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 				{{ csrf_field() }}

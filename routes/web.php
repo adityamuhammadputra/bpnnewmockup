@@ -140,6 +140,11 @@ Route::get('editprofile/{id}', 'UserController@editprofile');
 Route::patch('editprofile/{id}', 'UserController@updateprofile');
 Route::post('editprofile/cekusers', 'UserController@cekusers');
 
+Route::resource('userrole', 'UserRoleController');
+Route::get('api/userrole', 'UserRoleController@apidata');
+
+Route::resource('userpermission', 'UserPermissionController');
+    
 
 });
 

@@ -11,7 +11,7 @@
         "laravel/framework": "5.6.*",
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "~5.0",
-        
+        "spatie/laravel-permission": "^2.31",
         "yajra/laravel-datatables-oracle": "~8.0"
     },
     "require-dev": {
