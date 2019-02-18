@@ -144,6 +144,7 @@ Route::resource('userrole', 'UserRoleController');
 Route::get('api/userrole', 'UserRoleController@apidata');
 
 Route::resource('userpermission', 'UserPermissionController');
+Route::get('api/userpermission', 'UserPermissionController@apidata');
     
 
 });

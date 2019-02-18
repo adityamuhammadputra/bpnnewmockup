@@ -18,6 +18,18 @@ class UserRoleController extends Controller
 
     }
 
+    public function store(Request $request)
+    {
+        $permission = $request->permission;
+
+        $role = Role::create(['name' => $request->name]);
+        if($permission){
+            $role->syncPermissions($permission);
+        }
+
+        return redirect()->back()->with('info', 'Role '.$role['name'].' berhasil ditambah');
+    }
+
     public function apidata()
     {
         $data = Role::with('permissions');
