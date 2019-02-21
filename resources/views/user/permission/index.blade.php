@@ -111,6 +111,41 @@
                 } );
            
         }); 
+
+
+        function deleteData(id){
+            var csrf_token = $('meta[name="csrf-token"]').attr('content');
+            swal({
+                title: 'Apakah Anda yakin Menghapus Data?',
+                text: "Konfirmasi Penghapusan Data",
+                type:'warning',
+                showCancelButton:true,
+                cancelButtonColor:'#d33',
+                confirmButtonColor:'#3085d6',
+                confirmButtonText:'<i class="fa fa-check-circle"></i> Ya, Hapus ini',
+                cancelButtonText: '<i class="fa fa-times-circle"></i> Batal'
+            }).then(function(){                
+                $.ajax({
+                    url: "{{ url('userpermission')}}/" + id,
+                    type: "POST",
+                    data: {'_method': 'DELETE','_token': csrf_token
+                    },
+                    success: function(data) {
+                        $('#data-role').dataTable().api().ajax.reload();
+                        $('#form form')[0].reset();
+                        $('div.flash-message').html(data);
+                    },
+                    error: function () {
+                        swal({
+                            title:'opss..',
+                            text: 'Terjadi Error, Silahkan Hubungi Pengembang',
+                            type:'error',
+                            timer: '1500'
+                        })
+                    }
+                });
+            });
+        }
     </script>
 @endpush
 @endsection

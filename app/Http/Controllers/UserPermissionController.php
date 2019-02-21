@@ -18,7 +18,6 @@ class UserPermissionController extends Controller
     public function index()
     {
         return view('user.permission.index');
-        
     }
 
     public function store(Request $request)
@@ -40,6 +39,14 @@ class UserPermissionController extends Controller
                     </i> </a>';
     })
     ->rawColumns(['action'])->make(true);
+   }
+
+   public function destroy($id)
+   {
+       $data = Permission::destroy($id);
+
+       Session::flash('info','Permission Berhasil dihapus');
+       return View::make('layouts/alerts');
    }
 
 }

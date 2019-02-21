@@ -33,9 +33,9 @@
         </div>
 
         <br>
-        <div class="row">
-            <div class="col-md-12">
-                @foreach ($data as $permission)
+        <div class="row" style="padding-left: 40px;">
+            @foreach ($data as $permission)
+                <div class="col-md-2">
                     <div class="form-group">
                         <input type="checkbox" name="permission[]" value="{{ $permission->name }}" id="cekbox{{ $permission->id }}" class="inp-cbx checkbox" style="display: none;">
                         <label class="cbx" for="cekbox{{ $permission->id }}"><span>
@@ -45,19 +45,21 @@
                             {{ $permission->name }}
                         </label>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
-
-       
+        <br>
         <button type="button" class="btn btn-default" onclick="btnCancel()"><i class="fa fa-times-circle"></i> Batal</button>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check-circle"></i> <t class="tombol-simpan">Simpan</t></button>
     </form>
 </div>
 @push('scripts')
     <script>
-        $(function () {
-            $
-        })
+        function btnCancel()
+        {
+            $('#id').val('');
+            $('#name').val('');
+            $('.checkbox').attr('checked',false);
+        }
     </script>
 @endpush
