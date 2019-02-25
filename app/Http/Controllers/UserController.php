@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Datatables;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Spatie\Permission\Models\Role;
+
+
 
 class UserController extends Controller
 {
@@ -36,7 +39,9 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('user.index');
+        $data = Role::all();
+
+        return view('user.index',compact('data'));
     }
 
    
@@ -53,19 +58,14 @@ class UserController extends Controller
 
         $input['photo'] = null;
 
-        if ($request->hasFile('photo')){
-            $input['photo'] = '/upload/photo/'.str_slug($input['name'],'-').'.'.$request->photo->getClientOriginalExtension();
-            $request->photo->move(public_path('/upload/photo/'), $input['photo']);
-        }
+        // if ($request->hasFile('photo')){
+        //     $input['photo'] = '/upload/photo/'.str_slug($input['name'],'-').'.'.$request->photo->getClientOriginalExtension();
+        //     $request->photo->move(public_path('/upload/photo/'), $input['photo']);
+        // }
 
-        // return $input;
+        // return User::create($input);
 
-        return User::create($input);
-
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Contact Created'
-        // ]);
+        
     }
 
    

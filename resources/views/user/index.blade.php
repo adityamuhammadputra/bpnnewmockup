@@ -40,7 +40,6 @@
                 </div>
             </div>
     </div>
-    {{-- @include('user.formmodal') --}}
 
     @include('user.form')
 
