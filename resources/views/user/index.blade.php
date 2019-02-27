@@ -58,6 +58,7 @@
             columns: [
                 {data: 'name',name:'name'},
                 {data: 'email',name:'email'},
+                {data: 'akses', name:'akses'},
                 {data: 'show_photo',name:'show_photo'},
                 {data: 'action',name:'action',orderable:false, searchable:false}
             ]

@@ -9,14 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use Spatie\Permission\Models\Role;
 
-
-
 class UserController extends Controller
 {
-   
     public function apiUser()
     {
-        $user = User::all();
+        $user = User::with('roles');
 
         return Datatables::of($user)
             ->addColumn('show_photo',function($user){
@@ -24,6 +21,13 @@ class UserController extends Controller
                     return 'No images';
                 }
                 return '<img class="rounded-square" windth="50" height="50" src="'.url($user->photo).'" alt="">';
+            })
+            ->addColumn('akses', function($user){
+                $role = '';
+                foreach ($user->roles as $role) {
+                    $role .= $role->id;
+                }
+                return $role;
             })
             ->addColumn('action',function($user){
 
