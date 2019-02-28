@@ -18,22 +18,21 @@
                 </div>
       
                 <div class="form-group">
-                  <label for="email" class="control-label">Email</label>
-                  <input type="email" name="email" id="email" class="form-control" required>
-                  <span class="help-block with-errors"></span>            
+                  <label for="email" class="control-label">Username</label>
+                  <input type="username" name="email" id="email" class="form-control" required>
+                  <span class="help-block with-errors" id="usernameerror"></span>            
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="control-label">Password</label>
-                    <input type="text" name="password" id="password" class="form-control" required>
+                    <input type="text" name="password" id="password" class="form-control">
                     <span class="help-block with-errors"></span>            
                 </div>
                 <div class="form-group">
-                    <label for="password" class="control-label">Akses</label>
-                    <input type="text" name="password" id="password" class="form-control" required>
+                    <label for="passwordagain" class="control-label">Konfirmasi Password Baru</label>
+                    <input type="password" name="" id="passwordagain" data-match="#password" data-match-error="Password tidak cocok" class="form-control">
                     <span class="help-block with-errors"></span>            
                 </div>
-      
                  <div class="form-group">
                   <label for="foto" class="control-label">Foto</label>
                   <input type="file" name="photo" id="photo" class="form-control">
@@ -65,3 +64,41 @@
           </div>
         </div>
       </div>
+
+@push('scripts')
+<script>
+    $('#password').blur(function () {
+        if($(this).val()){
+            $('#passwordagain').attr('required',true);
+        }else{
+            $('#passwordagain').attr('required',false);
+        }
+    })
+
+
+    $('#email').blur(function () {
+        var email = $(this).val().replace(/[^A-Z0-9]/ig, "");
+        $('#email').val(email);
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url:"{{ url('editprofile/cekusers') }}",
+            method: "POST",
+            data:{email:email,_token:_token},
+            success: function (data) {
+                if(data == 'ada'){
+                    $('#usernameerror').html('');
+                    $('#usernameerror').append('<a class="text-danger"><i class="fa fa-stop-circle-o"></i> Username sudah digunakan</a>');
+                    $('.form-username').addClass('has-error has-danger');
+                    $('#simpan').attr('disabled', true);
+                }
+                else{
+                    $('#usernameerror').html('');
+                    $('#usernameerror').append('<a class="text-success"><i class="fa fa-check-circle-o"></i> Username dapat digunakan</a>');
+                    $('#simpan').attr('disabled', false);
+                }
+                
+            }
+        });
+    })
+  </script>
+@endpush

@@ -28,7 +28,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
-                                    <th>Email</th>
+                                    <th>Username</th>
                                     <th>Akses</th>
                                     <th>photo</th>
                                     <th></th>
@@ -90,6 +90,9 @@
                     $('#name').val(data.name);
                     $('#email').val(data.email);
                     $('#password').val(data.password);
+                    $.each(data.roles, function( key, value) {
+                        $('#cekbox'+value.id).attr('checked','checked');
+                    });
 
                 },
 
@@ -111,12 +114,12 @@
                         url: url,
                         type: "POST",
                         // data: $('#modal-form form').serialize(),
-                        data:new FormData($('#form-data form')[0]),
+                        data:new FormData($('#modal-form form')[0]),
                         contentType: false,
                         processData: false,
                                             
                         success: function ($data) {
-                            $('#form-data').hide();
+                            $('#modal-form').modal('toggle');
                             $('#data-user').dataTable().api().ajax.reload();
                             swal({
                                 title:'Succes!',
@@ -124,7 +127,6 @@
                                 type:'success',
                                 timer: 2000
                             })
-
                         },
                         error: function () {
                             alert('Oops! error!');

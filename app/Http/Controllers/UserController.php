@@ -23,21 +23,19 @@ class UserController extends Controller
                 return '<img class="rounded-square" windth="50" height="50" src="'.url($user->photo).'" alt="">';
             })
             ->addColumn('akses', function($user){
-                $role = '';
+                $roles = '';
                 foreach ($user->roles as $role) {
-                    $role .= $role->id;
+                    $roles .= '<span class="label label-info">'.$role->name.'</span> ';
                 }
-                return $role;
+                return $roles;
             })
             ->addColumn('action',function($user){
 
                 return' <a onclick="editForm('.$user->id .')" class ="btn btn-primary btn-sm"><i class="glyphicon glyphicon-edit">
                         </i> Edit </a>' .
-                        ' <a onclick="deleteData('.$user->id .')" class ="btn btn-warning btn-sm"><i class="glyphicon glyphicon-trash">
+                        ' <a onclick="deleteData('.$user->id .')" class ="btn btn-danger btn-sm"><i class="glyphicon glyphicon-trash">
                         </i> Delete </a>';
-            })->rawColumns(['show_photo', 'action'])->make(true);
-
-
+            })->rawColumns(['show_photo', 'action','akses'])->make(true);
     }
 
 
@@ -58,16 +56,23 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $input['email'] = $request->email."@gmail.com";
         $input['password'] = Hash::make($request->password);
 
         $input['photo'] = null;
 
-        // if ($request->hasFile('photo')){
-        //     $input['photo'] = '/upload/photo/'.str_slug($input['name'],'-').'.'.$request->photo->getClientOriginalExtension();
-        //     $request->photo->move(public_path('/upload/photo/'), $input['photo']);
-        // }
 
-        // return User::create($input);
+        if ($request->hasFile('photo')){
+            $input['photo'] = '/upload/photo/'.str_slug($input['name'],'-').'.'.$request->photo->getClientOriginalExtension();
+            $request->photo->move(public_path('/upload/photo/'), $input['photo']);
+        }
+
+        $user = User::create($input);
+        if ($request->role) {
+            $user->assignRole([
+                $request->role
+            ]);
+        }
 
         
     }
@@ -81,7 +86,7 @@ class UserController extends Controller
    
     public function edit($id)
     {
-        $contact = User::find($id);
+        $contact = User::with('roles')->find($id);
 
         return $contact;
     }
@@ -91,6 +96,7 @@ class UserController extends Controller
     {
         $input = $request->all();
         $input['password'] = Hash::make($request->password);
+        $input['email'] = $request->email.'@gmail.com';
 
         $contact = User::findOrFail($id);
 
@@ -107,6 +113,13 @@ class UserController extends Controller
             $request->photo->move(public_path('/upload/photo/'), $input['photo']);
         }
         $contact->update($input);
+        
+        if ($request->role) {
+            $contact->syncRoles([
+                $request->role
+            ]);
+        }
+       
 
         return response()->json([
             'success'=>true,
@@ -117,11 +130,14 @@ class UserController extends Controller
    
     public function destroy($id)
     {
-        $data = User::findOrFail($id);
+        $data = User::with('roles')->findOrFail($id);
 
         if($data->photo != null)
         {
             unlink(public_path($data->photo));
+        }
+        foreach($data->roles as $roles){
+            $data->removeRole($roles->name);
         }
         User::destroy($id);
 
