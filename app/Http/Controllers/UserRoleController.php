@@ -68,7 +68,7 @@ class UserRoleController extends Controller
         ->addColumn('permissions',function($data){
             $foreach = '';
             foreach ($data->permissions as $permission) {
-                $foreach .= '<ul><li>' . $permission->name . '</li></ul>';
+                $foreach .= '<span class="label label-info">' . $permission->name . '</span> ';
             }
             return $foreach;
         })
