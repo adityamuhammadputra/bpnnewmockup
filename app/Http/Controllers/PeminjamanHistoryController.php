@@ -20,11 +20,13 @@ class PeminjamanHistoryController extends Controller
 {
     public function index()
     {
+        $this->authorize('bukutanah.read');
         return view('peminjaman.peminjamanhistory.index');
     }
 
     public function apiPeminjamanHistory()
     {
+        $this->authorize('bukutanah.read');
         $data = PeminjamanPengecekanHistory::all();
 
         return Datatables::of($data)->make(true);
@@ -37,6 +39,7 @@ class PeminjamanHistoryController extends Controller
     }
     public function cetak(Request $request)
     {
+        $this->authorize('bukutanah.read');
         $datetime = \Carbon::now();
         $replace = array(" ", ":");
         $datetime = str_replace($replace, '-', $datetime);

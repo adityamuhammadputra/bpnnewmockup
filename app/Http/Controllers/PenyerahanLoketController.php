@@ -24,7 +24,7 @@ class PenyerahanLoketController extends Controller
     
     public function index()
     {
-
+        $this->authorize('penyerahanloket.read');
         return view('penyerahan.penyerahanloket.index');
     }
 
@@ -32,6 +32,7 @@ class PenyerahanLoketController extends Controller
    
     public function edit($id)
     {
+        $this->authorize('penyerahanloket.crud');
         // return $id;
         $kegiatan = Kegiatan::orderBy('no_urut', 'asc')->pluck('nama_kegiatan', 'id')->toArray();
         $kegiatan = ['' => '---- Pilih Kegiatan ----'] + $kegiatan;
@@ -49,6 +50,7 @@ class PenyerahanLoketController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('penyerahanloket.crud');
         $input = $request->except('_method','_token','status', 'data-detail_length');
         // return $input;
         $data = Penyerahan::where('id',$id)->update(
@@ -61,6 +63,7 @@ class PenyerahanLoketController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('penyerahanloket.crud');
         Penyerahan::destroy($id);
 
         Session::flash('info', 'Data Berhasil Dihapus');
@@ -69,11 +72,13 @@ class PenyerahanLoketController extends Controller
 
     public function kamera(Request $request)
     {
+        $this->authorize('penyerahanloket.crud');
         return view('penyerahan.penyerahanloket.kamera');
     }
 
     public function kameraAksi(Request $request)
     {
+        $this->authorize('penyerahanloket.crud');
         $img = $request['image'];
         $image_parts = explode(";base64,", $img);
         $image_type_aux = explode("image/", $image_parts[0]);
@@ -93,6 +98,7 @@ class PenyerahanLoketController extends Controller
 
     public function cetak($id)
     {
+        $this->authorize('penyerahanloket.crud');
         $datetime = Carbon::now();
         $replace = array(" ", ":");
         $datetime = str_replace($replace, '-', $datetime);
@@ -118,7 +124,7 @@ class PenyerahanLoketController extends Controller
     }
     public function apiPenyerahan()
     {
-        
+        $this->authorize('penyerahanloket.read');        
         $data = Penyerahan::with('kegiatan', 'penyerahandetail')->where('status', '3')->whereNull('status_cetak');
         // return $data->get();
         return Datatables::of($data)
@@ -135,6 +141,7 @@ class PenyerahanLoketController extends Controller
 
     public function apiDetail($id)
     {
+        $this->authorize('penyerahanloket.read');
         $data = PenyerahanDetail::where('penyerahan_id', $id)->orderBy('created_at', 'desc');
         return Datatables::of($data)
             ->addColumn('action', function ($data) {

@@ -17,6 +17,7 @@ class UserPermissionController extends Controller
 {
     public function index()
     {
+        $this->authorize('user.read');
         return view('user.permission.index');
     }
 
@@ -29,6 +30,8 @@ class UserPermissionController extends Controller
 
    public function apiData()
    {
+    $this->authorize('user.read');
+
     $data = Permission::query();
 
     return DataTables::of($data)
@@ -43,6 +46,8 @@ class UserPermissionController extends Controller
 
    public function destroy($id)
    {
+        $this->authorize('user.crud');
+
        $data = Permission::destroy($id);
 
        Session::flash('info','Permission Berhasil dihapus');

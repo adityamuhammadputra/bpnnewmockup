@@ -17,6 +17,7 @@ class WarkahController extends Controller
     
     public function apiWarkah()
     {
+        $this->authorize('warkah.read');
         $data = DataWarkah::orderBy('id');
 
         // return $data;
@@ -35,11 +36,13 @@ class WarkahController extends Controller
 
     public function index()
     {
+        $this->authorize('warkah.read');
         return view('datawarkah.index');        
     }
     
     public function store(Request $request)
     {
+        $this->authorize('warkah.crud');
         return DataWarkah::create($request->except(['_method','_token']));
     }
    
@@ -50,11 +53,13 @@ class WarkahController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('warkah.crud');
         return DataWarkah::find($id);
     }
 
     public function update(Request $request, $id)
     {
+        $this->authorize('warkah.crud');
         $data = DataWarkah::find($id);
         $data->no_warkah = $request['no_warkah'];
         $data->no_box = $request['no_box'];
@@ -71,6 +76,7 @@ class WarkahController extends Controller
     
     public function destroy($id)
     {
+        $this->authorize('warkah.crud');
         DataWarkah::destroy($id);
     }
 }

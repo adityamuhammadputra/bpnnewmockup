@@ -34,7 +34,7 @@
                                     <th>Role Id</th>
                                     <th></th>
                                     <th>Gueard Name</th>
-                                    <th>Permission</th>
+                                    <th width="50%">Permission</th>
                                     <th></th>
                                 </tr>
                             </thead>

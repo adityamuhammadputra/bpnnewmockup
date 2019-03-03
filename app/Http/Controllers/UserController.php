@@ -13,6 +13,8 @@ class UserController extends Controller
 {
     public function apiUser()
     {
+        $this->authorize('user.read');
+
         $user = User::with('roles');
 
         return Datatables::of($user)
@@ -41,6 +43,8 @@ class UserController extends Controller
 
     public function index()
     {
+        $this->authorize('user.read');
+
         $data = Role::all();
 
         return view('user.index',compact('data'));
@@ -55,6 +59,8 @@ class UserController extends Controller
   
     public function store(Request $request)
     {
+        $this->authorize('user.crud');
+
         $input = $request->all();
         $input['email'] = $request->email."@gmail.com";
         $input['password'] = Hash::make($request->password);
@@ -86,6 +92,7 @@ class UserController extends Controller
    
     public function edit($id)
     {
+        $this->authorize('user.crud');
         $contact = User::with('roles')->find($id);
 
         return $contact;
@@ -94,6 +101,7 @@ class UserController extends Controller
    
     public function update(Request $request, $id)
     {
+        $this->authorize('user.crud');
         $input = $request->all();
         $input['password'] = Hash::make($request->password);
         $input['email'] = $request->email.'@gmail.com';
@@ -130,6 +138,7 @@ class UserController extends Controller
    
     public function destroy($id)
     {
+        $this->authorize('user.crud');
         $data = User::with('roles')->findOrFail($id);
 
         if($data->photo != null)
@@ -150,6 +159,7 @@ class UserController extends Controller
 
     public function editprofile($id)
     {
+        $this->authorize('user.crud');
         if($id != Auth::user()->id){
             return redirect()->back()->withDanger('Mohon maaf anda tidak mempunyai untuk mengubah akun lain');
         }
@@ -159,6 +169,7 @@ class UserController extends Controller
 
     public function updateprofile(Request $request,$id)
     {
+        $this->authorize('user.crud');
         $user = User::find($id);
         $input = $request->except('password');
         $input['email'] = $input['email'].'@gmail.com';

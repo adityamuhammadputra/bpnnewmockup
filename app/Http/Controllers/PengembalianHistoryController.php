@@ -26,11 +26,13 @@ class PengembalianHistoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('pengembalian.read');
         return view('pengembalian.pengembalianhistory.index');
     }
 
     public function apiPengembalianHistory()
     {
+        $this->authorize('pengembalian.read');
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail', 4);
 
         return Datatables::of($data)
@@ -44,6 +46,7 @@ class PengembalianHistoryController extends Controller
 
     public function cekdetail(Request $request)
     {
+        $this->authorize('pengembalian.read');
         PeminjamanDetail::where('id', '=', $request->id)
             ->update(['status_detail' => '3']);
 

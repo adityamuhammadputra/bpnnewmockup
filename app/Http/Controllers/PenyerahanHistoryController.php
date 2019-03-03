@@ -21,11 +21,13 @@ class PenyerahanHistoryController extends Controller
 {
     public function index()
     {
+        $this->authorize('penyerahanloket.read', 'penyerahanproses.read');        
         return view('penyerahan.penyerahanhistory.index');
     }
 
     public function apiPenyerahan(Request $request)
     {
+        $this->authorize('penyerahanloket.read', 'penyerahanproses.read');        
         $data = Penyerahan::with('kegiatan', 'penyerahandetail')
             ->where('status', 3);
             
@@ -43,6 +45,7 @@ class PenyerahanHistoryController extends Controller
     {
         // $tanggalawal = $this->dateConverter($request->tanggal_awal);
         // $tanggalakhir = $this->dateConverter($request->tanggal_akhir);
+        $this->authorize('penyerahanloket.read', 'penyerahanproses.read');        
         if ($request->tanggal_awal) {
             $data = Penyerahan::with('kegiatan', 'penyerahandetail')
                 ->where('status', 3)->whereBetween('tanggal1', [$request->tanggal_awal . ' 00.00', $request->tanggal_akhir. ' 23.59']);

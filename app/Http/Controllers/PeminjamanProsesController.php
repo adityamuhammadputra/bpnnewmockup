@@ -25,6 +25,7 @@ class PeminjamanProsesController extends Controller
    
     public function index()
     {
+        $this->authorize('peminjamanproses.read');
         $kegiatan = Kegiatan::orderBy('no_urut','asc')->pluck('nama_kegiatan','id')->toArray();
         $kegiatan = ['' => '---- Pilih Kegiatan ----'] + $kegiatan;
 
@@ -38,6 +39,7 @@ class PeminjamanProsesController extends Controller
 
     public function getVia(Request $request)
     {
+        $this->authorize('peminjamanproses.crud');
         $via = Via::where('kegiatan_id',$request->peminjaman_id)->pluck('nama','nama');
         return response()->json($via);
     }
@@ -45,6 +47,7 @@ class PeminjamanProsesController extends Controller
     public function store(Request $request)
     {
     //    return $request;
+        $this->authorize('peminjamanproses.crud');
         Peminjaman::create([
             'nip' => $request->nip,
             'nama' => $request->nama,
@@ -83,6 +86,7 @@ class PeminjamanProsesController extends Controller
    
     public function show($id)
     {
+        $this->authorize('peminjamanproses.crud');
         
         return PeminjamanDetail::where('peminjaman_id',$id)->get();
     }
@@ -96,6 +100,8 @@ class PeminjamanProsesController extends Controller
   
     public function update(Request $request, $id)
     {
+        $this->authorize('peminjamanproses.crud');
+
         $peminjamanid = $request->id;
 
         if ($request->idbukutanah != null){
@@ -134,6 +140,7 @@ class PeminjamanProsesController extends Controller
    
     public function destroy($id)
     {
+        $this->authorize('peminjamanproses.crud');
         Peminjaman::destroy($id);
 
         Session::flash('info', 'Data Berhasil Dihapus');
@@ -142,6 +149,7 @@ class PeminjamanProsesController extends Controller
 
     public function destroydetail($id)
     {
+        $this->authorize('peminjamanproses.crud');
         PeminjamanDetail::destroy($id);
 
         Session::flash('info', 'Data Berhasil Dihapus');
@@ -151,6 +159,7 @@ class PeminjamanProsesController extends Controller
 
     public function roket($id)
     {
+        $this->authorize('peminjamanproses.crud');
         PeminjamanDetail::where('peminjaman_id', $id)->where('status_tunggak',0)
             ->update([
                 'status_detail' => '1',
@@ -162,6 +171,7 @@ class PeminjamanProsesController extends Controller
 
     public function roketdetail($id)
     {
+        $this->authorize('peminjamanproses.crud');
         PeminjamanDetail::where('id', $id)
             ->update([
                 'status_detail' => '2',

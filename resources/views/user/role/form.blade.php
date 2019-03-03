@@ -33,7 +33,7 @@
         </div>
 
         <br>
-        <div class="row" style="padding-left: 40px;">
+        <div class="row" style="padding-left: 15px;">
             @foreach ($data as $permission)
                 <div class="col-md-2">
                     <div class="form-group">

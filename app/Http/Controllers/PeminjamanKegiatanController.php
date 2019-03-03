@@ -21,15 +21,14 @@ use App\Kegiatan;
 
 class PeminjamanKegiatanController extends Controller
 {
-   
     public function index()
     {
+        $this->authorize('peminjamankegiatan.read');
         $kegiatan = Kegiatan::orderBy('no_urut', 'asc')->pluck('nama_kegiatan', 'id')->toArray();
         $kegiatan = ['' => '---- Pilih Kegiatan ----'] + $kegiatan;
 
         return view('peminjaman.peminjamankegiatan.index',compact('kegiatan'));
     }
-
    
     public function edit($id)
     {
@@ -92,6 +91,7 @@ class PeminjamanKegiatanController extends Controller
     public function store(Request $request)
     {
         // return $data;
+        $this->authorize('peminjamankegiatan.crud');
         $date = Carbon::now();
         $replace = array(" ", ":");
         $datetime = str_replace($replace, '-', $date);
@@ -115,8 +115,6 @@ class PeminjamanKegiatanController extends Controller
 
         return $pdf->stream();
 
-        
-
     }
 
     public function datadetail($id)
@@ -126,6 +124,7 @@ class PeminjamanKegiatanController extends Controller
 
     public function datadetailupdate(Request $request, $id)
     {
+        $this->authorize('peminjamankegiatan.crud');
         $data = PeminjamanDetail::find($id);
         $data->idbukutanah = $request['idbukutanah'];
         $data->jenis_hak = $request['jenis_hak'];
@@ -157,6 +156,7 @@ class PeminjamanKegiatanController extends Controller
     // }
     public function apiPeminjamanKegiatan()
     {
+        $this->authorize('peminjamankegiatan.read');
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',1)->whereHas('peminjamanheader',function($q){
             if(auth()->user()->kegiatan_id == 100){
                 
@@ -176,7 +176,6 @@ class PeminjamanKegiatanController extends Controller
                 <input type="checkbox" class="checkbox" name="data[]" value="'.$data->id. '"><span class="checkmark"></span></label>' .
               
                 '';
-               
             })->rawColumns(['action'])->make(true);
 
     }

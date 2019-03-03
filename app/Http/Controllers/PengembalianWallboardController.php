@@ -22,11 +22,14 @@ class PengembalianWallboardController extends Controller
 
     public function index()
     {
+        $this->authorize('pengembalian');
         return view('pengembalian.pengembalianwallboard.index');
     }
 
     public function apiData()
     {
+        $this->authorize('pengembalian');
+
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail','!=',0);
         // return $data;
         return Datatables::of($data)->make(true);

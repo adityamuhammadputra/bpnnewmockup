@@ -14,6 +14,7 @@ class UserRoleController extends Controller
 {
     public function index()
     {
+        $this->authorize('user.read');
         $data = Permission::all();
         $form = [
             'action' => url('userrole'),
@@ -25,6 +26,7 @@ class UserRoleController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('user.crud');
         $role = Role::with('permissions')->find($id);
 
         return $role;
@@ -32,6 +34,7 @@ class UserRoleController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('user.crud');
         $permission = $request->permission;
 
         if($request->id){
@@ -57,6 +60,7 @@ class UserRoleController extends Controller
 
     public function apidata()
     {
+        $this->authorize('user.read');
         $data = Role::with('permissions');
         return DataTables::of($data)
         ->addColumn('action', function($data){
@@ -77,6 +81,7 @@ class UserRoleController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('user.crud');
         $data = Role::destroy($id);
  
         Session::flash('info','Role Berhasil dihapus');

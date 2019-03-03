@@ -14,6 +14,7 @@ class PtslController extends Controller
 {
     public function apiPtsl()
     {
+        $this->authorize('ptsl.read');
         $data = DataPtsl::orderBy('id');
 
         return Datatables::of($data)
@@ -27,6 +28,7 @@ class PtslController extends Controller
    
     public function index()
     {
+        $this->authorize('ptsl.read');
         return view('ptsl.index');
     }
 

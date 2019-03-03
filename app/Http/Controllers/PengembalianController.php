@@ -22,6 +22,7 @@ class PengembalianController extends Controller
    
     public function index()
     {
+        $this->authorize('pengembalian.read');
         return view('pengembalian.index');
     }
     public function create()
@@ -44,6 +45,7 @@ class PengembalianController extends Controller
    
     public function update(Request $request, $id)
     {
+        $this->authorize('pengembalian.crud');
         $id = $request->id;
 
         PeminjamanDetail::where('id', $id)
@@ -94,6 +96,8 @@ class PengembalianController extends Controller
     }
 
     public function cekdetail(Request $request){
+        $this->authorize('pengembalian.crud');
+
         // return $request->id;
         
         PeminjamanDetail::where('id', '=', $request->id)
@@ -140,6 +144,7 @@ class PengembalianController extends Controller
     
     public function apiPengembalianDetail()
     {
+        $this->authorize('pengembalian.read');
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',3)->orderby('tanggal_kembali','desc');
 
         return Datatables::of($data)

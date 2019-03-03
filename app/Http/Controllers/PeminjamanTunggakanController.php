@@ -24,11 +24,13 @@ class PeminjamanTunggakanController extends Controller
    
     public function index()
     {
+        $this->authorize('peminjamankegiatan.read', 'peminjamanproses.read');
         return view('peminjaman.peminjamantunggakan.index');
     }
 
     public function apiData()
     {
+        $this->authorize('peminjamankegiatan.read', 'peminjamanproses.read');
         $data = PeminjamanDetail::with('peminjamanheader')->where('status_detail',2);
         
 
@@ -57,6 +59,7 @@ class PeminjamanTunggakanController extends Controller
 
     public function tunggakancekdetail(Request $request)
     {
+        $this->authorize('peminjamankegiatan.read', 'peminjamanproses.read');
          PeminjamanDetail::where('id', $request->id_detail)
             ->update([
                 'status_detail' => '0',

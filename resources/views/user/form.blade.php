@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
       
             <form method="post" data-toogle="validator" class="form-horzontal" id="form" enctype="multipart/form-data">
@@ -54,6 +54,7 @@
                     </div>
                   </div>
                 @endforeach
+                <br><br><br>
                 <br><br><br>
               </div>
               <div class="modal-footer">

@@ -18,11 +18,13 @@ class PeminjamanMasterWallboardController extends Controller
 {
     public function index()
     {
+        $this->authorize('bukutanah.read');
         return view('peminjaman.peminjamanwarlboard.index');
     }
 
     public function apiPeinjamanMasterWarllboard()
     {
+        $this->authorize('bukutanah.read');
         $data = PeminjamanPengecekan::where('status_pinjam', 1)->orderBy('updated_at', 'asc');
 
         return Datatables::of($data)
@@ -35,6 +37,7 @@ class PeminjamanMasterWallboardController extends Controller
     }
     public function cekpinjam(Request $request)
     {
+        $this->authorize('bukutanah.crud');
         // return $request->all();
         $data = PeminjamanPengecekan::find($request->id);
         $data->status_pinjam = 0;

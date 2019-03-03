@@ -118,16 +118,18 @@ window.onload = setInterval(clock,1000);
 			</div>
 		</form>
 		<div class="clear"></div>
-
+		@php  $user = request()->user() @endphp
 		<ul class="nav menu">
-			@if (Auth::user()->kegiatan_penyerahan_id == null || Auth::user()->id == 2)
+			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardptsl.read']))
 			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard PTSL</a></li>
+			@endif
+			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardarsip.read']))
 			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
 			@endif
-			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 2 )
+			@if ($user->hasAnyRole(['admin','sysadmin','warkah']))
 				<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
 			@endif
-			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 3 )
+			@if ($user->hasAnyRole(['admin','sysadmin','bukutanah']))
 			<li class="parent {{ request()->is('peminjaman/master') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-4">
 				<em class="fa fa-navicon">&nbsp;</em>BukuTanah <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -144,7 +146,7 @@ window.onload = setInterval(clock,1000);
 				</ul>
 			</li>
 			@endif	
-			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 4 )
+			@if ($user->hasAnyRole(['admin','sysadmin','ptsl']))
 			<li class="parent {{ request()->is('ptsl/pengecekan') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-1">
 				<em class="fa fa-navicon">&nbsp;</em> Program PTSL <span data-toggle="collapse" href="#sub-item-1" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -158,17 +160,17 @@ window.onload = setInterval(clock,1000);
 				</ul>
 			</li>
 			@endif	
-			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 5 || Auth::user()->modul_id == 6 )
+			@if ($user->hasAnyRole(['admin','sysadmin','peminjamanproses','peminjamankegiatan']))
 			<li class="parent {{ request()->is('peminjaman/proses') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-dropbox">&nbsp;</em> Peminjaman <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
 				<ul class="children collapse" id="sub-item-2">
-					@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 5 )
+					@if ($user->hasAnyPermission(['peminjamanproses.read']))
 					<li><a class="" href="{{ url('peminjaman/proses') }}">
 							<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Proses
 					</a></li>
 					@endif
-					@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 6 )
+					@if ($user->hasAnyPermission(['peminjamankegiatan.read']))
 					<li><a class="" href="{{ url('peminjaman/kegiatan') }}">
 						<span class="fa fa-arrow-right">&nbsp;</span> Peminjaman Kegiatan
 					</a></li>
@@ -182,7 +184,7 @@ window.onload = setInterval(clock,1000);
 				</ul>
 			</li>
 			@endif
-			@if (Auth::user()->modul_id == 1 || Auth::user()->modul_id == 7 )
+			@if ($user->hasAnyRole(['admin','sysadmin','pengembalian']))
 			<li class="parent {{ request()->is('pengembalian') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-3">
 				<em class="fa fa-reply-all">&nbsp;</em> Pengembalian <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -199,11 +201,11 @@ window.onload = setInterval(clock,1000);
 				</ul>
 			</li>
 			@endif
-			@if (Auth::user()->kegiatan_penyerahan_id || Auth::user()->id == 2)
-			@if (Auth::user()->penyerahan_menu == 1|| Auth::user()->id == 2)
+			@if ($user->hasAnyPermission(['penyerahanproses.read','penyerahanloket.read']))
+			@if ($user->hasAnyPermission(['penyerahanproses.read']))
 			<li class="{{ request()->is('penyerahan') ? 'active' : '' }}"><a href="{{ url('penyerahan') }}"><em class="fa fa-book">&nbsp;</em> Penyerahan Proses</a></li>
 			@endif
-			@if (Auth::user()->penyerahan_menu == 2 || Auth::user()->id == 2)
+			@if ($user->hasAnyPermission(['penyerahanloket.read']))
 			<li class="{{ request()->is('penyerahanloket') ? 'active' : '' }}"><a href="{{ url('penyerahanloket') }}"><em class="fa fa-laptop">&nbsp;</em> Penyerahan Loket</a></li>
 			@endif
 			<li class="{{ request()->is('penyerahanhistory') ? 'active' : '' }}"><a href="{{ url('penyerahanhistory') }}"><em class="fa fa-calendar-times-o">&nbsp;</em> Penyerahan History</a></li>
@@ -234,7 +236,7 @@ window.onload = setInterval(clock,1000);
 
 				
 			{{-- <li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li> --}}
-			@if (Auth::user()->modul_id == 1 )
+			@if ($user->hasAnyRole(['admin','sysadmin']))
 			<li class="parent {{ request()->is('user') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-sub-item-user">
 				<em class="fa fa-users">&nbsp;</em> Users <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>

@@ -21,6 +21,7 @@ class PengecekanController extends Controller
 {
     public function cetak(Request $request)
     {
+        $this->authorize('ptsl.read');
         $datetime = Carbon::now();
         $replace = array(" ",":");
         $datetime = str_replace($replace, '-', $datetime);
@@ -41,6 +42,7 @@ class PengecekanController extends Controller
     }
     public function apiPengecekan()
     {
+        $this->authorize('ptsl.read');
         $user_id = auth()->user()->id;
         $kelompok_id = auth()->user()->kelompok_id;
         
@@ -62,6 +64,7 @@ class PengecekanController extends Controller
  
     public function index()
     {
+        $this->authorize('ptsl.read');
         $data = User::with('kelompok')->where('id', auth()->user()->id)->first();
         $kd_kelompok = $data->kelompok->kd_kelompok;
 
@@ -96,8 +99,7 @@ class PengecekanController extends Controller
    
     public function store(Request $request)
     {
-        // return "ok";
-        // return Pengecekan::create($request->except(['_method','_token']));
+        $this->authorize('ptsl.crud');
         $data = User::with('kelompok')->where('id', auth()->user()->id)->first();
         $kd_kelompok = $data->kelompok->kd_kelompok;
 
@@ -178,6 +180,7 @@ class PengecekanController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('ptsl.crud');
         $data = Pengecekan::find($id);
         $data->no_berkas = $request['no_berkas'];
         $data->no_hak = $request['no_hak'];
@@ -201,11 +204,14 @@ class PengecekanController extends Controller
    
     public function destroy($id)
     {
+        $this->authorize('ptsl.crud');
+
         Pengecekan::destroy($id);
     }
 
     public function autoComplete(Request $request)
     {
+        $this->authorize('ptsl.read');
         $query = $request->get('term','');
 
         $dataptsl=DataPtsl::where('no_berkas','LIKE','%'.$query.'%')->orWhere('tahun','LIKE','%'.$query.'%')->limit(30)->get();
@@ -222,6 +228,7 @@ class PengecekanController extends Controller
 
     public function showPtsl(Request $request)
     {
+        $this->authorize('ptsl.read');
         $no_berkas = $request->get('no_berkas');
         $peg=DataPtsl::where('no_berkas', $no_berkas)->first();
         $data = array(

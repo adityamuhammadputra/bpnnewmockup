@@ -38,6 +38,7 @@ class PenyerahanProsesController extends Controller
      */
     public function index()
     {
+        $this->authorize('penyerahanproses.read');
         $kegiatan = Kegiatan::orderBy('no_urut', 'asc')->pluck('nama_kegiatan', 'id')->toArray();
         $kegiatan = ['' => '---- Pilih ----'] + $kegiatan;
 
@@ -74,6 +75,7 @@ class PenyerahanProsesController extends Controller
     
     public function store(Request $request)
     {
+        $this->authorize('penyerahanproses.crud');
         Penyerahan::create([
             'no_berkas' => $request->no_berkas,
             'kd_box' => $request->kd_box,
@@ -134,6 +136,7 @@ class PenyerahanProsesController extends Controller
     }
     public function cetak(Request $request)
     {
+        $this->authorize('penyerahanproses.crud');
         $datetime = $this->datetime;
 
         $id = $request->cetak;
@@ -155,6 +158,7 @@ class PenyerahanProsesController extends Controller
 
     public function cetakbox(Request $request)
     {
+        $this->authorize('penyerahanproses.crud');
         $datetime = $this->datetime;
 
         $id = $request->id;
@@ -171,12 +175,14 @@ class PenyerahanProsesController extends Controller
    
     public function edit($id)
     {
+        $this->authorize('penyerahanproses.crud');
         return Penyerahan::with('kegiatan', 'penyerahandetail')->find($id);
     }
 
   
     public function update(Request $request, $id)
     {
+        $this->authorize('penyerahanproses.crud');
         $inputpenyerahan = $request->only('no_berkas', 'nama1', 'email', 'status', 'kegiatan_id', 'kd_box', 'no_urut' , 'kd_cetak', 'tanggal1' , 'catatan');
         $data = Penyerahan::find($id);
         $data->update(
@@ -227,6 +233,7 @@ class PenyerahanProsesController extends Controller
     
     public function destroy($id)
     {
+        $this->authorize('penyerahanproses.crud');
         Penyerahan::destroy($id);
 
         Session::flash('info', 'Data Berhasil Dihapus');
@@ -235,6 +242,7 @@ class PenyerahanProsesController extends Controller
 
     public function penyerahanprosesstatus(Request $request)
     {
+        $this->authorize('penyerahanproses.crud');
         $max = DB::table('penyerahan')
             ->select(DB::raw('max(no_urut) as no_urut'))
             ->where('user_id', Auth::user()->id)
@@ -292,7 +300,7 @@ class PenyerahanProsesController extends Controller
 
     public function apiPenyerahan()
     {
-        
+        $this->authorize('penyerahanproses.read', 'penyerahanloket.read');
         $data = Penyerahan::with('kegiatan', 'penyerahandetail');
         if (Auth::user()->id != 2) {
             $data->where('kegiatan_id',Auth::user()->kegiatan_penyerahan_id);
