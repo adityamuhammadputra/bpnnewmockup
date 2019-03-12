@@ -73,7 +73,7 @@
                     {data: 'nama1',name:'nama1'},
                     {data: 'email',name:'email'},
                     {data: 'kegiatan.nama_kegiatan',name:'kegiatan.nama_kegiatan'},
-                    {data: 'tanggal1',name:'tanggal1'},
+                    {data: 'tanggal1',name:'tanggal1',"sType": "date-uk"},
                     {
                         data: 'foto',
                         name:'foto',
@@ -138,7 +138,6 @@
                 } );
            
         });
-        
 
 
     </script>

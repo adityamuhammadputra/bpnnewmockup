@@ -31,7 +31,6 @@ class UserPermissionController extends Controller
    public function apiData()
    {
     $this->authorize('user.read');
-
     $data = Permission::query();
 
     return DataTables::of($data)
