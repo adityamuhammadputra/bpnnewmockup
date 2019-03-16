@@ -40,6 +40,22 @@
 	color: white;
 
 }
+.userpanel{
+	position: relative;
+    width: 100%;
+    padding: 10px;
+    overflow: hidden;
+}
+.userpanel>.infos {
+    padding: 5px 5px 5px 30px;
+    line-height: 1;
+    position: absolute;
+    left: 55px;
+	font-size: 19px;
+}
+.userpanel>.infos a {
+	cursor: pointer;
+}
 </style>
 <script>
 window.onload = setInterval(clock,1000);
@@ -75,9 +91,10 @@ window.onload = setInterval(clock,1000);
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
-					<span class="icon-bar"></span></button>
+					<span class="icon-bar"></span>
+				</button>
 				<a href="{{ asset('images/Logos.png') }}" target="_blank"><img src="{{ asset('images/Logos.png') }}" class="imglogoss"></a><c class="hidden-xs"><span class="namabpn"><a> BPN</a>Kab.bogor</span></c>
-				<ul class="nav navbar-top-links navbar-right">
+				<ul class="nav navbar-top-links navbar-right visible-lg visible-md visible-sm">
 					<a class="time-custom">
 					<em class="fa fa-calendar-check-o" style="color:white"></em> <span id="date"></span>
 					<em class="fa fa-clock-o" style="color:white"></em> <span id="time"></span>
@@ -110,7 +127,17 @@ window.onload = setInterval(clock,1000);
 		</div><!-- /.container-fluid -->
 	</nav>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		
+		<div class="visible-xs userpanel">
+			<div class="pull-left">
+				<img src="{{ asset(auth()->user()->photo) }}" data-toggle="dropdown" class="img-circle" alt="User Image" width="60px" height="60px">
+			</div>
+			<div class="pull-left infos">
+				<a href="{{ url('editprofile',Auth::user()->id) }}" title="Ubah data user">
+					{{ Auth::user()->name }}
+				</a>
+				<p style="font-size: 13px;margin-top: 15px;"><em class="fa fa-key"></em> {{ Auth::user()->jabatan_profile }}</p>
+			</div>
+		</div>
 		<div class="divider"></div>
 		<form role="search">
 			<div class="form-group">
@@ -234,6 +261,7 @@ window.onload = setInterval(clock,1000);
 			</li> --}}
 			@endif
 
+
 				
 			{{-- <li style="padding-top:10px; border-top: 1px solid #e9ecf2;"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li> --}}
 			@if ($user->hasAnyRole(['admin','sysadmin']))
@@ -254,6 +282,8 @@ window.onload = setInterval(clock,1000);
 			</li>
 			{{-- <li class="{{ request()->is('user') ? 'active' : '' }}"><a href="{{ url('user') }}"><em class="fa fa-users">&nbsp;</em> User</a></li> --}}
 			@endif
+			<li class="visible-xs"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-lock"></em> Logout</a></li>
+
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 				{{ csrf_field() }}
 			</form>

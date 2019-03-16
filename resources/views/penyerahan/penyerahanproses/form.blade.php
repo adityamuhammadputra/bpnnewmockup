@@ -91,10 +91,10 @@
             </div>
         </div>
                          
-                       
+        <div class="table-responsive">
         <table class="table table-striped table-borderless" id="item_table">
             <thead>
-                <tr>
+                <tr class="hidden-xs">
                     <th width="10%">No.Hak</th>
                     <th width="10%">Jenis Hak</th>
                     <th width="10%">Desa </th> 
@@ -103,13 +103,23 @@
                     <th width="5%" style="text-align-center">
                         <button type="button" name="add" class="btn btn-success add"><i class="fa fa-plus text-white"></i></button>
                     </th>
-                </tr>  
+                </tr>
+                <tr class="visible-xs">
+                    <th>Nomor Hak</th>
+                    <th>Jenis Hak</th>
+                    <th>Nama Desa </th> 
+                    <th>Kecamatan </th> 
+                    <th>No.DI 208</th>
+                    <th width="5%" style="text-align-center">
+                        <button type="button" name="add" class="btn btn-success add"><i class="fa fa-plus text-white"></i></button>
+                    </th>
+                </tr>    
             </thead>
              <tbody>
                
             </tbody> 
         </table>
-
+</div>
         <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

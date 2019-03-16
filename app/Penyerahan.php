@@ -25,4 +25,14 @@ class Penyerahan extends Model
     {
         return $this->penyerahandetail->whereNotIn('status', [1, 2, 3])->count();
     }
+
+    public function getCreatedAtAttribute($value)
+    {
+        $date = str_replace("-","", $this->attributes['created_at']);
+        $datefinal = str_replace(':', '', $date);
+        $datefinals = str_replace(' ','', $datefinal);
+        return $datefinals;
+
+
+    }
 }

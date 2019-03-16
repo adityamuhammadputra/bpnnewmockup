@@ -18,7 +18,8 @@ use App\Kegiatan;
 use App\Penyerahan;
 use App\PenyerahanDetail;
 
-
+use Intervention\Image\ImageManagerStatic as Image;
+use Input;
 class PenyerahanLoketController extends Controller
 {
     
@@ -28,8 +29,6 @@ class PenyerahanLoketController extends Controller
         return view('penyerahan.penyerahanloket.index');
     }
 
-
-   
     public function edit($id)
     {
         $this->authorize('penyerahanloket.crud');
@@ -51,7 +50,18 @@ class PenyerahanLoketController extends Controller
     public function update(Request $request, $id)
     {
         $this->authorize('penyerahanloket.crud');
-        $input = $request->except('_method','_token','status', 'data-detail_length');
+        if ($request->fotomobile) {
+            $filename = 'app/public/' . $id . '.' . $request->fotomobile->getClientOriginalExtension();
+
+            $file = \Input::file('fotomobile');
+            Image::make($file->getRealPath())->resize(354, 472)->save(storage_path('/') . $filename);
+            
+            $input = $request->except('_method', '_token', 'status', 'data-detail_length', 'fotomobile');
+            $input['foto'] = $filename;
+
+        }else {
+            $input = $request->except('_method', '_token', 'status', 'data-detail_length', 'fotomobile');
+        }
         // return $input;
         $data = Penyerahan::where('id',$id)->update(
           $input

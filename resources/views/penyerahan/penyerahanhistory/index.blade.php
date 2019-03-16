@@ -17,10 +17,9 @@
                 <div class="panel-heading">
                     History Penyerahan
                     <div class="pull-right">
-                        <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                        {{-- <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span> --}}
+                        <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-print"></i></button>
                     </div>
-                    <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-minus-circle"></i> Form Cetak</button>
-                
                 </div>
                 <div class="panel-body" id="form-panel">
                     @include('penyerahan.penyerahanhistory.form')
@@ -40,6 +39,8 @@
                                     <th>Tanggal Selesai</th>
                                     <th>Status</th>
                                     <th>Foto</th>
+                                    <th>Sort</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,14 +87,16 @@
                             }
                         }
                     },
-                    {data: 'fotos', name: 'fotos'}
+                    {data: 'fotos', name: 'fotos'},
+                    {data: 'created_at', name:'created_at', searchable:false, visible:false}
+
                 ],
                  columnDefs: [ {
                     searchable: false,
                     orderable:false,
                     targets: 0
                 } ],  
-                order: [[ 6, 'desc' ]],
+                order: [[ 9, 'desc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data tidak ada",

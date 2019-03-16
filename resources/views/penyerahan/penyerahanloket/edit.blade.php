@@ -12,6 +12,26 @@
     #group-foto a{
         width: 322px;
     }
+    
+.wrapimgaes
+{
+    background:#e1e1e1;
+    text-align: center;
+    line-height: 250px;
+    font-size: 11px;
+}
+
+.input-file-cus input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
 </style>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
@@ -29,15 +49,15 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Penyerahan <a class="text-primary">#{{$data['detail']->no_berkas}} , Kode Box : #{{$data['detail']->kd_box}}</a>
+                    Penyerahan <a class="text-primary hidden-xs">#{{$data['detail']->no_berkas}} , Kode Box : #{{$data['detail']->kd_box}}</a>
                     <div class="pull-right">
                     @if($data['detail']->foto != 'app/public/default.png')
-                        <a href="#" onclick="cetak({{$data['detail']->id}})"  class ="btn btn-info"><em class="fa fa-print"></em> Cetak Dokument</a>
+                        <a href="#" onclick="cetak({{$data['detail']->id}})"  class ="btn btn-info"><em class="fa fa-print"></em> Cetak</a>
                     @endif
                     </div>
                 </div>
                 <div class="panel-body">
-                    <form method="post" action="{{ url('penyerahanloket',$data['detail']->id)}}" data-toogle="validator" class="form-horzontal" id="form-detail">
+                    <form method="post" action="{{ url('penyerahanloket',$data['detail']->id)}}" data-toogle="validator" class="form-horzontal" id="form-detail" enctype="multipart/form-data">
                         {{csrf_field()}}
                         {{method_field ('PATCH')}} 
                         <input type="hidden" class="form-control" name="no_berkas" id="no_berkas" value="{{$data['detail']->no_berkas}}" required >
@@ -112,14 +132,26 @@
                                     <span class="help-block with-errors"></span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 visible-lg visible-md visible-sm">
                                 <div class="form-group" id="group-foto">
                                     <img src="{{asset('storage/'.$data['detail']->foto)}}"><br>
                                     @if ($data['detail']->nama2)
                                         <a id="detailData" data-id="{{$data['detail']->id}}" data-no_berkas="{{ $data['detail']->no_berkas }}" class="btn btn-primary"><i class="fa fa-camera"></i> Ambil Gambar</a>
                                     @endif
                                 </div>
-                            
+                            </div>
+                            <div class="col-md-4 visible-xs">
+                                <div class="form-group input-file-cus" id="group-foto">
+                                    <div class="wrapimgaes">
+                                        <img id="blah" src="{{asset('storage/'.$data['detail']->foto)}}" width="100%"/>
+                                    </div>
+                                    @if ($data['detail']->nama2)
+                                    <label for="file-upload" class="custom-file-upload">
+                                        <i class="fa fa-cloud-upload"></i> Ambil gambar
+                                    </label>
+                                    <input id="file-upload" type="file" name="fotomobile" style="visibility:hidden;"/>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="row text-center">
@@ -150,10 +182,24 @@
         </div>
     </div>
 {{-- </div> --}}
-@include('penyerahan.penyerahanloket.kamera');
+@include('penyerahan.penyerahanloket.kamera')
 
 @push('scripts')    
 <script>
+    function readURL(input) {
+         if (input.files && input.files[0]) {
+            var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#file-upload").change(function() {
+        readURL(this);
+    });
+
     if($('#kuasa').val() == '1'){
         $("#nonkuasa").hide();
     }

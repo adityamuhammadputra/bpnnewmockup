@@ -34,6 +34,7 @@
                                     <th>Tanggal</th>
                                     <th>Status Cetak</th>
                                     <th></th>
+                                    <th>Sort</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -117,14 +118,15 @@
                             }
                         }
                     },
-                    {data: 'action',name:'action',orderable:false, searchable:false}
+                    {data: 'action',name:'action',orderable:false, searchable:false},   
+                    {data: 'created_at', name:'created_at', searchable:false, visible:false}
                 ],
                  columnDefs: [ {
                     searchable: false,
                     orderable:false,
                     targets: 0
                 } ],  
-                order: [[ 6, 'desc' ]],
+                order: [[ 9, 'desc' ]],
                 language: {
                     lengthMenu: "Menampilkan _MENU_",
                     zeroRecords: "Data tidak ada",

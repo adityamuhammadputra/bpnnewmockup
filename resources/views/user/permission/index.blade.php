@@ -112,6 +112,30 @@
            
         }); 
 
+        function btnCancel () {
+            location.reload();
+        }
+        
+        function editForm(id) {
+            var url = "{{ url('userpermission') }}/" + id;
+            $('#form form')[0].reset();
+            $('input[name=_method]').val('PATCH');
+            $('#form form').attr('action',url);
+            $.ajax({
+                url : "{{ url('userpermission') }}/" + id + "/edit",
+                type : "GET",
+                // dataType 
+                success:function (data) {
+                    $('#id').val(data.id);
+                    $('#name').val(data.name);
+                },
+                error: function (data) {
+                    alert("Terjadi kesalahan, silahkan reload");
+                }
+            })
+
+            
+        }
 
         function deleteData(id){
             var csrf_token = $('meta[name="csrf-token"]').attr('content');

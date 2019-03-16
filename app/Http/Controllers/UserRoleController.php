@@ -34,6 +34,7 @@ class UserRoleController extends Controller
 
     public function store(Request $request)
     {
+        return $request;
         $this->authorize('user.crud');
         $permission = $request->permission;
 
@@ -64,7 +65,7 @@ class UserRoleController extends Controller
         $data = Role::with('permissions');
         return DataTables::of($data)
         ->addColumn('action', function($data){
-            return ' <a onclick="editData(' . $data->id . ')" class ="btn btn-primary"><i class="fa fa-pencil-square-o">
+            return ' <a onclick="editData(' . $data->id . ')" class ="btn btn-primary btn-edit"><i class="fa fa-pencil-square-o">
                         </i> </a>' .
                     ' <a onclick="deleteData(' . $data->id . ')" class ="btn btn-danger"><i class="fa fa-trash-o">
                         </i> </a>';

@@ -40,8 +40,6 @@
 </div>
 @push('scripts')
     <script>
-        $(function () {
-            $
-        })
+        
     </script>
 @endpush

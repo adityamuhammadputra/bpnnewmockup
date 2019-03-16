@@ -57,9 +57,7 @@
     <script>
         function btnCancel()
         {
-            $('#id').val('');
-            $('#name').val('');
-            $('.checkbox').attr('checked',false);
+            location.reload();
         }
     </script>
 @endpush

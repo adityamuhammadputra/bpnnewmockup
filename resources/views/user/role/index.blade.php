@@ -115,7 +115,9 @@
         }); 
 
         function editData(id){
+            $('.checkbox').removeAttr('checked');
             $('#id').val(id);
+            $('#form form')[0].reset();
             $.ajax({
                 url: "{{ url('userrole')}}/" + id + "/edit",
                 type: "GET",
@@ -131,7 +133,6 @@
                 }
             });
         }
-
 
         function deleteData(id){
             var csrf_token = $('meta[name="csrf-token"]').attr('content');

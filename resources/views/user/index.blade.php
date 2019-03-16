@@ -75,6 +75,7 @@
 
 
         function editForm(id) {
+            $('.checkbox').removeAttr('checked');
             save_method = 'edit';
             $('input[name=_method]').val('PATCH');
             $('#modal-form form')[0].reset();
@@ -91,7 +92,7 @@
                     $('#email').val(data.email);
                     $('#password').val(data.password);
                     $.each(data.roles, function( key, value) {
-                        $('#cekbox'+value.id).attr('checked','checked');
+                        $('#cekbox'+value.id).attr('checked','checkbox');
                     });
 
                 },

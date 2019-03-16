@@ -23,6 +23,8 @@ class UserPermissionController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('user.crud');
+
         $permission = Permission::create(['name' => $request->name]);
         
         return redirect()->back()->with('info', 'Permission berhasil dibuat');
@@ -41,6 +43,23 @@ class UserPermissionController extends Controller
                     </i> </a>';
     })
     ->rawColumns(['action'])->make(true);
+   }
+
+   public function edit($id)
+   {
+        return Permission::find($id);
+   }
+
+   public function update(Request $request, $id)
+   {
+        $this->authorize('user.crud');
+
+        Permission::find($id)->update(
+            $request->only('name')
+        );
+
+        return redirect()->back()->with('info', 'Permission '. $request->name .' berhasil dirubah');
+
    }
 
    public function destroy($id)

@@ -156,6 +156,8 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         Spatie\Permission\PermissionServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
+        
 
         /*
          * Application Service Providers...
@@ -222,6 +224,9 @@ return [
 
         'Form' => 'Collective\Html\FormFacade',
         'Html' => 'Collective\Html\HtmlFacade',
+
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
 
     ],
 

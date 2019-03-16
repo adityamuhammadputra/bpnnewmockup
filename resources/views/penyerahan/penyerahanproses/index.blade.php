@@ -22,10 +22,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Proses Penyerahan
-                    <div class="pull-right">
-                        <span class="clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                    </div>
-                        <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-minus-circle"></i> Hide Form</button>
+                        <button class="btn btn-primary pull-right btn-flat" onclick="addData()"><i id="hiden" class="fa fa-plus-circle"></i> </button>
                 </div>
                 <div class="panel-body" id="form-panel">
                     @include('penyerahan.penyerahanproses.form')
