@@ -69,7 +69,8 @@
             save_method = "add";
             $('input[name=_method]').val('POST');
             $('#modal-form').modal('show');
-            {{-- $('#modal-form form')[0].reset(); --}}
+            $('.checkbox').removeAttr('checked');
+            $('#modal-form form')[0].reset();
             $('.modal-title').text('Tambah User Baru');
         }
 

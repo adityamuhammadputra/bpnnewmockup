@@ -34,7 +34,6 @@ class UserRoleController extends Controller
 
     public function store(Request $request)
     {
-        return $request;
         $this->authorize('user.crud');
         $permission = $request->permission;
 

@@ -145,12 +145,10 @@
                                     <div class="wrapimgaes">
                                         <img id="blah" src="{{asset('storage/'.$data['detail']->foto)}}" width="100%"/>
                                     </div>
-                                    @if ($data['detail']->nama2)
                                     <label for="file-upload" class="custom-file-upload">
                                         <i class="fa fa-cloud-upload"></i> Ambil gambar
                                     </label>
                                     <input id="file-upload" type="file" name="fotomobile" style="visibility:hidden;"/>
-                                    @endif
                                 </div>
                             </div>
                         </div>
