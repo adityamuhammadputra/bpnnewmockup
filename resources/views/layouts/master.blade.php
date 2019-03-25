@@ -148,7 +148,7 @@ window.onload = setInterval(clock,1000);
 		@php  $user = request()->user() @endphp
 		<ul class="nav menu">
 			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardptsl.read']))
-			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard PTSL</a></li>
+			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-map">&nbsp;</em> Lapindek</a></li>
 			@endif
 			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardarsip.read']))
 			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
@@ -282,6 +282,8 @@ window.onload = setInterval(clock,1000);
 			</li>
 			{{-- <li class="{{ request()->is('user') ? 'active' : '' }}"><a href="{{ url('user') }}"><em class="fa fa-users">&nbsp;</em> User</a></li> --}}
 			@endif
+			{{-- <li class="{{ request()->is('peta') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard PTSL</a></li> --}}
+
 			<li class="visible-xs"><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();"><em class="fa fa-lock"></em> Logout</a></li>
 
 			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

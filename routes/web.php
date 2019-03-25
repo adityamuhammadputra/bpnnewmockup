@@ -12,8 +12,11 @@ Route::get('/register', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
+    // Route::get('peta', 'PetaController@index');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'PetaController@index')->name('home');
+Route::get('peta/{id}', 'PetaController@show');
+
 // Dashboard Arsip
 Route::get('/dashboardarsip', 'DashboardArsipController@index')->name('dashboardarsip');
 
@@ -145,7 +148,7 @@ Route::get('api/userrole', 'UserRoleController@apidata');
 
 Route::resource('userpermission', 'UserPermissionController');
 Route::get('api/userpermission', 'UserPermissionController@apidata');
-    
+
 
 });
 
