@@ -16,6 +16,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('/home', 'PetaController@index')->name('home');
 Route::get('peta/{id}', 'PetaController@show');
+Route::get('getpeta', 'PetaController@apiMaps');
 
 // Dashboard Arsip
 Route::get('/dashboardarsip', 'DashboardArsipController@index')->name('dashboardarsip');

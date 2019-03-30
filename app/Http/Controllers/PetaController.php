@@ -9,6 +9,7 @@ use Yajra\DataTables\Datatables;
 use Auth;
 use App\User;
 use App\Peta;
+use DB;
 
 class PetaController extends Controller
 {
@@ -23,6 +24,15 @@ class PetaController extends Controller
     {
         $data = Peta::where('id',$id)->first();
         return view('peta.show', compact('data'));
+    }
+
+    public function apiMaps()
+    {
+        // $data = Peta::where('Kelurahan', 'Pakansari')->get();
+
+        $data = DB::table('coba')->selectRaw('AsText(SHAPE) as GEO')->where('Kelurahan', 'Pakansari')->get();
+        
+        return $data;
     }
    
 }
