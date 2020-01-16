@@ -73,7 +73,7 @@
         console.log(cetak); --}}
 
 
-        $('#data-pengecekan').on('search.dt', function() {
+          $('#data-pengecekan').on('search.dt', function() {
             var value = $('.dataTables_filter input').val();
             $('#cetak').val(value);
 

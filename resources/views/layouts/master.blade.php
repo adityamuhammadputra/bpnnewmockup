@@ -147,9 +147,6 @@ window.onload = setInterval(clock,1000);
 		<div class="clear"></div>
 		@php  $user = request()->user() @endphp
 		<ul class="nav menu">
-			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardptsl.read']))
-			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-map">&nbsp;</em> Lapindek</a></li>
-			@endif
 			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardarsip.read']))
 			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
 			@endif

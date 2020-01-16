@@ -111,16 +111,16 @@ class PenyerahanProsesController extends Controller
         if ($request->status == 1) {//Tunggakan
             $text = 'YTH: ' . $request->nama1 . ' Dengan NoBerkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas Anda. Terimakasih';
         }elseif ($request->status == 2) { //Tidak lengkap
-            $text = 'YTH: ' . $request->nama1 . ' Dengan NoBerkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak lengkap (' . $request->catatan . ') Silahkan datang ke Kantor Pertanahan Kab.Bogor';
+            $text = 'YTH: ' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $request->catatan . ') Silahkan Datang ke Loket CS. Nilai Layanan Kami di http://ikm.atrbpn.go.id';
         }else { //selesai
-            $text = 'YTH: ' . $request->nama1 . ' Dengan NoBerkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah selesai diproses. Silahkan datang ke Loket Penyerahan Kantor Pertanahan Kab.Bogor';
+            $text = 'YTH: ' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . ' Telah Selesai. Silahkan Datang ke KANTAH KAB.BOGOR. Nilai Layanan Kami di http://ikm.atrbpn.go.id';
         }
         
 
         $sms = new smsmasking();
 
         $sms->username = 'adityamuhammadputra';
-        $sms->password = '27Oktober';
+        $sms->password = '741599';
         $sms->apikey = '31208ea4c56acbb64c8973004d1351ed';
         $sms->setTo($request->email);
         $sms->setText($text);
@@ -220,7 +220,7 @@ class PenyerahanProsesController extends Controller
         $sms = new smsmasking();
 
         $sms->username = 'adityamuhammadputra';
-        $sms->password = '27Oktober';
+        $sms->password = '741599';
         $sms->apikey = '31208ea4c56acbb64c8973004d1351ed';
         $sms->setTo($penyerahan->email);
         $sms->setText($text);
@@ -287,7 +287,7 @@ class PenyerahanProsesController extends Controller
         $sms = new smsmasking();
 
         $sms->username = 'adityamuhammadputra';
-        $sms->password = '27Oktober';
+        $sms->password = '741599';
         $sms->apikey = '31208ea4c56acbb64c8973004d1351ed';
         $sms->setTo($penyerahan->email);
         $sms->setText($text);

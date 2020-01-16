@@ -147,6 +147,7 @@
                 type: "GET",
                 dataType: "JSON",
                 success: function (data) {
+                    $('#item_table').empty();
                     $('#id').val(data.id);
                     $('#no_berkas').val(data.no_berkas);
                     $('#nama1').val(data.nama1);
