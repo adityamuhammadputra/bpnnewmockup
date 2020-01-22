@@ -2512,3 +2512,11 @@ p.back-link {
     transform: scale(0.9);
   }
 }
+
+
+
+.sidebar ul.nav li a {
+  height: 40px;
+  font-size: 13px;
+  line-height: 1.8em;
+}

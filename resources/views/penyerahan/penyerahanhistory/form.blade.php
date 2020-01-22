@@ -31,7 +31,7 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label class="control-label">Status</label>
-                    <select name="status_cetak" class="form-control" id="status_cetak">
+                    <select name="status_cetak" class="form-control">
                         <option value="">---Pilih Status---</option>
                         <option value="1">Sudah Diserahkan</option>    
                         <option value="2">Belum Diserahkan</option>    
@@ -52,7 +52,6 @@
 </div>
 @push('scripts')
 <script type="text/javascript">
-
     $('#form-panel').hide();
 
     function addData() {
@@ -67,7 +66,6 @@
     }
    
     $(document).ready(function() {
-       
         // var dateNow = new Date();
         // var dateNext = new Date();
         $(function() {

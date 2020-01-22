@@ -1,6 +1,11 @@
 @extends('layouts.master')
 
 @section('content')
+<style>
+.panel-heading {
+  font-size: 14px !important;
+}
+</style>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
         <ol class="breadcrumb">
@@ -12,10 +17,10 @@
     </div><!--/.row-->
   
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Grafik Progress Peminjaman Dan Pengembalian Sistem Kearsipan
+                    Grafik Penyerahan SMS Senter
                     <ul class="pull-right panel-settings panel-button-tab-right">
                         <li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
                             <em class="fa fa-cogs"></em>
@@ -24,15 +29,11 @@
                                 <li>
                                     <ul class="dropdown-settings">
                                         <li><a href="#">
-                                            <em class="fa fa-cog"></em> Settings 1
+                                            <em class="fa fa-cog"></em> 2019
                                         </a></li>
                                         <li class="divider"></li>
                                         <li><a href="#">
-                                            <em class="fa fa-cog"></em> Settings 2
-                                        </a></li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">
-                                            <em class="fa fa-cog"></em> Settings 3
+                                            <em class="fa fa-cog"></em> 2020
                                         </a></li>
                                     </ul>
                                 </li>
@@ -43,146 +44,204 @@
                 </div>
                 <div class="panel-body">
                     <div class="canvas-wrapper">
-                        {{-- <canvas class="main-chart" id="line-chart" height="200" width="600"></canvas> --}}
-                        <canvas class="main-chart" id="bar-chart" height="200" width="600"></canvas>
+                        <canvas id="myChart" width="50" height="50"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Response Masyarakat SMS Senter
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="storage/{{ $tab2->default_foto->foto }}" class="img img-responsive img-default-slider" width="100%">
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="nama-default-slider">{{ $tab2->default_foto->nama1 }}</h4>
+                            <table class="table">
+                                <tr>
+                                    <td>Penerima </td>
+                                    <td>:</td>
+                                    <td>{{ $tab2->default_foto->nama2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat </td>
+                                    <td>:</td>
+                                    <td>{{ $tab2->default_foto->alamat }}</td>
+                                </tr>
+                                 <tr>
+                                    <td>No HP </td>
+                                    <td>:</td>
+                                    <td>{{ $tab2->default_foto->email }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="owl-carousel">
+                        @foreach($tab2->slider_pernyerahan as $path => $nama1)
+                            <div>
+                                <a href="#" class="slider-click" data-path="{{ $path }}" data-nama1="{{ $nama1 }}"><img windth="150" height="150" src="storage/{{ $path }}"/></a>
+                                <h5>{{ $nama1 }}</h5>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div><!--/.row-->
     <div class="row">
-        <div class="col-md126">
+        <div class="col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Progress Jumlah Kegiatan Unit Kerja KANTAH KAB.BOGOR
+                    Grafik Per Jenis Kegiatan
                     <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
                 </div>
                 <div class="panel-body">
-                    {{-- <div class="col-md-12 no-padding">
-                        @foreach($data2 as $kecamatan=>$jumlah)
-                        <div class="row progress-labels">
-                            <div class="col-sm-6">Kecamatan {{ $kecamatan }}</div>
-                            <div class="col-sm-6" style="text-align: right;">{{ $jumlah }} Data</div>
-                        </div>
-                        <div class="progress">
-                            <div data-percentage="0%" style="width: {{ $jumlah }}%;" class="progress-bar progress-bar-blue" role="progressbar" aria-valuemin="0" aria-valuemax="90"></div>
-                        </div>
-                        @endforeach --}}
-                        <div class="row progress-labels">
-                            <div class="col-sm-6">PENGECEKAN</div>
-                            <div class="col-sm-6" style="text-align: right;">1500</div>
-                        </div>
-                        <div class="progress">
-                                <div data-percentage="0%" style="width: 80%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="row progress-labels">
-                                <div class="col-sm-6">BALIK NAMA</div>
-                                <div class="col-sm-6" style="text-align: right;">350</div>
-                            </div>
-                        <div class="progress">
-                                <div data-percentage="0%" style="width: 10%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="row progress-labels">
-                             <div class="col-sm-6">SKPT</div>
-                             <div class="col-sm-6" style="text-align: right;">190</div>
-                        </div>
-                        <div class="progress">
-                                <div data-percentage="0%" style="width: 30%;" class="progress-bar progress-bar-grey" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <div class="row progress-labels">
-                             <div class="col-sm-6">SERTIFIKAT RUSAK</div>
-                             <div class="col-sm-6" style="text-align: right;">80</div>
-                         </div>
-                         <div class="progress">
-                                <div data-percentage="0%" style="width: 5%;" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                         <div class="row progress-labels">
-                             <div class="col-sm-6">SERTIFIKAT HILANG</div>
-                              <div class="col-sm-6" style="text-align: right;">10</div>
-                         </div>
-                         <div class="progress">
-                                <div data-percentage="0%" style="width: 2%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        <div class="row progress-labels">
-                            <div class="col-sm-6">PERALIHAN HAK</div>
-                            <div class="col-sm-6" style="text-align: right;">850</div>
-                        </div>
-                        <div class="progress">
-                            <div data-percentage="0%" style="width: 60%;" class="progress-bar progress-bar-orange" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="row progress-labels">
-                            <div class="col-sm-6">SK</div>
-                            <div class="col-sm-6" style="text-align: right;">350</div>
-                        </div>
-                        <div class="progress">
-                            <div data-percentage="0%" style="width: 40%;" class="progress-bar progress-bar-teal" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <div class="row progress-labels">
-                            <div class="col-sm-6">ROYA HAK TANGGUNGAN</div>
-                            <div class="col-sm-6" style="text-align: right;">480</div>
-                        </div>
-                        <div class="progress">
-                            <div data-percentage="10%" style="width: 50%;" class="progress-bar progress-bar-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                    <div class="canvas-wrapper">
+                        <canvas id="myChart2" width="150" height="150"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-        
-        </div>
     </div><!--/.row-->
+
 @push('scripts')
 <script>
 
-    window.onload = function () {
-        var chart2 = document.getElementById("bar-chart").getContext("2d");
-        window.myBar = new Chart(chart2).Bar(
-            {
-                labels : ["Januari","Februari","Maret","April","Mei","Juni","Juli", "Agustus","September","Oktober","November","Desember"],
-                datasets : [
-                    {
-                        fillColor : "rgba(220,220,220,0.5)",
-                        strokeColor : "rgba(220,220,220,0.8)",
-                        highlightFill: "rgba(220,220,220,0.75)",
-                        highlightStroke: "rgba(220,220,220,1)",
-                        data : [
-                            @foreach($data as $d)
-                               {{ 700-$d->pengecekan->count() }},
-                               {{ 850-$d->pengecekan->count() }},
+$(document).ready(function(){
+  $(".owl-carousel").owlCarousel({
+        items:4,
+        loop:true,
+        margin:10,
+        autoplay:true,
+        autoplayTimeout:1300,
+        autoplayHoverPause:true
+  });
+});
 
-                               {{ 720-$d->pengecekan->count() }},
+$('.slider-click').on('click', function () {
+    var path = 'storage/' + $(this).data('path');
+    var nama1 = $(this).data('nama1');
 
-                            @endforeach
-                        ]
+    $('.img-default-slider').attr('src', path);
+    $('.nama-default-slider').html(nama1);
+})
+var ctx = document.getElementById('myChart');
+var ctx2 = document.getElementById('myChart2');
 
-                    },
-                    {
-                        fillColor : "rgba(48, 164, 255, 0.2)",
-                        strokeColor : "rgba(48, 164, 255, 0.8)",
-                        highlightFill : "rgba(48, 164, 255, 0.75)",
-                        highlightStroke : "rgba(48, 164, 255, 1)",
-                        data : [
-                            @foreach($data as $d)
-                               {{ 1000-$d->pengecekan->count() }},
-                               {{ 875-$d->pengecekan->count() }},
-                               {{ 705-$d->pengecekan->count() }},
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+        datasets: [{
+            // label: '# 2019',
+            data: [12, 19, 15, 9, 12, 11, 12, 19, 15, 9, 12, 11],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: false,
+                    // stepSize: 
 
-                            @endforeach
-                        ]
-                    }
-                ]
-        
-            }
-        , {
-        responsive: true,
-        scaleLineColor: "rgba(0,0,0,.2)",
-        scaleGridLineColor: "rgba(0,0,0,.05)",
-        scaleFontColor: "#c5c7cc",
-        scaleOverride: true,
-        scaleSteps: 10,
-        scaleStepWidth: 100, 
-        });
-    };
+                }
+            }]
+        }
+    }
+});
+
+var myChar2 = new Chart(ctx2, {
+    type: 'horizontalBar',
+    data: {
+        labels: [{!! $tab3->label !!}],
+        datasets: [{
+            // label: '# 2019',
+            data: [{{ $tab3->data }}],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: false,
+                    // stepSize: 
+
+                }
+            }]
+        }
+    }
+});
 </script>
 @endpush
 

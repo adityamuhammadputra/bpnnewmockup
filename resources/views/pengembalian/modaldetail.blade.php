@@ -14,7 +14,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="control-label">Id Buku Tanah</label>
-                                <input type="text" class="form-control" name="idbukutanah" id="idbukutanah" required > 
+                                <input type="text" class="form-control" name="idbukutanah" id="idbukutanah" > 
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
@@ -55,14 +55,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Desa</label>
-                                <input type="text" class="form-control" name="desa" id="desa" readonly>
+                                <input type="text" class="form-control" name="desa" id="desa">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Kecamatan</label>
-                                <input type="text" class="form-control" name="kecamatan" id="kecamatan" readonly>
+                                <input type="text" class="form-control" name="kecamatan" id="kecamatan">
                                 <span class="help-block with-errors"></span>
                             </div>
                         </div>

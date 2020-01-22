@@ -30,8 +30,5 @@ class User extends Authenticatable
         return substr($value, 0, -10); //menghapus @gmail.com
     }
 
-    // public function roles()
-    // {
-    //     return $this->belongsToMany('Spatie\Permission\Models\Role','role_id','model_id');
-    // }
+    
 }

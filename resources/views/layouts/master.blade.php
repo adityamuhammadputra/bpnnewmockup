@@ -17,6 +17,8 @@
 	<link href="{{asset('lumino/css/sweetalert2.min.css') }}" rel="stylesheet">
 	<link href="{{asset('lumino/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
 	<link href="{{asset('lumino/css/googlefont.css')}}" rel="stylesheet">
+    <link href="{{asset('lumino/css/Chart.css')}}" rel="stylesheet">
+    <link href="{{asset('lumino/css/owl.carousel.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/styles.css')}}" rel="stylesheet">
     
     <link rel="shortcut icon" href="{{ asset('images/bpnlogo.png') }}">
@@ -147,12 +149,7 @@ window.onload = setInterval(clock,1000);
 		<div class="clear"></div>
 		@php  $user = request()->user() @endphp
 		<ul class="nav menu">
-			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardptsl.read']))
-			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-map">&nbsp;</em> Lapindek</a></li>
-			@endif
-			@if ($user->hasAnyRole(['admin','sysadmin',]) || $user->hasAnyPermission(['dashboardarsip.read']))
-			<li class="{{ request()->is('dashboardarsip') ? 'active' : '' }}"><a href="{{ url('dashboardarsip') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard Kearsipan</a></li>
-			@endif
+			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			@if ($user->hasAnyRole(['admin','sysadmin','warkah']))
 				<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
 			@endif
@@ -187,7 +184,7 @@ window.onload = setInterval(clock,1000);
 				</ul>
 			</li>
 			@endif	
-			@if ($user->hasAnyRole(['admin','sysadmin','peminjamanproses','peminjamankegiatan']))
+			{{-- @if ($user->hasAnyRole(['admin','sysadmin','peminjamanproses','peminjamankegiatan']))
 			<li class="parent {{ request()->is('peminjaman/proses') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-2">
 				<em class="fa fa-dropbox">&nbsp;</em> Peminjaman <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -210,8 +207,8 @@ window.onload = setInterval(clock,1000);
 					</a></li>
 				</ul>
 			</li>
-			@endif
-			@if ($user->hasAnyRole(['admin','sysadmin','pengembalian']))
+			@endif --}}
+			{{-- @if ($user->hasAnyRole(['admin','sysadmin','pengembalian']))
 			<li class="parent {{ request()->is('pengembalian') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-3">
 				<em class="fa fa-reply-all">&nbsp;</em> Pengembalian <span data-toggle="collapse" href="#sub-item-2" class="icon pull-right"><em class="fa fa-plus"></em></span>
 				</a>
@@ -227,7 +224,7 @@ window.onload = setInterval(clock,1000);
 					</a></li>
 				</ul>
 			</li>
-			@endif
+			@endif --}}
 			@if ($user->hasAnyPermission(['penyerahanproses.read','penyerahanloket.read']))
 			@if ($user->hasAnyPermission(['penyerahanproses.read']))
 			<li class="{{ request()->is('penyerahan') ? 'active' : '' }}"><a href="{{ url('penyerahan') }}"><em class="fa fa-book">&nbsp;</em> Penyerahan Proses</a></li>
@@ -335,14 +332,16 @@ window.onload = setInterval(clock,1000);
 
   <script src="{{asset('lumino/js/validator.min.js') }}"></script>
 
-  <script src="{{asset('lumino/js/chart.min.js')}}"></script>
-  <script src="{{asset('lumino/js/chart-data.js')}}"></script>
+  {{-- <script src="{{asset('lumino/js/chart.min.js')}}"></script>
+  <script src="{{asset('lumino/js/chart-data.js')}}"></script> --}}
   <script src="{{asset('lumino/js/easypiechart.js')}}"></script>
   <script src="{{asset('lumino/js/easypiechart-data.js')}}"></script>
 
   <script src="{{asset('lumino/js/morris.min.js')}}"></script>
   <script src="{{asset('lumino/js/raphael.min.js')}}"></script>
 
+  <script src="{{asset('lumino/js/owl.carousel.js')}}"></script>
+  <script src="{{asset('lumino/js/Chart.js')}}"></script>
   <script src="{{asset('lumino/js/custom.js')}}"></script>
   <script>
 		
