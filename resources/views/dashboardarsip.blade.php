@@ -5,6 +5,37 @@
 .panel-heading {
   font-size: 14px !important;
 }
+
+.ui-datepicker{
+    width: 100%;
+    padding: 10px !important;
+    border: none !important;
+}
+
+.ui-datepicker th {
+    padding: 1.5em .3em;
+}
+
+.ui-datepicker td {
+    padding: 5px !important;
+}
+
+.ui-datepicker td span, .ui-datepicker td a {
+	background: transparent !important;
+    border: none !important;
+    text-align: center;
+    font-size: 16px;
+}
+
+.ui-state-active{
+    color: #30a5ff !important;
+}
+.ui-datepicker-header{
+    background: transparent !important;
+    border-left: none;
+    border-right: none;
+    color: #fbc12b !important;
+}
 </style>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
@@ -17,7 +48,58 @@
     </div><!--/.row-->
   
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-md-4 col-lg-4 no-padding">
+                            <div class="panel panel-teal panel-widget border-right">
+                                <div class="row no-padding"><em class="fa fa-xl fa-book color-blue"></em>
+                                    <div class="large">120</div>
+                                    <div class="text-muted">Sedang Proses</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-lg-4 no-padding">
+                            <div class="panel panel-blue panel-widget border-right">
+                                <div class="row no-padding"><em class="fa fa-xl fa-comments color-orange"></em>
+                                    <div class="large">52</div>
+                                    <div class="text-muted">Belum Diserahkan</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-lg-4 no-padding">
+                            <div class="panel panel-orange panel-widget border-right">
+                                <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
+                                    <div class="large">24</div>
+                                    <div class="text-muted">Sudah Diserahkan</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Grafik Per Jenis Kegiatan
+                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+                </div>
+                <div class="panel-body">
+                    <div class="canvas-wrapper">
+                        <canvas id="myChart2" width="150" height="377"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!--/.row-->
+
+    <div class="row">
+        <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Grafik Penyerahan SMS Senter
@@ -50,7 +132,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Response Masyarakat SMS Senter
@@ -95,21 +177,7 @@
             </div>
         </div>
     </div><!--/.row-->
-    <div class="row">
-        <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Grafik Per Jenis Kegiatan
-                    <span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-                </div>
-                <div class="panel-body">
-                    <div class="canvas-wrapper">
-                        <canvas id="myChart2" width="150" height="150"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!--/.row-->
+    
 
 @push('scripts')
 <script>
@@ -235,11 +303,16 @@ var myChar2 = new Chart(ctx2, {
             yAxes: [{
                 ticks: {
                     beginAtZero: false,
-                    // stepSize: 
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    stepSize: 100
 
                 }
             }]
-        }
+        },
+        maintainAspectRatio: false,
     }
 });
 </script>

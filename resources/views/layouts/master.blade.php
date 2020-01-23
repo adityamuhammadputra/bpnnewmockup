@@ -20,8 +20,11 @@
     <link href="{{asset('lumino/css/Chart.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/owl.carousel.css')}}" rel="stylesheet">
     <link href="{{asset('lumino/css/styles.css')}}" rel="stylesheet">
-    
-    <link rel="shortcut icon" href="{{ asset('images/bpnlogo.png') }}">
+    {{-- <link href="http://getbootstrap.com.vn/examples/equal-height-columns/equal-height-columns.css" rel="stylesheet"> --}}
+	
+	
+	<link rel="shortcut icon" href="{{ asset('images/bpnlogo.png') }}">
+	
 
 	
 
