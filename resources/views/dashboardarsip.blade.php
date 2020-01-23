@@ -55,24 +55,24 @@
                         <div class="col-xs-12 col-md-4 col-lg-4 no-padding">
                             <div class="panel panel-teal panel-widget border-right">
                                 <div class="row no-padding"><em class="fa fa-xl fa-book color-blue"></em>
-                                    <div class="large">120</div>
-                                    <div class="text-muted">Sedang Proses</div>
+                                    <div class="large Count">{{ $tab1->tungakan }}</div>
+                                    <div class="text-muted">Tunggakan</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-4 col-lg-4 no-padding">
                             <div class="panel panel-blue panel-widget border-right">
                                 <div class="row no-padding"><em class="fa fa-xl fa-comments color-orange"></em>
-                                    <div class="large">52</div>
-                                    <div class="text-muted">Belum Diserahkan</div>
+                                    <div class="large Count">{{ $tab1->tidak_lengkap }}</div>
+                                    <div class="text-muted">Tidak Lengkap</div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xs-12 col-md-4 col-lg-4 no-padding">
                             <div class="panel panel-orange panel-widget border-right">
                                 <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-                                    <div class="large">24</div>
-                                    <div class="text-muted">Sudah Diserahkan</div>
+                                    <div class="large Count">{{ $tab1->selesai }}</div>
+                                    <div class="text-muted">Selesai</div>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="canvas-wrapper">
-                        <canvas id="myChart2" width="150" height="377"></canvas>
+                        <canvas id="myChart2" width="150" height="380"></canvas>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
         <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Grafik Penyerahan SMS Senter
+                    Grafik Penyerahan SMS Senter 2019
                     <ul class="pull-right panel-settings panel-button-tab-right">
                         <li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
                             <em class="fa fa-cogs"></em>
@@ -181,6 +181,18 @@
 
 @push('scripts')
 <script>
+// $('.Count').text(0);
+$('.Count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 1000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
 
 $(document).ready(function(){
   $(".owl-carousel").owlCarousel({
@@ -209,7 +221,7 @@ var myChart = new Chart(ctx, {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
         datasets: [{
             // label: '# 2019',
-            data: [12, 19, 15, 9, 12, 11, 12, 19, 15, 9, 12, 11],
+            data: [{!! $tab4->data !!}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

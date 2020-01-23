@@ -11,6 +11,7 @@ use App\DataWarkah;
 use App\Dashboard;
 use App\Pengecekan;
 use App\Penyerahan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardArsipController extends Controller
@@ -23,18 +24,16 @@ class DashboardArsipController extends Controller
 
     public function index()
     {
-        $data = Kelompok::with('pengecekan')->get();
-
-        $collection = Pengecekan::all()->sort();
-
-        $grouped = $collection->groupBy(function ($item, $key) {
-            return $item['kecamatan'];
-        });
-
-
-        $data2 = $grouped->map(function ($item, $key) use ($collection) {
-            return collect($item)->count();
-        });
+       
+        $penyerahans = Penyerahan::query();
+        $tungakan = Penyerahan::where('status', 1)->count();
+        $tidak_lengkap = Penyerahan::where('status', 2)->count();
+        $selesai = Penyerahan::where('status', 3)->count();
+        $tab1 = (object)[
+            'tungakan' => $tungakan,
+            'tidak_lengkap' => $tidak_lengkap,
+            'selesai' => $selesai,
+        ];
 
         $foto = Penyerahan::where('foto', 'NOT LIKE', '%app/public/default.png%')
             ->limit(9)
@@ -47,8 +46,7 @@ class DashboardArsipController extends Controller
             'default_foto' => $default_foto,
         ];
 
-        $penyerahans = Penyerahan::with('kegiatan')
-            ->select('kegiatan_id', DB::raw('count(kegiatan_id) as total'))
+        $penyerahans = Penyerahan::select('kegiatan_id', DB::raw('count(kegiatan_id) as total'))
             ->groupBy('kegiatan_id')
             ->get();
         $label = "'" . $penyerahans->pluck('kegiatan')->pluck('nama_kegiatan')->implode("','") . "'";
@@ -59,7 +57,14 @@ class DashboardArsipController extends Controller
             'data' => $data,
         ];
 
+        $datas = Penyerahan::select(DB::raw('count(id) as `data`'), DB::raw("DATE_FORMAT(created_at, '%m-%Y') new_date"),  DB::raw('YEAR(created_at) year, MONTH(created_at) month'))
+        ->groupby('month')
+        ->pluck('data')->implode(',');
+        $tab4 = (object)[
+            'data' => $datas,
+        ];
 
-        return view('dashboardarsip', compact('data', 'data2', 'tab2', 'tab3'));
+
+        return view('dashboardarsip', compact('tab1', 'tab2', 'tab3','tab4'));
     }
 }

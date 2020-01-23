@@ -301,10 +301,12 @@ class PenyerahanProsesController extends Controller
     public function apiPenyerahan()
     {
         $this->authorize('penyerahanproses.read', 'penyerahanloket.read');
-        $data = Penyerahan::with('kegiatan', 'penyerahandetail');
-        if (Auth::user()->id != 2) {
-            $data->where('kegiatan_id',Auth::user()->kegiatan_penyerahan_id);
-        }
+        $data = Penyerahan::with('kegiatan', 'penyerahandetail')
+            ->whereNull('status_cetak')
+            ->orderBy('created_at', 'desc');
+        // if (Auth::user()->id != 2) {
+        //     $data->where('kegiatan_id',Auth::user()->kegiatan_penyerahan_id);
+        // }
         
         return Datatables::of($data)
             ->addColumn('status_update', function($data){

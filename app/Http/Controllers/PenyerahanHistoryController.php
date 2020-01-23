@@ -21,7 +21,7 @@ class PenyerahanHistoryController extends Controller
 {
     public function index()
     {
-        $this->authorize('penyerahanloket.read', 'penyerahanproses.read');        
+        $this->authorize('penyerahanloket.read', 'penyerahanproses.read');   
         return view('penyerahan.penyerahanhistory.index');
     }
 
