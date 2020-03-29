@@ -2522,9 +2522,11 @@ p.back-link {
 .breadcrumb{
   display: none !important;
 }
-
-.col-sm-12.col-sm-offset-3.col-lg-10.col-lg-offset-2.main{
-width: 100% !important;
+.navbar.navbar-custom.navbar-fixed-top{
+  display: none !important;
+}
+.col-sm-9.col-sm-offset-3.col-lg-10.col-lg-offset-2.main{
+  width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
 }
