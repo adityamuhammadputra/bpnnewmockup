@@ -189,7 +189,7 @@
                 
                 <tr>
                     <td>
-                        <img src="{{'https://kantahkabbogor.id/storage/'.$data->foto}}" width="100px">
+                        <img src="{{'https://smscenterbpnbogortimur.xyz/storage/'.$data->foto}}" width="100px">
                     </td>
                     <td></td>
                     <td></td>

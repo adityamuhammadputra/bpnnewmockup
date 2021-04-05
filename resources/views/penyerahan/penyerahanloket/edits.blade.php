@@ -245,7 +245,7 @@
             window.open(link,'_blank');
             // window.focus();
             // location.reload();
-            window.location.replace("https://kantahkabbogor.id/penyerahanloket");
+            window.location.replace("https://smscenterbpnbogortimur.xyz/penyerahanloket");
         })
     }
    
