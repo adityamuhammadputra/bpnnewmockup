@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'BPN Kab Bogor') }}</title>
+    <title>BPN Kab Bogor || Cileungsi</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
 	<link href="{{asset('lumino/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -154,7 +154,7 @@ window.onload = setInterval(clock,1000);
 		<ul class="nav menu">
 			<li class="{{ request()->is('home') ? 'active' : '' }}"><a href="{{ url('home') }}"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			@if ($user->hasAnyRole(['admin','sysadmin','warkah']))
-				<li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li>
+				{{-- <li class="{{ request()->is('datawarkah') ? 'active' : '' }}"><a href="{{ url('datawarkah') }}"><em class="fa fa-sticky-note">&nbsp;</em> Penataan Warkah</a></li> --}}
 			@endif
 			@if ($user->hasAnyRole(['admin','sysadmin','bukutanah']))
 			<li class="parent {{ request()->is('peminjaman/master') ? 'active' : '' }} "><a data-toggle="collapse" href="#sub-item-4">

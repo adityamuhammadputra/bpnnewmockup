@@ -283,7 +283,6 @@ class PenyerahanProsesController extends Controller
             $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah Selesai, Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi';
         }
 
-
         $sms = new smsmasking();
 
         $sms->username = 'adityamuhammadputra';
