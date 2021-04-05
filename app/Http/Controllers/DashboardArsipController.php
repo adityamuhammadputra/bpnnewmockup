@@ -35,9 +35,10 @@ class DashboardArsipController extends Controller
             'selesai' => $selesai,
         ];
 
-        $foto = Penyerahan::where('foto', 'NOT LIKE', '%app/public/default.png%')
-            ->limit(9)
-            ->orderBy('id', 'DESC');
+        $foto = Penyerahan::inRandomOrder()
+            // ->where('')
+            ->where('foto', 'NOT LIKE', '%app/public/default.png%')
+            ->limit(10);
         $slider_pernyerahan = $foto->pluck('nama1', 'foto');
         $default_foto = $foto->get()[0];
 
