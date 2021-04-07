@@ -109,11 +109,11 @@ class PenyerahanProsesController extends Controller
         $kegiatan = Kegiatan::find($request->kegiatan_id);
         
         if ($request->status == 1) {//Tunggakan
-            $text = 'YTH:' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas. Terimakasih bpnkabbogor.id';
+            $text = 'YTH:' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas. Terimakasih bpnbogortimur.com';
         }elseif ($request->status == 2) { //Tidak lengkap
-            $text = 'YTH:' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $request->catatan . ') Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnkabbogor.id';
+            $text = 'YTH:' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $request->catatan . ') Silahkan Ke Loket Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnbogortimur.com';
         }else { //selesai
-            $text = 'YTH:' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . ' Telah Selesai, Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnkabbogor.id';
+            $text = 'YTH:' . $request->nama1 . ' Berkas ' . $request->no_berkas . ', ' . $kegiatan->nama_kegiatan . ' Telah Selesai, Silahkan Ke Loket Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnbogortimur.com';
         }
         
 
@@ -209,11 +209,11 @@ class PenyerahanProsesController extends Controller
         $kegiatan = Kegiatan::find($penyerahan->kegiatan_id);
 
         if ($request->status == 1) {//Tunggakan
-            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas. Terimakasih bpnkabbogor.id';
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas. Terimakasih bpnbogortimur.com';
         } elseif ($request->status == 2) { //Tidak lengkap
-            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $penyerahan->catatan . ') Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnkabbogor.id';
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $penyerahan->catatan . ') Silahkan Ke Loket Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnbogortimur.com';
         } else { //selesai
-            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah Selesai, Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnkabbogor.id';
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah Selesai, Silahkan Ke Loket Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnbogortimur.com';
         }
 
 
@@ -276,11 +276,11 @@ class PenyerahanProsesController extends Controller
         $kegiatan = Kegiatan::find($penyerahan->kegiatan_id);
 
         if ($request->status_update == 1) {//Tunggakan
-            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas. Terimakasih bpnkabbogor.id';
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. masih dalam proses, Kami akan menginformasikan kembali status Berkas. Terimakasih bpnbogortimur.com';
         } elseif ($request->status_update == 2) { //Tidak lengkap
-            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $kegiatan->catatan . ') Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnkabbogor.id';
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Tidak Lengkap (' . $kegiatan->catatan . ') Silahkan Ke Loket Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnbogortimur.com';
         } else { //selesai
-            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah Selesai, Silahkan Ke Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnkabbogor.id';
+            $text = 'YTH: ' . $penyerahan->nama1 . ' Dengan NoBerkas ' . $penyerahan->no_berkas . ', ' . $kegiatan->nama_kegiatan . '. Telah Selesai, Silahkan Ke Loket Perwakilan Kantah Kab Bogor Jl Alternatif Cibubur No.6 Cileungsi bpnbogortimur.com';
         }
 
         $sms = new smsmasking();
