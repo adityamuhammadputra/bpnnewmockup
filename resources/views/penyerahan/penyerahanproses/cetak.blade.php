@@ -145,7 +145,7 @@
                     <th width="5%">Kode Box</th>
                     <th width="8%">Kegiatan</th>
                     <th width="10%">Tanggal</th>
-                    <th width="8%">Status</th>
+                    <th width="8%">Kd Cetak</th>
                 </tr>  
             </thead>
             <tbody>
@@ -157,15 +157,7 @@
                     <td> {{ $datas->kd_box }}</td>
                     <td> {{ $datas->kegiatan->nama_kegiatan }}</td>
                     <td> {{ $datas->tanggal1 }}</td>
-                    <td> 
-                        @if ($datas->status == 3)
-                            {{ "Selesai" }}
-                        @elseif($datas->status == 2)
-                            {{ "Tidak Lengkap" }}
-                        @else
-                            {{ "Tunggakan" }}
-                        @endif
-                    </td>
+                    <td> {{ $datas->kd_cetak }}</td>
                 </tr>
                 @endforeach
             </tbody> 
