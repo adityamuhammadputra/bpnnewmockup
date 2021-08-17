@@ -139,18 +139,21 @@
         <table id="customers">
             <thead>
                 <tr>
+                    <th width="2%">No</th>
                     <th width="8%">No.Berkas</th>
                     <th width="10%">Nama Pemohon</th>
                     <th width="10%">No Hp</th>
                     <th width="5%">Kode Box</th>
                     <th width="8%">Kegiatan</th>
                     <th width="10%">Tanggal</th>
-                    <th width="8%">Kd Cetak</th>
+                    <th width="5%">Kode Cetak</th>
                 </tr>  
             </thead>
             <tbody>
+                @php $no = 1; @endphp
                 @foreach($data as $datas)
                 <tr>
+                    <td> {{ $no++ }}</td>
                     <td> {{ $datas->no_berkas }}</td>
                     <td> {{ $datas->nama1 }}</td>
                     <td> {{ $datas->email }}</td>
