@@ -125,7 +125,7 @@
         <div class="atasheader">
             <b class="tulisanpalingatas">BADAN PERTANAHAN NASIONAL - RI</b><br>
             <b class="tulisanpalingatas">KANTOR PERTANAHAN KABUPATEN BOGOR</b>
-            <p>Jl.Tegar Beriman, Kecamatan Cibonong  Kab. Bogor Telp (0251)87901140</p>
+            {{-- <p>Jl.Tegar Beriman, Kecamatan Cibonong  Kab. Bogor Telp (0251)87901140</p> --}}
         </div>
     </div>
     <div class="atasjudul">
