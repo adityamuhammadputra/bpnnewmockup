@@ -120,7 +120,6 @@ class PenyerahanLoketController extends Controller
 
         $kegiatan = $data->kegiatan()->first();
 
-
         $data = [
             'data' => $data,
             'kegiatan' => $kegiatan
