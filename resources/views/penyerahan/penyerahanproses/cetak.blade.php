@@ -116,18 +116,16 @@
     </style>
 </head>
 <body>
-    <div class="headerlogo">
+    {{-- <div class="headerlogo">
         <div class="atasgambar">
-            {{-- <img src="/images/bpnlogo.png" width="100px"> --}}
-            {{-- <img src="{{ asset('images/bpnlogo.png') }}" width="100px"> --}}
-
+            <img src="images/bpnlogo.png" width="100px">
         </div>
         <div class="atasheader">
             <b class="tulisanpalingatas">BADAN PERTANAHAN NASIONAL - RI</b><br>
             <b class="tulisanpalingatas">KANTOR PERTANAHAN KABUPATEN BOGOR</b>
-            {{-- <p>Jl.Tegar Beriman, Kecamatan Cibonong  Kab. Bogor Telp (0251)87901140</p> --}}
+            <p>Jl.Tegar Beriman, Kecamatan Cibonong  Kab. Bogor Telp (0251)87901140</p>
         </div>
-    </div>
+    </div> --}}
     <div class="atasjudul">
         <b><u>LAMPIRAN PENYERAHAN BERKAS</u></b><br>
         <i>Tanggal Penyerahan : . . . / . . . / 20 . . .</i>
